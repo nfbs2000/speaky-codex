@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link active" href="ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제7부: Long-Running Goal Harness</p>
+    <h1>21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: 사용자가 <code>/goal</code>을 입력했을 때, Codex TUI는 무엇을 사용자 메시지로 보내고 무엇을 control plane 이벤트로 처리하는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 <code>/goal</code>의 첫 관문인 TUI를 읽습니다. 목표는 세 가지입니다.</p>
+<ul><li><code>/goal</code>이 command palette에 어떻게 등록되는지 확인한다.</li><li><code>/goal &lt;objective&gt;</code>와 <code>/goal pause|resume|clear</code>가 어디서 분기되는지 따라간다.</li><li>TUI가 모델에게 텍스트를 보내지 않고 app-server RPC로 상태를 바꾸는 지점을 이해한다.</li></ul>
+<h2 id="1단계-slash-command-등록">1단계: slash command 등록</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/slash_command.rs"><code>codex-rs/tui/src/slash_command.rs</code></a>에서 <code>/goal</code>은 <code>SlashCommand::Goal</code> variant입니다. 설명은 &quot;set or view the goal for a long-running task&quot;입니다. 같은 파일에서 두 가지 중요한 속성이 보입니다.</p>
+<pre class="code-block"><code class="language-rust">SlashCommand::Goal =&gt; &quot;set or view the goal for a long-running task&quot;,</code></pre>
+<pre class="code-block"><code class="language-rust">SlashCommand::Goal</code></pre>
+<p><code>supports_inline_args()</code>에 포함되기 때문에 <code>/goal improve tests</code>처럼 command 뒤의 텍스트를 objective로 받을 수 있습니다. <code>available_during_task()</code>에도 포함되어 있어 이미 작업이 도는 중에도 goal 상태를 조회하거나 pause/resume/clear할 수 있습니다.</p>
+<h2 id="2단계-bare-goal">2단계: bare <code>/goal</code></h2>
+<p>bare <code>/goal</code>은 objective가 없습니다. <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/slash_dispatch.rs"><code>chatwidget/slash_dispatch.rs</code></a>의 <code>dispatch_command</code>는 먼저 <code>Feature::Goals</code>가 켜져 있는지 봅니다. thread id가 있으면 <code>OpenThreadGoalMenu</code> 이벤트를 보냅니다. thread가 아직 없으면 사용법을 출력합니다.</p>
+<pre class="code-block"><code class="language-rust">SlashCommand::Goal =&gt; {
+    if !self.config.features.enabled(Feature::Goals) {
+        return;
+    }
+    if let Some(thread_id) = self.thread_id {
+        self.app_event_tx
+            .send(AppEvent::OpenThreadGoalMenu { thread_id });
+    } else {
+        self.add_info_message(
+            GOAL_USAGE.to_string(),
+            Some(GOAL_USAGE_HINT.to_string()),
+        );
+    }
+}</code></pre>
+<p>여기서 중요한 점은 bare <code>/goal</code>이 모델에게 &quot;현재 goal을 알려줘&quot;라고 묻지 않는다는 것입니다. TUI가 app event를 만들고, app layer가 app-server의 <code>thread/goal/get</code>을 호출합니다.</p>
+<h2 id="3단계-goal-pause-goal-resume-goal-clear">3단계: <code>/goal pause</code>, <code>/goal resume</code>, <code>/goal clear</code></h2>
+<p>inline args가 있는 경우 <code>dispatch_prepared_command_with_args</code>로 들어갑니다. 여기서 먼저 <code>pause</code>, <code>resume</code>, <code>clear</code>를 control command로 인식합니다.</p>
+<pre class="code-block"><code class="language-rust">let control_command = match trimmed.to_ascii_lowercase().as_str() {
+    &quot;clear&quot; =&gt; Some(GoalControlCommand::Clear),
+    &quot;pause&quot; =&gt; Some(GoalControlCommand::SetStatus(AppThreadGoalStatus::Paused)),
+    &quot;resume&quot; =&gt; Some(GoalControlCommand::SetStatus(AppThreadGoalStatus::Active)),
+    _ =&gt; None,
+};</code></pre>
+<p>control command라면 TUI는 app event를 보냅니다.</p>
+<pre class="code-block"><code class="language-rust">GoalControlCommand::Clear =&gt; {
+    self.app_event_tx
+        .send(AppEvent::ClearThreadGoal { thread_id });
+}
+GoalControlCommand::SetStatus(status) =&gt; {
+    self.app_event_tx
+        .send(AppEvent::SetThreadGoalStatus { thread_id, status });
+}</code></pre>
+<p>이것이 <code>/goal</code> 표면에서 가장 중요한 분리입니다. 사용자가 상태를 바꾸는 명령은 모델의 natural language turn이 아니라, deterministic app event입니다.</p>
+<h2 id="4단계-goal">4단계: <code>/goal &lt;objective&gt;</code></h2>
+<p>control command가 아니면 나머지 inline args는 objective입니다. TUI는 먼저 빈 objective와 길이 제한을 검사합니다. thread id가 아직 없으면 이 입력을 queue에 넣고, session이 시작된 뒤 slash command로 다시 파싱되도록 합니다.</p>
+<pre class="code-block"><code class="language-rust">self.queue_user_message_with_options(
+    UserMessage {
+        text: format!(&quot;/goal {args}&quot;),
+        local_images: Vec::new(),
+        remote_image_urls: Vec::new(),
+        text_elements: Vec::new(),
+        mention_bindings: Vec::new(),
+    },
+    QueuedInputAction::ParseSlash,
+);</code></pre>
+<p>thread id가 있으면 <code>SetThreadGoalObjective</code> 이벤트를 보냅니다. mode는 <code>ConfirmIfExists</code>입니다. 이미 목표가 있다면 바로 덮어쓰지 않기 위한 장치입니다.</p>
+<pre class="code-block"><code class="language-rust">self.app_event_tx.send(AppEvent::SetThreadGoalObjective {
+    thread_id,
+    objective: objective.to_string(),
+    mode: ThreadGoalSetMode::ConfirmIfExists,
+});</code></pre>
+<h2 id="5단계-app-layer-action">5단계: app layer action</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/app/thread_goal_actions.rs"><code>codex-rs/tui/src/app/thread_goal_actions.rs</code></a>는 이 이벤트를 app-server RPC로 바꿉니다.</p>
+<ul><li><code>open_thread_goal_menu</code> -&gt; <code>thread_goal_get</code></li><li><code>set_thread_goal_objective</code> -&gt; <code>thread_goal_set(objective, Active, None)</code></li><li><code>set_thread_goal_status</code> -&gt; <code>thread_goal_set(None, status, None)</code></li><li><code>clear_thread_goal</code> -&gt; <code>thread_goal_clear</code></li></ul>
+<p>목표 교체 확인도 여기서 처리됩니다. <code>ConfirmIfExists</code> 모드에서 먼저 <code>thread_goal_get</code>을 호출하고, goal이 있으면 &quot;Replace goal?&quot; 선택 UI를 띄웁니다.</p>
+<h2 id="ui-표시">UI 표시</h2>
+<p>bare <code>/goal</code>이 goal을 읽으면 <code>goal_menu.rs</code>가 history에 요약을 추가합니다.</p>
+<pre class="code-block"><code class="language-rust">Line::from(&quot;Goal&quot;.bold()),
+Line::from(vec![&quot;Status: &quot;.dim(), goal_status_label(goal.status).to_string().into()]),
+Line::from(vec![&quot;Objective: &quot;.dim(), goal.objective.clone().into()]),</code></pre>
+<p>footer 표시도 따로 있습니다. <code>goal_status.rs</code>는 active goal이면 token budget 또는 elapsed time을 compact string으로 만들고, <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/bottom_pane/footer.rs"><code>bottom_pane/footer.rs</code></a>는 이를 <code>Pursuing goal</code>, <code>Goal paused</code>, <code>Goal achieved</code> 같은 한 줄로 보여 줍니다.</p>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td><code>/goal</code>은 inline argument를 받는 slash command다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/slash_command.rs"><code>codex-rs/tui/src/slash_command.rs</code></a></td><td><code>SlashCommand::Goal</code>이 <code>supports_inline_args()</code>에 포함된다</td></tr><tr><td>bare <code>/goal</code>은 app event를 만든다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/slash_dispatch.rs"><code>codex-rs/tui/src/chatwidget/slash_dispatch.rs</code></a></td><td>thread id가 있으면 <code>OpenThreadGoalMenu</code>를 보낸다</td></tr><tr><td><code>pause/resume/clear</code>는 모델 입력이 아니다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/slash_dispatch.rs"><code>codex-rs/tui/src/chatwidget/slash_dispatch.rs</code></a></td><td>control command가 <code>SetThreadGoalStatus</code> 또는 <code>ClearThreadGoal</code>로 변환된다</td></tr><tr><td>objective 설정은 기존 goal 확인을 거친다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/app/thread_goal_actions.rs"><code>codex-rs/tui/src/app/thread_goal_actions.rs</code></a></td><td><code>ConfirmIfExists</code>일 때 먼저 <code>thread_goal_get</code>을 호출한다</td></tr><tr><td>goal 요약은 TUI history와 footer에 표시된다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/goal_menu.rs"><code>codex-rs/tui/src/chatwidget/goal_menu.rs</code></a>, <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/goal_status.rs"><code>codex-rs/tui/src/chatwidget/goal_status.rs</code></a></td><td>status/objective/usage line과 <code>GoalStatusIndicator</code>가 있다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<p>다음 질문에 답해 보십시오.</p>
+<ol><li><code>/goal clear</code>가 ordinary user message로 들어가지 않는 이유는 무엇인가?</li><li>session 시작 전 <code>/goal &lt;objective&gt;</code>는 왜 queue에 넣고 나중에 다시 slash로 파싱하는가?</li><li>이미 goal이 있을 때 바로 replace하지 않는 이유는 어떤 UX/안전성 문제를 막는가?</li></ol>
+<p>다음 장에서는 이 app event가 app-server의 <code>thread/goal/*</code> RPC와 sqlite 상태로 내려가는 과정을 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/tui/src/app/thread_goal_actions.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/app/thread_goal_actions.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/app/thread_goal_actions.rs">Edition</a></td></tr><tr><td><code>codex-rs/tui/src/bottom_pane/footer.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/bottom_pane/footer.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/bottom_pane/footer.rs">Edition</a></td></tr><tr><td><code>codex-rs/tui/src/chatwidget/goal_menu.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/goal_menu.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/chatwidget/goal_menu.rs">Edition</a></td></tr><tr><td><code>codex-rs/tui/src/chatwidget/goal_status.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/goal_status.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/chatwidget/goal_status.rs">Edition</a></td></tr><tr><td><code>codex-rs/tui/src/chatwidget/slash_dispatch.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/chatwidget/slash_dispatch.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/chatwidget/slash_dispatch.rs">Edition</a></td></tr><tr><td><code>codex-rs/tui/src/slash_command.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/slash_command.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/slash_command.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 2개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>goal_menu.rs</code></li><li><code>goal_status.rs</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch20.html"><span>이전</span><strong>20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</strong></a><a class="nav-card" href="ch22.html"><span>다음</span><strong>22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

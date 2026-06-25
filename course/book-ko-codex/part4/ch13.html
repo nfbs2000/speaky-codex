@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link active" href="ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제4부: Policy Harness &amp; Extensibility</p>
+    <h1>13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex의 안전성은 어떤 단일 스위치가 아니라 어떤 다층 정책 구조로 계산되는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>에이전트 안전성은 &quot;승인 받기&quot; 같은 UI 한 장면으로 설명되지 않습니다. 세션 설정, approval policy, sandbox policy, 실행 전 requirement 계산, 실패 후 escalation 판단이 모두 연결되어야 실제 경계가 생깁니다. Codex는 이 연결을 <code>session configured policy -&gt; orchestrator decision -&gt; execution path</code>의 구조로 만듭니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;SessionConfiguredEvent&quot;] --&gt; B[&quot;approval policy&quot;]
+    A --&gt; C[&quot;sandbox policy&quot;]
+    B --&gt; D[&quot;ExecApprovalRequirement 계산&quot;]
+    C --&gt; E[&quot;initial sandbox 선택&quot;]
+    D --&gt; F[&quot;tool orchestrator run&quot;]
+    E --&gt; F
+    F --&gt; G[&quot;실행 / denial / escalation&quot;]</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a></td><td>실행 전 policy calculation의 중심</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs"><code>codex-rs/core/src/session/session.rs</code></a></td><td>세션 수준 정책을 외부로 노출</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a></td><td>외부 클라이언트가 override할 수 있는 정책 표면</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>세션 구성 이벤트는 approval policy와 sandbox policy를 외부에 노출한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs"><code>codex-rs/core/src/session/session.rs</code></a> -&gt; <code>SessionConfiguredEvent</code>에 두 정책이 포함된다</li><li>실행 전 approval requirement를 계산하고 skip/forbidden/needs-approval로 나눈다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a> -&gt; <code>ExecApprovalRequirement</code> 분기가 존재한다</li><li>첫 시도 샌드박스는 파일시스템/네트워크/플랫폼 정책을 모두 반영한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a> -&gt; <code>select_initial(...)</code> 인자에 관련 정책이 모인다</li><li>sandbox denial 후에도 항상 escalation하는 것은 아니다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a> -&gt; denial 분기에서 capability와 approval policy를 다시 본다</li><li>외부 클라이언트도 <code>turn/start</code> 시 sandbox/approval override를 전달할 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; override 가능한 필드를 설명한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p>정책 값 자체는 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/protocol/src/protocol.rs"><code>codex-rs/protocol/src/protocol.rs</code></a>의 wire-visible enum으로 정의됩니다.</p>
+<pre class="code-block"><code class="language-rust">#[serde(rename_all = &quot;kebab-case&quot;)]
+#[strum(serialize_all = &quot;kebab-case&quot;)]
+pub enum AskForApproval {
+    /// Under this policy, only &quot;known safe&quot; commands—as determined by
+    /// `is_safe_command()`—that **only read files** are auto‑approved.
+    /// Everything else will ask the user to approve.
+    #[serde(rename = &quot;untrusted&quot;)]
+    #[strum(serialize = &quot;untrusted&quot;)]
+    UnlessTrusted,
+
+    /// DEPRECATED: *All* commands are auto‑approved, but they are expected to
+    /// run inside a sandbox where network access is disabled and writes are
+    /// confined to a specific set of paths. If the command fails, it will be
+    /// escalated to the user to approve execution without a sandbox.
+    /// Prefer `OnRequest` for interactive runs or `Never` for non-interactive
+    /// runs.
+    OnFailure,
+
+    /// The model decides when to ask the user for approval.
+    #[default]
+    OnRequest,
+
+    /// Fine-grained controls for individual approval flows.
+    ///
+    /// When a field is `true`, commands in that category are allowed. When it
+    /// is `false`, those requests are automatically rejected instead of shown
+    /// to the user.
+    #[strum(serialize = &quot;granular&quot;)]
+    Granular(GranularApprovalConfig),
+
+    /// Never ask the user to approve commands. Failures are immediately returned
+    /// to the model, and never escalated to the user for approval.
+    Never,
+}</code></pre>
+<p>실제 실행 판단은 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/exec_policy.rs"><code>codex-rs/core/src/exec_policy.rs</code></a>에서 command, sandbox, approval policy를 함께 보고 결정합니다.</p>
+<pre class="code-block"><code class="language-rust">if command_might_be_dangerous(command) || environment_lacks_sandbox_protections {
+    return match approval_policy {
+        AskForApproval::Never =&gt; {
+            let sandbox_is_explicitly_disabled = matches!(
+                sandbox_policy,
+                SandboxPolicy::DangerFullAccess | SandboxPolicy::ExternalSandbox { .. }
+            );
+            if sandbox_is_explicitly_disabled {
+                // If the sandbox is explicitly disabled, we should allow the command to run
+                Decision::Allow
+            } else {
+                Decision::Forbidden
+            }
+        }
+        AskForApproval::OnFailure
+        | AskForApproval::OnRequest
+        | AskForApproval::UnlessTrusted
+        | AskForApproval::Granular(_) =&gt; Decision::Prompt,
+    };
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex의 안전성은 단일 가드가 아니라 계층형 결정 체계입니다. 세션 수준 정책은 경계를 선언하고, 오케스트레이터는 호출 수준에서 그 경계를 구체적 requirement로 바꿉니다. 이 두 층이 함께 있어야 &quot;왜 이 호출이 막혔는가&quot;를 설명할 수 있습니다.</p>
+<h2 id="더-깊게-읽기-정책-선언과-호출-결정을-연결한다">더 깊게 읽기: 정책 선언과 호출 결정을 연결한다</h2>
+<p><code>SessionConfiguredEvent</code>는 세션이 어떤 정책으로 시작했는지를 외부에 알립니다. 여기에는 approval policy, approvals reviewer, sandbox policy, cwd가 포함됩니다. 하지만 이 이벤트 자체가 실행을 허용하거나 막지는 않습니다. 실제 tool call 시점에는 <code>ToolOrchestrator::run()</code>이 현재 turn context와 tool runtime의 요구를 합쳐 <code>ExecApprovalRequirement</code>를 계산합니다.</p>
+<p>이 분리가 중요한 이유는 세션 정책이 &quot;기본 경계&quot;이고, 호출 결정은 &quot;그 경계를 현재 명령에 적용한 결과&quot;이기 때문입니다. 같은 sandbox policy라도 어떤 tool인지, network approval context가 있는지, guardian reviewer를 쓰는지에 따라 경로가 달라집니다.</p>
+<ul><li>세션 정책은 첫 이벤트에 노출된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs"><code>codex-rs/core/src/session/session.rs</code></a> -&gt; <code>SessionConfiguredEvent</code>가 approval policy, approvals reviewer, sandbox policy, cwd를 포함한다</li><li>호출별 approval requirement는 orchestrator에서 계산된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a> -&gt; <code>tool.exec_approval_requirement(...)</code> 또는 <code>default_exec_approval_requirement(...)</code>를 사용한다</li><li>guardian reviewer 사용 여부도 호출 경로에 반영된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a> -&gt; <code>routes_approval_to_guardian(turn_ctx)</code>와 <code>guardian_review_id</code>가 approval request 경로에 들어간다</li><li>network denial은 별도 approval context로 바뀔 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a> -&gt; <code>network_approval_context_from_payload(...)</code> 결과에 따라 retry approval 문구가 달라진다</li></ul>
+<p>즉 &quot;승인을 받는다&quot;는 UI 한 장면 뒤에는 세션 정책, turn context, tool policy, guardian routing, network policy decision이 함께 작동합니다.</p>
+<h2 id="app-server에서-보는-안전-표면">app-server에서 보는 안전 표면</h2>
+<p>외부 클라이언트도 이 정책 체계를 일부 조정할 수 있습니다. <code>app-server</code> 문서는 <code>turn/start</code>에서 model, cwd, sandbox policy, approval policy 등을 override할 수 있다고 설명합니다. 또 approval flow는 <code>item/commandExecution/requestApproval</code> 같은 server-initiated JSON-RPC request로 나타납니다.</p>
+<ul><li>turn 시작 요청은 정책 override를 받을 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; <code>turn/start</code> optional fields가 sandbox policy와 approval policy override를 설명한다</li><li>command approval은 item lifecycle에 묶인다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; command execution approval request와 client response flow를 설명한다</li><li>granular request permissions도 별도 item request로 노출된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a> -&gt; <code>item/permissions/requestApproval</code> method mapping이 존재한다</li></ul>
+<p>이렇게 보면 안전성은 core 내부 구현만의 문제가 아니라, 외부 표면과 UX가 반드시 함께 지켜야 하는 계약입니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>안전성은 반드시 <code>정책 선언</code>과 <code>실행 시점 계산</code>의 두 층으로 나눠야 합니다. 정책을 너무 추상적으로만 두면 실행 경로에서 이유를 설명할 수 없고, 반대로 호출 시점에만 즉흥적으로 판단하면 제품 전체의 일관성을 잃습니다.</p>
+<p>이제 보호 계층의 첫 층을 봤으니, 다음 장에서는 사용자가 런타임에 직접 개입할 수 있는 <code>Hooks</code> 시스템을 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server-protocol/src/protocol/common.rs">Edition</a></td></tr><tr><td><code>codex-rs/app-server/README.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server/README.md">Edition</a></td></tr><tr><td><code>codex-rs/core/src/exec_policy.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/exec_policy.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/exec_policy.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/session/session.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/session.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/tools/orchestrator.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tools/orchestrator.rs">Edition</a></td></tr><tr><td><code>codex-rs/protocol/src/protocol.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/protocol/src/protocol.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/protocol/src/protocol.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="../part3/ch12.html"><span>이전</span><strong>12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</strong></a><a class="nav-card" href="ch14.html"><span>다음</span><strong>14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

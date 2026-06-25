@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link active" href="ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제8부: Desktop SDK Runtime Evidence Harness</p>
+    <h1>29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Chat 입력 버튼을 누르면 React renderer는 어떤 command를 보내고, bridge server는 어떤 snapshot을 돌려주는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 Desktop 내부 protocol boundary를 읽습니다.</p>
+<ul><li><code>desktop/shared/protocol.ts</code>가 renderer와 bridge server의 공통 계약임을 확인한다.</li><li><code>desktop/src/api.ts</code>가 WebSocket transport만 담당하는 구조를 본다.</li><li><code>desktop/src/store/useCodexStore.ts</code>가 UI action을 command로 바꾸는 방식을 이해한다.</li><li>renderer가 SDK 객체를 직접 들고 있지 않기 때문에 evidence 수집이 server 한 곳에 모일 수 있음을 이해한다.</li></ul>
+<h2 id="1단계-shared-protocol이-먼저다">1단계: shared protocol이 먼저다</h2>
+<p><code>desktop/shared/protocol.ts</code>에는 renderer와 server가 공유하는 타입이 있습니다.</p>
+<pre class="code-block"><code class="language-ts">export type ThreadLaunchConfig = {
+  source: &quot;sdk.runStreamed&quot;;
+  model: string | null;
+  sandboxMode: string | null;
+  approvalPolicy: string | null;
+  reasoningEffort: string | null;
+  workingDirectory: string;
+};</code></pre>
+<p><code>source: &quot;sdk.runStreamed&quot;</code>는 이 Desktop Chat이 실제 SDK streaming surface에서 왔다는 configured evidence입니다.</p>
+<p>client command도 같은 파일에서 정의됩니다.</p>
+<pre class="code-block"><code class="language-ts">export type ClientCommand =
+  | WorkspaceSelectCommand
+  | ThreadSelectCommand
+  | ThreadCreateCommand
+  | ChatRunCommand
+  | EvidenceRefreshCommand
+  | EvidenceTrajectoryGenerateCommand
+  | EvidencePromptScoreSaveCommand
+  | EvidencePromptCoachGenerateCommand;</code></pre>
+<p>즉 Chat 실행, Evidence 갱신, Trajectory 생성, Prompt Score 저장이 모두 같은 WebSocket command plane을 통과합니다.</p>
+<h2 id="2단계-api-ts는-websocket-transport다">2단계: <code>api.ts</code>는 WebSocket transport다</h2>
+<p><code>desktop/src/api.ts</code>는 bridge port를 읽고 WebSocket을 엽니다.</p>
+<pre class="code-block"><code class="language-ts">const runtimePort = import.meta.env.VITE_CODEX_VIS_PORT ?? &quot;4318&quot;;
+this.socket = new WebSocket(`ws://${hostname}:${runtimePort}`);</code></pre>
+<p>서버에서 message가 오면 JSON을 <code>ServerEnvelope</code>로 파싱해 listener에게 전달합니다.</p>
+<pre class="code-block"><code class="language-ts">this.socket.addEventListener(&quot;message&quot;, (event) =&gt; {
+  const envelope = JSON.parse(event.data as string) as ServerEnvelope;
+  for (const listener of this.listeners) {
+    listener(envelope);
+  }
+});</code></pre>
+<p>command 전송도 단순합니다.</p>
+<pre class="code-block"><code class="language-ts">this.socket.send(JSON.stringify(command));</code></pre>
+<p>이 파일에는 <code>Codex</code>, <code>Thread</code>, <code>runStreamed</code>가 없습니다. renderer transport는 SDK를 모릅니다.</p>
+<h2 id="3단계-zustand-store가-ui-action을-command로-바꾼다">3단계: Zustand store가 UI action을 command로 바꾼다</h2>
+<p><code>desktop/src/store/useCodexStore.ts</code>의 <code>boot()</code>는 envelope listener를 등록하고 WebSocket을 연결합니다.</p>
+<pre class="code-block"><code class="language-ts">api.onEnvelope((envelope) =&gt; {
+  if (envelope.type === &quot;snapshot&quot;) {
+    set({ snapshot: envelope.snapshot, connection: &quot;open&quot; });
+  } else if (envelope.type === &quot;toast&quot;) {
+    set({ toast: { level: envelope.level, message: envelope.message } });
+  }
+});
+api.connect();</code></pre>
+<p>Chat submit은 <code>chat.run</code> command로 바뀝니다.</p>
+<pre class="code-block"><code class="language-ts">runTurn: (input) =&gt; {
+  const activeThreadId = get().snapshot?.activeThreadId ?? undefined;
+  api.send({ type: &quot;chat.run&quot;, input, threadId: activeThreadId ?? undefined });
+}</code></pre>
+<p>Evidence 버튼도 같은 방식입니다.</p>
+<div class="table-wrap"><table><thead><tr><th>UI action</th><th>command</th></tr></thead><tbody><tr><td>새 채팅</td><td><code>thread.create</code></td></tr><tr><td>프롬프트 실행</td><td><code>chat.run</code></td></tr><tr><td>OTel 생성/갱신</td><td><code>evidence.refresh</code></td></tr><tr><td>Trajectory 생성</td><td><code>evidence.trajectory.generate</code></td></tr><tr><td>Prompt Score 저장</td><td><code>evidence.promptScore.save</code></td></tr><tr><td>Prompt Coach 생성</td><td><code>evidence.promptCoach.generate</code></td></tr></tbody></table></div>
+<h2 id="4단계-snapshot은-ui의-단일-읽기-모델이다">4단계: snapshot은 UI의 단일 읽기 모델이다</h2>
+<p>bridge server는 <code>ServerEnvelope</code> 중 <code>snapshot</code>을 방송합니다. renderer는 snapshot을 저장하고 각 페이지가 거기서 active thread, runtime entries, projection run을 읽습니다.</p>
+<p>이 방식은 UI가 여러 파일을 직접 읽지 않아도 되게 합니다. 파일 artifact는 server가 관리하고, UI는 summary와 selected run metadata를 snapshot으로 받습니다.</p>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>renderer/server protocol은 shared type으로 고정된다</td><td><code>desktop/shared/protocol.ts</code></td><td><code>ClientCommand</code>, <code>ServerEnvelope</code>, <code>ThreadSnapshot</code>이 같은 파일에 있다</td></tr><tr><td>renderer는 SDK를 직접 import하지 않는다</td><td><code>desktop/src/api.ts</code>, <code>desktop/src/store/useCodexStore.ts</code></td><td>두 파일은 <code>Codex</code>가 아니라 <code>ClientCommand</code>와 <code>ServerEnvelope</code>만 다룬다</td></tr><tr><td>Chat submit은 <code>chat.run</code> command가 된다</td><td><code>desktop/src/store/useCodexStore.ts</code></td><td><code>api.send({ type: &quot;chat.run&quot;, input, threadId })</code>가 있다</td></tr><tr><td>Evidence 조작도 같은 command plane을 쓴다</td><td><code>desktop/src/store/useCodexStore.ts</code></td><td><code>refreshEvidence</code>, <code>generateTrajectory</code>, <code>savePromptScore</code>, <code>generatePromptCoach</code>가 모두 <code>api.send()</code>를 호출한다</td></tr><tr><td>snapshot은 UI의 읽기 모델이다</td><td><code>desktop/src/store/useCodexStore.ts</code></td><td><code>envelope.type === &quot;snapshot&quot;</code>일 때 <code>snapshot</code> state를 갱신한다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li>React component가 직접 파일 시스템을 읽지 않는 이유는 무엇인가?</li><li>Evidence command를 Chat command와 같은 WebSocket에 태우면 어떤 일관성이 생기는가?</li><li><code>ThreadLaunchConfig.source</code>를 <code>&quot;sdk.runStreamed&quot;</code>로 저장하는 것은 observed인가 configured인가?</li></ol>
+<p>다음 장에서는 bridge server가 <code>chat.run</code>을 받아 실제 SDK thread 실행과 raw/normalized archive 생성으로 바꾸는 부분을 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 4개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>api.ts</code></li><li><code>desktop/shared/protocol.ts</code></li><li><code>desktop/src/api.ts</code></li><li><code>desktop/src/store/useCodexStore.ts</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch28.html"><span>이전</span><strong>28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</strong></a><a class="nav-card" href="ch30.html"><span>다음</span><strong>30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

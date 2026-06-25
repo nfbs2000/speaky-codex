@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link active" href="ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제5부: Subagents &amp; Surfaces</p>
+    <h1>18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex는 왜 여러 인터페이스 표면을 가지며, 그 표면들은 같은 하니스의 어떤 부분을 공유하고 어떤 부분만 다르게 포장하는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>좋은 에이전트 시스템은 인터페이스가 늘어나도 의미론이 갈라지지 않아야 합니다. Codex는 app-server, TUI, CLI, exec 같은 여러 표면을 제공하지만, 중요한 점은 이 표면들이 서로 다른 제품이 아니라 같은 하니스를 다른 UX와 프로토콜로 포장한 것이라는 점입니다. Part 5 전체를 sub-agent와 함께 읽으면, Codex는 &quot;하니스를 어떻게 복제할 것인가&quot;뿐 아니라 &quot;하니스를 어떻게 노출할 것인가&quot;도 별도 설계 대상으로 본다는 사실이 드러납니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">graph TD
+    C[&quot;shared harness core&quot;] --&gt; A[&quot;CLI&quot;]
+    C --&gt; B[&quot;TUI&quot;]
+    C --&gt; D[&quot;app-server&quot;]
+    C --&gt; E[&quot;exec surface&quot;]
+
+    D --&gt; F[&quot;external clients&quot;]
+    B --&gt; G[&quot;interactive terminal UX&quot;]
+    A --&gt; H[&quot;direct command-line usage&quot;]</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a></td><td>외부 클라이언트용 protocol surface</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/README.md"><code>codex-rs/README.md</code></a></td><td>워크스페이스 내 실행 표면의 역할 설명</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/cli.rs"><code>codex-rs/tui/src/cli.rs</code></a></td><td>TUI가 노출하는 사용자 경험 옵션</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>app-server는 VS Code 같은 rich interface를 위한 공식 인터페이스다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; 문서 첫 부분이 그 목적을 직접 설명한다</li><li>워크스페이스의 핵심 실행 표면은 <code>core</code>, <code>exec</code>, <code>tui</code>, <code>cli</code>로 구분된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/README.md"><code>codex-rs/README.md</code></a> -&gt; code organization 섹션이 각 crate 역할을 정리한다</li><li>TUI는 approval policy, web search, alt-screen 여부 같은 UX 옵션을 노출한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/cli.rs"><code>codex-rs/tui/src/cli.rs</code></a> -&gt; 관련 CLI 필드가 존재한다</li><li>app-server API는 thread/start, turn/start, review/start, rollback, compact 같은 상위 동작을 thread/turn 프리미티브 위에서 노출한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; API overview가 관련 surface를 열거한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/cli.rs"><code>codex-rs/tui/src/cli.rs</code></a>는 사용자 경험 옵션을 CLI 필드로 노출합니다.</p>
+<pre class="code-block"><code class="language-rust">#[derive(Parser, Debug)]
+#[command(version)]
+pub struct Cli {
+    /// Optional user prompt to start the session.
+    #[arg(value_name = &quot;PROMPT&quot;, value_hint = clap::ValueHint::Other)]
+    pub prompt: Option&lt;String&gt;,
+
+    // Internal controls set by the top-level `codex resume` subcommand.
+    // These are not exposed as user flags on the base `codex` command.
+    #[clap(skip)]
+    pub resume_picker: bool,
+
+    #[clap(skip)]
+    pub resume_last: bool,
+
+    /// Internal: resume a specific recorded session by id (UUID). Set by the
+    /// top-level `codex resume &lt;SESSION_ID&gt;` wrapper; not exposed as a public flag.
+    #[clap(skip)]
+    pub resume_session_id: Option&lt;String&gt;,
+
+    /// Internal: show all sessions (disables cwd filtering and shows CWD column).
+    #[clap(skip)]
+    pub resume_show_all: bool,
+
+    /// Internal: include non-interactive sessions in resume listings.
+    #[clap(skip)]
+    pub resume_include_non_interactive: bool,
+
+    // Internal controls set by the top-level `codex fork` subcommand.
+    // These are not exposed as user flags on the base `codex` command.
+    #[clap(skip)]
+    pub fork_picker: bool,
+
+    #[clap(skip)]
+    pub fork_last: bool,
+
+    /// Internal: fork a specific recorded session by id (UUID). Set by the
+    /// top-level `codex fork &lt;SESSION_ID&gt;` wrapper; not exposed as a public flag.
+    #[clap(skip)]
+    pub fork_session_id: Option&lt;String&gt;,
+
+    /// Internal: show all sessions (disables cwd filtering and shows CWD column).
+    #[clap(skip)]
+    pub fork_show_all: bool,
+
+    #[clap(flatten)]
+    pub shared: TuiSharedCliOptions,
+
+    /// Configure when the model requires human approval before executing a command.
+    #[arg(long = &quot;ask-for-approval&quot;, short = &#x27;a&#x27;)]
+    pub approval_policy: Option&lt;ApprovalModeCliArg&gt;,
+
+    /// Enable live web search. When enabled, the native Responses `web_search` tool is available to the model (no per‑call approval).
+    #[arg(long = &quot;search&quot;, default_value_t = false)]
+    pub web_search: bool,
+
+    /// Disable alternate screen mode
+    ///
+    /// Runs the TUI in inline mode, preserving terminal scrollback history. This is useful
+    /// in terminal multiplexers like Zellij that follow the xterm spec strictly and disable
+    /// scrollback in alternate screen buffers.
+    #[arg(long = &quot;no-alt-screen&quot;, default_value_t = false)]
+    pub no_alt_screen: bool,
+
+    #[clap(skip)]
+    pub config_overrides: CliConfigOverrides,
+}</code></pre>
+<p>반면 app-server v2는 <code>codex-rs/app-server-protocol/src/protocol/v2.rs</code>에서 thread/turn 요청 payload를 타입으로 고정합니다. 아래 두 블록은 각 struct의 앞부분 연속 발췌입니다.</p>
+<pre class="code-block"><code class="language-rust">pub struct ThreadStartParams {
+    #[ts(optional = nullable)]
+    pub model: Option&lt;String&gt;,
+    #[ts(optional = nullable)]
+    pub model_provider: Option&lt;String&gt;,
+    #[ts(optional = nullable)]
+    pub cwd: Option&lt;String&gt;,
+    #[experimental(nested)]
+    #[ts(optional = nullable)]
+    pub approval_policy: Option&lt;AskForApproval&gt;,
+    /// Override where approval requests are routed for review on this thread
+    /// and subsequent turns.
+    #[ts(optional = nullable)]
+    pub approvals_reviewer: Option&lt;ApprovalsReviewer&gt;,
+    #[ts(optional = nullable)]
+    pub sandbox: Option&lt;SandboxMode&gt;,
+    #[ts(optional = nullable)]
+    pub config: Option&lt;HashMap&lt;String, JsonValue&gt;&gt;,
+    #[ts(optional = nullable)]
+    pub service_name: Option&lt;String&gt;,</code></pre>
+<pre class="code-block"><code class="language-rust">pub struct TurnStartParams {
+    pub thread_id: String,
+    pub input: Vec&lt;UserInput&gt;,
+    /// Optional turn-scoped Responses API client metadata.
+    #[experimental(&quot;turn/start.responsesapiClientMetadata&quot;)]
+    #[ts(optional = nullable)]
+    pub responsesapi_client_metadata: Option&lt;HashMap&lt;String, String&gt;&gt;,
+    /// Override the working directory for this turn and subsequent turns.
+    #[ts(optional = nullable)]
+    pub cwd: Option&lt;PathBuf&gt;,
+    /// Override the approval policy for this turn and subsequent turns.
+    #[experimental(nested)]
+    #[ts(optional = nullable)]
+    pub approval_policy: Option&lt;AskForApproval&gt;,
+    /// Override the sandbox policy for this turn and subsequent turns.
+    #[ts(optional = nullable)]
+    pub sandbox_policy: Option&lt;SandboxPolicy&gt;,
+    /// Override the model for this turn and subsequent turns.
+    #[ts(optional = nullable)]
+    pub model: Option&lt;String&gt;,
+    /// Override the service tier for this turn and subsequent turns.
+    #[serde(
+        default,
+        deserialize_with = &quot;super::serde_helpers::deserialize_double_option&quot;,
+        serialize_with = &quot;super::serde_helpers::serialize_double_option&quot;,
+        skip_serializing_if = &quot;Option::is_none&quot;
+    )]
+    #[ts(optional = nullable)]
+    pub service_tier: Option&lt;Option&lt;ServiceTier&gt;&gt;,</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex의 표면 분리는 &quot;표면마다 로직이 다르다&quot;가 아니라 &quot;하니스는 같고, 인터페이스 계약과 UX가 다르다&quot;에 가깝습니다. app-server는 외부 계약을, TUI와 CLI는 사용자 경험과 옵션 조합을, exec는 실행 표면 특화를 담당합니다. 즉 Part 16의 sub-agent가 <code>분기된 하니스</code>였다면, 이 장의 app-server/TUI/CLI는 <code>포장된 하니스</code>입니다.</p>
+<h2 id="더-깊게-읽기-같은-core-다른-entry-contract">더 깊게 읽기: 같은 core, 다른 entry contract</h2>
+<p>app-server, TUI, CLI는 같은 코어를 쓰지만 사용자와 맺는 계약은 다릅니다. TUI는 interactive terminal에서 approval policy, web search, alt-screen 같은 UX 옵션을 다룹니다. app-server는 JSON-RPC method/notification으로 외부 rich client가 thread와 turn을 제어하게 합니다. CLI/exec는 command-line entrypoint와 non-interactive 실행에 더 가깝습니다.</p>
+<ul><li>TUI 표면은 사용자 옵션을 clap 구조체로 노출한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/cli.rs"><code>codex-rs/tui/src/cli.rs</code></a> -&gt; <code>Cli</code>가 prompt, approval policy, web search, alt screen 옵션을 가진다</li><li>app-server는 rich interface용 protocol surface다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; VS Code extension 같은 rich interface를 위한 interface라고 설명한다</li><li>app-server protocol은 method 이름을 code에서 고정한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a> -&gt; <code>thread/start</code>, <code>turn/start</code>, <code>review/start</code>, <code>thread/rollback</code>, <code>thread/compact/start</code> mapping이 있다</li><li>v2 payload는 TypeScript export 대상이다 -&gt; <code>codex-rs/app-server-protocol/src/protocol/v2.rs</code> -&gt; API 타입들이 <code>#[ts(export_to = &quot;v2/&quot;)]</code>를 사용한다</li></ul>
+<p>이 차이를 놓치면 &quot;왜 같은 기능이 TUI와 app-server에 중복돼 보이는가&quot;라는 오해가 생깁니다. 실제 중복은 코어 의미론이 아니라 표면별 계약입니다.</p>
+<h2 id="표면별로-달라지는-것과-같아야-하는-것">표면별로 달라지는 것과 같아야 하는 것</h2>
+<p>달라져도 되는 것은 입력 방식, 표시 방식, transport, lifecycle notification의 포장입니다. 같아야 하는 것은 thread/turn의 기본 의미, approval/sandbox policy의 효과, tool execution result의 의미, history/compaction/rollback semantics입니다.</p>
+<p>app-server의 <code>review/start</code>는 inline과 detached delivery를 설명합니다. TUI의 <code>/review</code>는 사용자 경험으로 드러납니다. 하지만 core에서 review는 <code>ReviewTask</code>, constrained sub-agent, <code>ExitedReviewMode</code>로 수렴합니다. 표면은 다르지만 하니스 의미론은 하나여야 합니다.</p>
+<ul><li>review는 app-server에서도 상위 API로 노출된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; <code>review/start</code>가 inline/detached delivery와 review item stream을 설명한다</li><li>core review는 같은 ReviewTask 경로로 들어간다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/review.rs"><code>codex-rs/core/src/session/review.rs</code></a> -&gt; <code>spawn_review_thread(...)</code>가 <code>ReviewTask::new()</code>를 spawn한다</li><li>review 결과는 structured event로 parent에 돌아온다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/review.rs"><code>codex-rs/core/src/tasks/review.rs</code></a> -&gt; <code>exit_review_mode(...)</code>가 <code>EventMsg::ExitedReviewMode</code>를 보낸다</li></ul>
+<p>이런 대응이 있을 때만 새 표면을 추가해도 제품 의미론이 갈라지지 않습니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>표면이 늘어날수록 더 중요한 것은 공용 하니스와 표면별 adapter를 분리하는 것입니다. UI나 API를 추가할 때마다 코어를 복제하기 시작하면 곧 의미론이 갈라집니다. Codex는 하니스를 한곳에 두고 표면별 노출만 다르게 하는 편을 택했습니다.</p>
+<p>이제 분기된 하니스와 포장된 하니스까지 봤으니, 마지막 장에서는 이 저장소 전반에서 반복적으로 드러나는 하니스 엔지니어링 원칙을 압축합니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/README.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/README.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/README.md">Edition</a></td></tr><tr><td><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server-protocol/src/protocol/common.rs">Edition</a></td></tr><tr><td><code>codex-rs/app-server/README.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server/README.md">Edition</a></td></tr><tr><td><code>codex-rs/core/src/session/review.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/review.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/review.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/tasks/review.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/review.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tasks/review.rs">Edition</a></td></tr><tr><td><code>codex-rs/tui/src/cli.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/tui/src/cli.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/tui/src/cli.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 1개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>codex-rs/app-server-protocol/src/protocol/v2.rs</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch17.html"><span>이전</span><strong>17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</strong></a><a class="nav-card" href="../part6/ch19.html"><span>다음</span><strong>19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

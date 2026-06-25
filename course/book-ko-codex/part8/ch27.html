@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link active" href="ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제8부: Desktop SDK Runtime Evidence Harness</p>
+    <h1>27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: <code>pnpm dev:electron</code> 류 실행에서 Desktop 앱은 어떤 포트와 환경 변수로 SDK bridge와 renderer를 묶는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 Electron 앱이 켜지는 순서를 코드로 읽습니다.</p>
+<ul><li><code>desktop/scripts/dev-electron.mjs</code>가 bridge port와 renderer port를 동적으로 잡는 방식을 본다.</li><li>bridge server, Vite renderer, Electron shell의 시작 순서를 이해한다.</li><li><code>CODEX_VIS_PORT</code>, <code>CODEX_PROJECT_PATH</code>, <code>VITE_CODEX_VIS_PORT</code>, <code>VITE_DEV_SERVER_URL</code>의 역할을 분리한다.</li><li>Electron main process가 SDK를 직접 알지 않아도 renderer가 bridge에 붙을 수 있는 이유를 확인한다.</li></ul>
+<h2 id="1단계-free-port를-두-개-잡는다">1단계: free port를 두 개 잡는다</h2>
+<p><code>desktop/scripts/dev-electron.mjs</code>는 개발 실행에서 포트를 고정하지 않습니다. <code>getFreePort()</code>로 bridge용 포트와 Vite client용 포트를 각각 잡습니다.</p>
+<pre class="code-block"><code class="language-js">const bridgePort = await getFreePort();
+const clientPort = await getFreePort();
+const devUrl = `http://${host}:${clientPort}`;</code></pre>
+<p>이 설계는 이미 다른 dev server가 떠 있어도 충돌 가능성을 줄입니다. bridge와 renderer가 서로 다른 포트를 쓰기 때문에, renderer는 compile-time env인 <code>VITE_CODEX_VIS_PORT</code>로 bridge 위치를 알아야 합니다.</p>
+<h2 id="2단계-bridge-server를-먼저-띄운다">2단계: bridge server를 먼저 띄운다</h2>
+<p>첫 번째 자식 프로세스는 bridge server입니다.</p>
+<pre class="code-block"><code class="language-js">spawnChild(&quot;pnpm&quot;, [&quot;exec&quot;, &quot;tsx&quot;, &quot;server/index.ts&quot;], {
+  CODEX_VIS_PORT: String(bridgePort),
+  CODEX_PROJECT_PATH: workspaceRoot,
+});</code></pre>
+<p>여기서 중요한 환경 변수는 두 개입니다.</p>
+<div class="table-wrap"><table><thead><tr><th>env</th><th>사용처</th><th>의미</th></tr></thead><tbody><tr><td><code>CODEX_VIS_PORT</code></td><td><code>desktop/server/index.ts</code></td><td>WebSocket bridge가 listen할 포트</td></tr><tr><td><code>CODEX_PROJECT_PATH</code></td><td><code>desktop/server/index.ts</code></td><td>기본 workspace root, evidence artifact가 생성될 기준 경로</td></tr></tbody></table></div>
+<p>bridge server는 나중에 <code>ws://127.0.0.1:&lt;CODEX_VIS_PORT&gt;</code>로 renderer와 연결됩니다.</p>
+<h2 id="3단계-vite-renderer를-띄운다">3단계: Vite renderer를 띄운다</h2>
+<p>두 번째 자식 프로세스는 Vite입니다.</p>
+<pre class="code-block"><code class="language-js">spawnChild(&quot;pnpm&quot;, [&quot;exec&quot;, &quot;vite&quot;, &quot;--host&quot;, host, &quot;--port&quot;, String(clientPort), &quot;--strictPort&quot;], {
+  VITE_CODEX_VIS_PORT: String(bridgePort),
+});</code></pre>
+<p><code>VITE_CODEX_VIS_PORT</code>는 renderer bundle에서 <code>import.meta.env.VITE_CODEX_VIS_PORT</code>로 읽힙니다. 즉 renderer는 Electron IPC가 아니라 WebSocket으로 bridge에 붙습니다.</p>
+<h2 id="4단계-renderer가-준비된-뒤-electron을-띄운다">4단계: renderer가 준비된 뒤 Electron을 띄운다</h2>
+<p>스크립트는 <code>waitForHttp(devUrl)</code>로 Vite가 응답할 때까지 기다린 뒤 Electron을 실행합니다.</p>
+<pre class="code-block"><code class="language-js">spawnChild(&quot;pnpm&quot;, [&quot;exec&quot;, &quot;electron&quot;, electronMain], {
+  VITE_DEV_SERVER_URL: devUrl,
+  CODEX_VIS_PORT: String(bridgePort),
+});</code></pre>
+<p>Electron main process는 <code>VITE_DEV_SERVER_URL</code>만 보면 됩니다. 실제 Codex bridge port는 renderer가 이미 Vite env로 알고 있습니다.</p>
+<h2 id="5단계-electron-main-process는-창만-만든다">5단계: Electron main process는 창만 만든다</h2>
+<p><code>desktop/electron/main.cjs</code>는 <code>BrowserWindow</code>를 만들고 dev URL 또는 build된 <code>dist/index.html</code>을 로드합니다.</p>
+<pre class="code-block"><code class="language-js">if (devServerUrl) {
+  void window.loadURL(devServerUrl);
+} else {
+  const indexUrl = pathToFileURL(path.join(__dirname, &quot;..&quot;, &quot;dist&quot;, &quot;index.html&quot;)).toString();
+  void window.loadURL(indexUrl);
+}</code></pre>
+<p>여기에는 <code>Codex</code>, <code>runStreamed</code>, <code>raw-sdk-events.jsonl</code> 같은 개념이 없습니다. 이 분리가 유지되어야 Electron shell이 단순하고, SDK 실행/증거 저장은 bridge server에서 독립적으로 검증할 수 있습니다.</p>
+<h2 id="실행-체인-요약">실행 체인 요약</h2>
+<pre class="code-block"><code class="language-text">dev-electron.mjs
+  1. bridgePort 확보
+  2. clientPort 확보
+  3. CODEX_VIS_PORT=bridgePort pnpm exec tsx server/index.ts
+  4. VITE_CODEX_VIS_PORT=bridgePort pnpm exec vite --port clientPort
+  5. VITE_DEV_SERVER_URL=http://127.0.0.1:clientPort pnpm exec electron electron/main.cjs</code></pre>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>bridge와 renderer는 다른 포트를 쓴다</td><td><code>desktop/scripts/dev-electron.mjs</code></td><td><code>bridgePort</code>와 <code>clientPort</code>를 각각 <code>getFreePort()</code>로 만든다</td></tr><tr><td>bridge server는 workspace root를 env로 받는다</td><td><code>desktop/scripts/dev-electron.mjs</code>, <code>desktop/server/index.ts</code></td><td><code>CODEX_PROJECT_PATH</code>가 <code>DEFAULT_PROJECT_PATH</code>가 된다</td></tr><tr><td>renderer는 bridge port를 Vite env로 받는다</td><td><code>desktop/scripts/dev-electron.mjs</code>, <code>desktop/src/api.ts</code></td><td><code>VITE_CODEX_VIS_PORT</code>가 WebSocket URL에 들어간다</td></tr><tr><td>Electron은 SDK를 직접 실행하지 않는다</td><td><code>desktop/electron/main.cjs</code></td><td><code>loadURL()</code> 또는 <code>loadURL(indexUrl)</code>만 수행한다</td></tr><tr><td>child process가 비정상 종료되면 전체 dev session도 종료된다</td><td><code>desktop/scripts/dev-electron.mjs</code></td><td><code>bridge.on(&quot;exit&quot;)</code>, <code>vite.on(&quot;exit&quot;)</code>, <code>electron.on(&quot;exit&quot;)</code>가 <code>shutdown()</code>으로 연결된다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li><code>CODEX_VIS_PORT</code>와 <code>VITE_CODEX_VIS_PORT</code>가 둘 다 필요한 이유는 무엇인가?</li><li>Electron main process가 SDK를 몰라도 되는 설계의 장점은 무엇인가?</li><li>bridge server를 Vite보다 먼저 띄우는 것이 관측성 면에서 왜 유리한가?</li></ol>
+<p>다음 장에서는 bridge server가 호출하는 TypeScript SDK가 실제 Codex CLI를 어떻게 실행하고 JSON event stream을 만드는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 5개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>desktop/electron/main.cjs</code></li><li><code>desktop/scripts/dev-electron.mjs</code></li><li><code>desktop/server/index.ts</code></li><li><code>desktop/src/api.ts</code></li><li><code>raw-sdk-events.jsonl</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch26.html"><span>이전</span><strong>26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</strong></a><a class="nav-card" href="ch28.html"><span>다음</span><strong>28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

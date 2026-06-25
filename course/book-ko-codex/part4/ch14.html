@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link active" href="ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제4부: Policy Harness &amp; Extensibility</p>
+    <h1>14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex의 hooks는 어떤 이벤트 지점에서 런타임을 가로채며, 그 결과는 어떻게 다시 정책 흐름에 반영되는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>hooks는 &quot;작업 끝나면 알림 보내기&quot; 같은 부가 기능이 아닙니다. session start, pre-tool-use, permission request, post-tool-use, stop, user prompt submit 등 여러 지점에서 런타임을 가로채고, 그 결과가 실제 실행 허용 여부와 후속 메시지 흐름을 바꿉니다. 즉 hooks는 제어 평면의 외부 개입 포인트입니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;runtime event&quot;] --&gt; B[&quot;Hooks preview/run&quot;]
+    B --&gt; C{&quot;outcome&quot;}
+    C --&gt;|allow| D[&quot;계속 진행&quot;]
+    C --&gt;|deny / block| E[&quot;실행 차단 또는 오류 주입&quot;]
+    C --&gt;|none| D</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/lib.rs"><code>codex-rs/hooks/src/lib.rs</code></a></td><td>hook 이벤트 타입과 공개 surface</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/registry.rs"><code>codex-rs/hooks/src/registry.rs</code></a></td><td>preview와 run 조합</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/permission_request.rs"><code>codex-rs/hooks/src/events/permission_request.rs</code></a></td><td>permission request hook 해석</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/pre_tool_use.rs"><code>codex-rs/hooks/src/events/pre_tool_use.rs</code></a></td><td>pre-tool-use block/JSON outcome 해석</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>hooks crate는 여러 이벤트별 outcome/request 타입을 공개한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/lib.rs"><code>codex-rs/hooks/src/lib.rs</code></a> -&gt; session_start, pre_tool_use, permission_request, stop 등을 re-export한다</li><li><code>Hooks</code>는 preview와 run을 모두 제공한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/registry.rs"><code>codex-rs/hooks/src/registry.rs</code></a> -&gt; <code>preview_*</code>와 <code>run_*</code> 메서드가 짝으로 존재한다</li><li>permission-request hook은 allow/deny/none을 반환하며 deny가 보수적으로 우선한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/permission_request.rs"><code>codex-rs/hooks/src/events/permission_request.rs</code></a> -&gt; 관련 resolver가 deny 우선 규칙을 구현한다</li><li>pre-tool-use hook은 JSON 출력 또는 exit code 2로 실행 차단을 만들 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/pre_tool_use.rs"><code>codex-rs/hooks/src/events/pre_tool_use.rs</code></a> -&gt; parser와 exit code 처리 분기가 존재한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/registry.rs"><code>codex-rs/hooks/src/registry.rs</code></a>의 registry는 preview와 run을 분리해서 노출합니다.</p>
+<pre class="code-block"><code class="language-rust">pub fn preview_pre_tool_use(
+    &amp;self,
+    request: &amp;PreToolUseRequest,
+) -&gt; Vec&lt;codex_protocol::protocol::HookRunSummary&gt; {
+    self.engine.preview_pre_tool_use(request)
+}
+
+pub async fn run_pre_tool_use(&amp;self, request: PreToolUseRequest) -&gt; PreToolUseOutcome {
+    self.engine.run_pre_tool_use(request).await
+}
+
+pub fn preview_permission_request(
+    &amp;self,
+    request: &amp;PermissionRequestRequest,
+) -&gt; Vec&lt;codex_protocol::protocol::HookRunSummary&gt; {
+    self.engine.preview_permission_request(request)
+}
+
+pub async fn run_permission_request(
+    &amp;self,
+    request: PermissionRequestRequest,
+) -&gt; PermissionRequestOutcome {
+    self.engine.run_permission_request(request).await
+}</code></pre>
+<p>permission request hook은 deny를 보수적으로 우선합니다. 이 발췌는 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/permission_request.rs"><code>codex-rs/hooks/src/events/permission_request.rs</code></a>입니다.</p>
+<pre class="code-block"><code class="language-rust">fn resolve_permission_request_decision&lt;&#x27;a&gt;(
+    decisions: impl IntoIterator&lt;Item = &amp;&#x27;a PermissionRequestDecision&gt;,
+) -&gt; Option&lt;PermissionRequestDecision&gt; {
+    let mut resolved_allow = None;
+    for decision in decisions {
+        match decision {
+            PermissionRequestDecision::Allow =&gt; {
+                resolved_allow = Some(PermissionRequestDecision::Allow);
+            }
+            PermissionRequestDecision::Deny { message } =&gt; {
+                return Some(PermissionRequestDecision::Deny {
+                    message: message.clone(),
+                });
+            }
+        }
+    }
+    resolved_allow
+}</code></pre>
+<p>pre-tool-use hook은 block 여부와 block reason을 outcome으로 돌려줍니다.</p>
+<pre class="code-block"><code class="language-rust">#[derive(Debug)]
+pub struct PreToolUseOutcome {
+    pub hook_events: Vec&lt;HookCompletedEvent&gt;,
+    pub should_block: bool,
+    pub block_reason: Option&lt;String&gt;,
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex의 hooks는 &quot;콜백&quot;보다는 &quot;정책 인터셉터&quot;에 가깝습니다. preview와 run이 분리되어 있다는 점도 중요합니다. 시스템은 사용자가 개입할 수 있는 지점을 미리 보여 줄 수 있고, 실제 실행 시에는 그 결정을 다시 런타임 흐름에 반영할 수 있습니다.</p>
+<h2 id="더-깊게-읽기-preview와-run은-다른-계약이다">더 깊게 읽기: preview와 run은 다른 계약이다</h2>
+<p><code>Hooks</code> registry는 거의 모든 주요 hook 이벤트에 대해 preview와 run을 나란히 제공합니다. preview는 UI가 &quot;어떤 hook이 돌 예정인지&quot;를 표시할 수 있게 <code>HookRunSummary</code>를 만들고, run은 실제 command를 실행해 outcome을 만듭니다. 이 둘을 나누면 사용자는 런타임이 멈추기 전에 곧 실행될 개입점을 볼 수 있고, 런타임은 실행 후 결과를 정책 결정에 반영할 수 있습니다.</p>
+<ul><li>hooks public surface는 이벤트별 request/outcome을 노출한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/lib.rs"><code>codex-rs/hooks/src/lib.rs</code></a> -&gt; permission request, pre tool use, post tool use, session start, stop, user prompt submit 타입을 re-export한다</li><li>registry는 preview와 run을 모두 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/registry.rs"><code>codex-rs/hooks/src/registry.rs</code></a> -&gt; <code>preview_pre_tool_use</code>, <code>run_pre_tool_use</code>, <code>preview_permission_request</code>, <code>run_permission_request</code>가 나란히 있다</li><li>legacy after-agent hook도 같은 registry에 들어온다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/registry.rs"><code>codex-rs/hooks/src/registry.rs</code></a> -&gt; <code>legacy_notify_argv</code>가 있으면 <code>notify_hook</code>으로 after agent hook을 구성한다</li></ul>
+<p>hooks를 단순 callback으로 보면 preview surface가 왜 필요한지 이해하기 어렵습니다. 그러나 hooks를 &quot;사용자 개입이 가능한 정책 지점&quot;으로 보면 preview는 UX 계약이고, run은 실행 계약입니다.</p>
+<h2 id="deny-semantics를-코드로-읽기">deny semantics를 코드로 읽기</h2>
+<p>permission request hook과 pre-tool-use hook은 비슷해 보이지만 의미가 다릅니다. permission request hook은 approval path에서 allow/deny/none 결정을 돌려줄 수 있고, deny가 보수적으로 우선합니다. pre-tool-use hook은 실행 전 command를 막을 수 있으며, JSON output 또는 exit code 2로 block reason을 전달할 수 있습니다.</p>
+<ul><li>permission request deny는 allow보다 우선한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/permission_request.rs"><code>codex-rs/hooks/src/events/permission_request.rs</code></a> -&gt; <code>resolve_permission_request_decision(...)</code>이 deny를 만나면 즉시 반환한다</li><li>permission request hook은 결정하지 않을 수도 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/permission_request.rs"><code>codex-rs/hooks/src/events/permission_request.rs</code></a> -&gt; <code>PermissionRequestOutcome.decision: Option&lt;...&gt;</code> 구조가 normal approval flow를 계속할 수 있게 한다</li><li>pre-tool-use hook은 block 여부와 reason을 반환한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/pre_tool_use.rs"><code>codex-rs/hooks/src/events/pre_tool_use.rs</code></a> -&gt; <code>PreToolUseOutcome { should_block, block_reason }</code>이 있다</li><li>exit code 2는 block으로 해석된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/pre_tool_use.rs"><code>codex-rs/hooks/src/events/pre_tool_use.rs</code></a> -&gt; <code>Some(2)</code> 분기가 stderr reason을 feedback으로 넣고 <code>should_block = true</code>로 만든다</li></ul>
+<p>이 차이를 정확히 알아야 hooks가 approval을 대체하는지, 실행을 차단하는지, 또는 단순 관찰인지 구분할 수 있습니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>사용자 확장 지점을 설계할 때는 이벤트 이름만 열어 주는 것으로 충분하지 않습니다. outcome type, preview surface, deny semantics까지 같이 정의해야 예측 가능한 생태계를 만들 수 있습니다. Codex hooks는 그 최소 조건을 잘 보여 줍니다.</p>
+<p>이제 사용자가 어디서 개입할 수 있는지 봤으니, 다음 장에서는 외부 앱과 도구가 붙는 더 큰 확장 버스인 MCP 연결 관리자를 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/hooks/src/events/permission_request.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/permission_request.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/hooks/src/events/permission_request.rs">Edition</a></td></tr><tr><td><code>codex-rs/hooks/src/events/pre_tool_use.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/events/pre_tool_use.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/hooks/src/events/pre_tool_use.rs">Edition</a></td></tr><tr><td><code>codex-rs/hooks/src/lib.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/lib.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/hooks/src/lib.rs">Edition</a></td></tr><tr><td><code>codex-rs/hooks/src/registry.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/hooks/src/registry.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/hooks/src/registry.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 2개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>preview_*</code></li><li><code>run_*</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch13.html"><span>이전</span><strong>13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</strong></a><a class="nav-card" href="ch15.html"><span>다음</span><strong>15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link active" href="ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제9부: Course Evidence Implementation</p>
+    <h1>37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Course Evidence가 normalized event와 OTel trace에 들어간 뒤, 사용자는 Desktop Runtime Evidence에서 무엇을 확인할 수 있고 다음 구현 지점은 어디인가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 Course Evidence의 사용자 표면과 확장 방향을 정리합니다.</p>
+<ul><li>run summary가 Course Evidence count, level, concept, item preview를 어떻게 만드는지 본다.</li><li>Runtime Evidence UI의 <code>CourseEvidenceReview</code>가 어떤 정보를 보여 주는지 확인한다.</li><li>현재 Trajectory review와 Course Evidence가 나란히 표시되는 구조를 이해한다.</li><li>Course Evidence를 <code>trajectory-evaluation.json</code> 안에 넣으려면 어떤 파일을 확장해야 하는지 파악한다.</li><li>live e2e에서 무엇을 증명해야 하는지 체크리스트를 만든다.</li></ul>
+<h2 id="1단계-run-summary가-course-evidence를-요약한다">1단계: run summary가 Course Evidence를 요약한다</h2>
+<p><code>desktop/server/evidence/run-archive.ts</code>의 <code>summarizeCourseEvidence()</code>는 normalized input에서 <code>eventType === &quot;course.evidence&quot;</code>만 모읍니다.</p>
+<p>요약 field:</p>
+<div class="table-wrap"><table><thead><tr><th>field</th><th>의미</th></tr></thead><tbody><tr><td><code>count</code></td><td>Course Evidence event 총개수</td></tr><tr><td><code>observedCount</code></td><td>observed event 개수</td></tr><tr><td><code>inferredCount</code></td><td>inferred event 개수</td></tr><tr><td><code>configuredCount</code></td><td>configured event 개수</td></tr><tr><td><code>chapters</code></td><td>연결된 책 chapter 목록</td></tr><tr><td><code>concepts</code></td><td>관측된 concept 목록</td></tr><tr><td><code>items</code></td><td>최대 12개 event preview</td></tr></tbody></table></div>
+<p>각 item에는 id, level, chapter, concept, decision, reason, source file/function, attributes preview, sourceEventIds가 들어갑니다.</p>
+<p>이 summary는 <code>ProjectionRunSummary.courseEvidence</code>로 UI에 전달됩니다.</p>
+<h2 id="2단계-course-evidence-ui-카드">2단계: Course Evidence UI 카드</h2>
+<p><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code>의 <code>CourseEvidenceReview</code>는 <code>run.courseEvidence</code>가 없으면 렌더링하지 않습니다.</p>
+<p>보이는 정보:</p>
+<ul><li><code>Course Evidence</code> 제목</li><li><code>Rust core decision evidence projected from codex.course_evidence</code> 설명</li><li><code>Claude 평가</code> 버튼</li><li>observed count</li><li>inferred count</li><li>chapters 목록</li><li>concepts 목록</li><li>event item list</li></ul>
+<p><code>Claude 평가</code> 버튼은 normalized artifact path를 Chat에 보내 Claude가 직접 파일을 읽고 평가하게 하는 흐름입니다. 중요한 것은 UI 카드가 점수를 자동으로 확정하지 않는다는 점입니다. 카드는 evidence를 보여 주고, judge는 명시적으로 실행해야 합니다.</p>
+<h2 id="3단계-evidence-surface-안에서-trajectory와-나란히-둔다">3단계: Evidence surface 안에서 Trajectory와 나란히 둔다</h2>
+<p>현재 Evidence surface는 selected run에 대해 다음 순서로 렌더링합니다.</p>
+<pre class="code-block"><code class="language-tsx">&lt;RuntimeEvidenceActions ... /&gt;
+&lt;SdkPipelineMonitor run={projectionRun} /&gt;
+&lt;EvidenceChain run={projectionRun} /&gt;
+&lt;CourseEvidenceReview run={projectionRun} /&gt;
+&lt;TrajectoryArtifactReview run={projectionRun} /&gt;</code></pre>
+<p>이 구조는 현재 구현의 진실을 반영합니다.</p>
+<ul><li>Course Evidence는 run summary와 normalized/OTel artifact에 포함된다.</li><li>Trajectory review는 tool round trip과 final answer gap을 본다.</li><li>Course Evidence가 trajectory JSON 내부 field로 아직 복사되지는 않는다.</li><li>하지만 같은 selected run의 Evidence surface에서 함께 보이므로, 강사는 &quot;코어 decision evidence&quot;와 &quot;prompt -&gt; tool -&gt; final trajectory&quot;를 같은 맥락에서 비교할 수 있다.</li></ul>
+<h2 id="4단계-trajectory-json에-넣으려면-어디를-바꿔야-하나">4단계: trajectory JSON에 넣으려면 어디를 바꿔야 하나</h2>
+<p>Course Evidence summary를 <code>projection/trajectory-evaluation.json</code> 내부에도 넣고 싶다면 다음 파일을 확장해야 합니다.</p>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>수정 내용</th></tr></thead><tbody><tr><td><code>desktop/shared/evidence-protocol.ts</code></td><td><code>TrajectoryEvaluation</code>에 <code>courseEvidence?: CourseEvidenceSummary</code> 또는 더 작은 summary type 추가</td></tr><tr><td><code>desktop/server/evidence/trajectory.ts</code></td><td><code>input.events.filter(eventType === &quot;course.evidence&quot;)</code>로 concept summary 생성</td></tr><tr><td><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code></td><td>trajectory artifact 옆의 courseEvidence section 렌더링</td></tr><tr><td><code>desktop/server/evidence/evidence.test.ts</code></td><td>trajectory 생성 시 course evidence summary가 보존되는지 테스트 추가</td></tr></tbody></table></div>
+<p>주의할 점은 trajectory step의 <code>thought</code> field를 hidden reasoning처럼 쓰면 안 된다는 것입니다. Course Evidence는 별도 section이나 deterministic precheck summary로 넣어야 합니다.</p>
+<h2 id="5단계-live-e2e에서-증명할-것">5단계: live e2e에서 증명할 것</h2>
+<p>Course Evidence가 실제 남는지 증명하려면 다음을 확인합니다.</p>
+<ol><li>Course Evidence가 발생하는 prompt/run을 만든다.</li><li>run archive 아래 <code>raw-sdk-events.jsonl</code>에 <code>codex.course_evidence</code> 또는 관련 event가 있는지 확인한다.</li><li><code>normalized-events.json</code>에 <code>eventType: &quot;course.evidence&quot;</code>가 있는지 확인한다.</li><li><code>otel-trace.json</code>의 span events에 <code>course.chapter</code>, <code>course.concept</code>, <code>course.source.function</code> attribute가 있는지 확인한다.</li><li><code>run-summary.json</code> 또는 loaded projection summary에 <code>courseEvidence.count &gt; 0</code>인지 확인한다.</li><li>Runtime Evidence surface에 Course Evidence card가 보이는지 확인한다.</li><li>Claude 평가를 누르면 normalized path를 직접 읽으라는 prompt가 Chat draft/run으로 들어가는지 확인한다.</li></ol>
+<p>여기서 중요한 것은 prompt keyword만으로 통과시키지 않는 것입니다. 반드시 artifact file 안의 event와 sourceEventIds를 봐야 합니다.</p>
+<h2 id="6단계-다음-insertion-point-후보">6단계: 다음 insertion point 후보</h2>
+<p>현재 구현된 Course Evidence는 skill budget과 compaction 중심입니다. 다음으로 추가하기 좋은 지점은 다음과 같습니다.</p>
+<div class="table-wrap"><table><thead><tr><th>concept</th><th>후보 파일</th><th>관측할 값</th></tr></thead><tbody><tr><td>auto compaction threshold</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> 또는 turn loop 주변</td><td>context window, reserved summary token, threshold, should compact, guard reason</td></tr><tr><td>tool result truncation</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/context.rs"><code>codex-rs/core/src/tools/context.rs</code></a></td><td>original char count, truncated char count, truncation policy, source id</td></tr><tr><td>goal accounting</td><td><code>codex-rs/core/src/goals.rs</code></td><td>token delta, time delta, budget limit, status transition</td></tr><tr><td>permission branch</td><td>exec approval/sandbox policy 주변</td><td>approval requirement, sandbox mode, denial/allow branch</td></tr><tr><td>retry/rate limit</td><td>model client retry path</td><td>status, retry count, backoff, final exhausted 여부</td></tr></tbody></table></div>
+<p>각 후보는 &quot;full content&quot;가 아니라 작은 결정 metadata만 남겨야 합니다.</p>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>run summary는 Course Evidence count와 items를 만든다</td><td><code>desktop/server/evidence/run-archive.ts</code></td><td><code>summarizeCourseEvidence()</code>가 <code>count</code>, <code>observedCount</code>, <code>concepts</code>, <code>items</code>를 반환한다</td></tr><tr><td>UI 카드는 run summary의 Course Evidence를 읽는다</td><td><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code></td><td><code>CourseEvidenceReview({ run })</code>가 <code>run.courseEvidence</code>를 사용한다</td></tr><tr><td>Evidence surface는 Course Evidence와 Trajectory를 함께 보여 준다</td><td><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code></td><td><code>CourseEvidenceReview</code> 다음에 <code>TrajectoryArtifactReview</code>가 렌더링된다</td></tr><tr><td>현재 trajectory builder는 <code>course.evidence</code>를 step에 포함하지 않는다</td><td><code>desktop/server/evidence/trajectory.ts</code></td><td><code>INCLUDED_EVENTS</code>에 <code>course.evidence</code>가 없다</td></tr><tr><td>trajectory 안에 Course Evidence를 넣으려면 shared type부터 확장해야 한다</td><td><code>desktop/shared/evidence-protocol.ts</code></td><td><code>TrajectoryEvaluation</code> type에 현재 <code>courseEvidence</code> field가 없다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li>Course Evidence card가 보인다고 해서 trajectory judge score가 자동 확정되지 않는 이유는 무엇인가?</li><li>live e2e에서 <code>normalized-events.json</code>과 <code>otel-trace.json</code>을 모두 확인해야 하는 이유는 무엇인가?</li><li>다음 insertion point를 추가할 때 <code>observed</code>와 <code>inferred</code>를 어떻게 구분할 것인가?</li></ol>
+<p>이 Part의 결론은 단순합니다. Course Evidence는 책의 설명을 &quot;있어 보이는 해설&quot;에서 &quot;실제 run artifact로 확인 가능한 내부 결정 증거&quot;로 바꾸는 얇은 관측 레이어입니다. core logic은 그대로 두고, decision point마다 작은 안전한 event를 남기며, Desktop Runtime Evidence가 그 event를 raw -&gt; normalized -&gt; OTel -&gt; summary -&gt; UI로 끌어올립니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core/src/compact.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/compact.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/tools/context.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/context.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tools/context.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 12개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>codex-rs/core/src/goals.rs</code></li><li><code>desktop/server/evidence/evidence.test.ts</code></li><li><code>desktop/server/evidence/run-archive.ts</code></li><li><code>desktop/server/evidence/trajectory.ts</code></li><li><code>desktop/shared/evidence-protocol.ts</code></li><li><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code></li><li><code>normalized-events.json</code></li><li><code>otel-trace.json</code></li><li><code>projection/trajectory-evaluation.json</code></li><li><code>raw-sdk-events.jsonl</code></li><li><code>run-summary.json</code></li><li><code>trajectory-evaluation.json</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch36.html"><span>이전</span><strong>36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</strong></a><a class="nav-card" href="../appendix/a-file-index.html"><span>다음</span><strong>부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

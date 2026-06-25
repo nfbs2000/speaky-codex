@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link active" href="ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제9부: Course Evidence Implementation</p>
+    <h1>32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: 책에서 설명한 &quot;내부 동작의 섬세함&quot;을 프롬프트 키워드나 tool name이 아니라 실제 코드 실행 증거로 만들려면 어떤 구조가 필요한가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 Course Evidence의 목적과 구현 범위를 잡습니다.</p>
+<ul><li>Course Evidence가 hidden chain-of-thought가 아니라 내부 변수/분기 관측 이벤트임을 이해한다.</li><li><code>observed</code>, <code>configured</code>, <code>inferred</code> evidence level을 분리한다.</li><li>Rust core decision point에서 <code>codex.course_evidence</code> OTel event를 만들고, Desktop Runtime Evidence로 투영하는 전체 파이프라인을 본다.</li><li>현재 구현된 범위와 아직 trajectory JSON에 직접 넣지 않은 경계를 명확히 구분한다.</li></ul>
+<h2 id="1단계-course-evidence가-해결하는-문제">1단계: Course Evidence가 해결하는 문제</h2>
+<p>일반 SDK event만 보면 다음은 어느 정도 보입니다.</p>
+<ul><li>어떤 turn이 시작됐는가</li><li>어떤 tool/item이 실행됐는가</li><li>최종 답변과 token usage가 무엇인가</li><li>실패 event가 있었는가</li></ul>
+<p>하지만 책에서 말하는 내부 결정은 일반 tool trace만으로는 부족합니다.</p>
+<div class="table-wrap"><table><thead><tr><th>책의 개념</th><th>tool trace만으로 가능한가</th><th>필요한 Course Evidence</th></tr></thead><tbody><tr><td>skill metadata budget</td><td>일부 추정 가능</td><td>total/included/omitted/truncated count</td></tr><tr><td>compacted history selection</td><td>결과 diff로 추정 가능</td><td>considered/selected/truncated user message count</td></tr><tr><td>replacement history 적용</td><td>외부에서 보기 어려움</td><td>replacement history item count, reference context persist 여부</td></tr><tr><td>compaction state persistence</td><td>raw event만으로 불완전</td><td>compacted item과 active session history 전환 event</td></tr></tbody></table></div>
+<p>Course Evidence는 이 결정을 코드 안에서 작은 scalar metadata로 관측합니다.</p>
+<h2 id="2단계-관측하는-것과-관측하지-않는-것">2단계: 관측하는 것과 관측하지 않는 것</h2>
+<p>Course Evidence는 &quot;모델의 생각&quot;을 기록하지 않습니다. 코드가 이미 계산한 상태와 branch decision만 기록합니다.</p>
+<p>관측하는 것:</p>
+<ul><li>count</li><li>boolean</li><li>threshold</li><li>enum branch</li><li>source file/function</li><li>decision label</li><li>short reason</li><li>redacted id 또는 hash</li></ul>
+<p>관측하지 않는 것:</p>
+<ul><li>hidden chain-of-thought</li><li>full prompt</li><li>full tool result</li><li>secret/env token</li><li>private file body</li><li>모델 내부 reasoning</li></ul>
+<p>이 경계가 무너지면 교육용 관측성이 아니라 private data logging이 됩니다.</p>
+<h2 id="3단계-evidence-level">3단계: evidence level</h2>
+<p>Course Evidence에서는 evidence level을 명확히 나눕니다.</p>
+<div class="table-wrap"><table><thead><tr><th>level</th><th>의미</th><th>예시</th></tr></thead><tbody><tr><td><code>observed</code></td><td>core/adapter가 실제 내부 변수나 branch를 직접 기록함</td><td><code>selectedUserMessageCount</code>, <code>omittedSkills</code>, <code>referenceContextItemPersisted</code></td></tr><tr><td><code>configured</code></td><td>실행 설정이나 정책으로 주어진 값</td><td>model, sandbox mode, approval policy</td></tr><tr><td><code>inferred</code></td><td>외부 event 전후 diff로 재구성한 판단</td><td>tool_result 전후 크기 비교로 budget pressure 추정</td></tr></tbody></table></div>
+<p>현재 Rust Course Evidence type에는 <code>Configured</code>, <code>Observed</code>, <code>Inferred</code>가 있습니다. <code>not_proven</code>은 UI/강좌 판단에서 쓰는 상태이지 Rust enum에는 아직 없습니다. 어떤 run에서 Course Evidence event가 없으면 그 개념은 &quot;이 run에서 증명되지 않음&quot;으로 다뤄야 합니다.</p>
+<h2 id="4단계-전체-파이프라인">4단계: 전체 파이프라인</h2>
+<pre class="code-block"><code class="language-text">Rust core decision point
+  -&gt; SessionTelemetry::course_evidence(CourseEvidenceEvent)
+  -&gt; OTel log + trace event: codex.course_evidence
+  -&gt; TypeScript SDK/CLI event stream 또는 OTel export
+  -&gt; desktop normalizer: course.evidence
+  -&gt; normalized-events.json
+  -&gt; otel-trace.json event attributes
+  -&gt; run-summary.json courseEvidence
+  -&gt; Runtime Evidence UI Course Evidence card</code></pre>
+<p>이 파이프라인의 핵심은 &quot;책 개념&quot;과 &quot;소스 코드 decision point&quot;가 함께 저장된다는 것입니다. event 하나에는 chapter, concept, source file/function, decision, reason, attributes가 들어갑니다.</p>
+<h2 id="5단계-현재-구현-범위">5단계: 현재 구현 범위</h2>
+<p>현재 구현은 다음까지 되어 있습니다.</p>
+<ul><li>Rust OTel type: <code>CourseEvidenceEvent</code>, <code>CourseEvidenceLevel</code></li><li>Rust emitter: <code>SessionTelemetry::course_evidence(...)</code></li><li>core insertion point: skill metadata budget, compaction history selection, compaction replacement history, session compacted history state</li><li>Rust OTel routing test: log와 trace 양쪽에 <code>codex.course_evidence</code>가 남는지 검증</li><li>desktop normalizer: <code>codex.course_evidence</code>를 <code>course.evidence</code> normalized event로 변환</li><li>desktop OTel trace: course attributes를 span event attributes로 투영</li><li>run summary: concept/chapter/count/items 요약</li><li>UI: Runtime Evidence surface에서 Course Evidence review 카드 표시</li></ul>
+<p>현재 구현에서 주의할 점도 있습니다.</p>
+<ul><li><code>trajectory-evaluation.json</code> 자체에는 아직 <code>courseEvidence</code> summary를 복사하지 않습니다.</li><li>대신 selected run의 <code>courseEvidence</code> summary를 Trajectory review와 같은 Runtime Evidence surface에서 나란히 보여 줍니다.</li><li>Trajectory JSON 내부로 넣으려면 <code>desktop/shared/evidence-protocol.ts</code>와 <code>desktop/server/evidence/trajectory.ts</code>를 확장해야 합니다.</li></ul>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>Course Evidence는 Rust OTel event type이다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a></td><td><code>CourseEvidenceEvent</code>와 <code>CourseEvidenceLevel</code>이 정의되어 있다</td></tr><tr><td>Course Evidence는 <code>codex.course_evidence</code> event name으로 나간다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a></td><td><code>event.name = &quot;codex.course_evidence&quot;</code>가 있다</td></tr><tr><td>desktop normalizer는 이를 <code>course.evidence</code>로 바꾼다</td><td><code>desktop/server/evidence/codex-event-normalizer.ts</code></td><td><code>normalizeCourseEvidence()</code>가 <code>eventType: &quot;course.evidence&quot;</code>를 반환한다</td></tr><tr><td>run summary는 Course Evidence 요약을 가진다</td><td><code>desktop/server/evidence/run-archive.ts</code></td><td><code>summarizeCourseEvidence()</code>와 <code>courseEvidence</code> field가 있다</td></tr><tr><td>UI는 Course Evidence review를 표시한다</td><td><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code></td><td><code>CourseEvidenceReview</code> component가 <code>run.courseEvidence</code>를 읽는다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li>&quot;프롬프트에 compaction이라고 썼다&quot;가 Course Evidence가 아닌 이유는 무엇인가?</li><li>내부 변수 관측과 hidden chain-of-thought 수집의 차이는 무엇인가?</li><li>trajectory JSON에 아직 Course Evidence를 복사하지 않았다는 사실을 문서에서 왜 명확히 해야 하는가?</li></ol>
+<p>다음 장에서는 Rust OTel layer에 Course Evidence type과 emitter가 어떻게 구현되어 있는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/otel/src/events/session_telemetry.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/otel/src/events/session_telemetry.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 6개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>desktop/server/evidence/codex-event-normalizer.ts</code></li><li><code>desktop/server/evidence/run-archive.ts</code></li><li><code>desktop/server/evidence/trajectory.ts</code></li><li><code>desktop/shared/evidence-protocol.ts</code></li><li><code>desktop/src/components/v2/pages/BookVisualizationPage.tsx</code></li><li><code>trajectory-evaluation.json</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="../part8/ch31.html"><span>이전</span><strong>31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</strong></a><a class="nav-card" href="ch33.html"><span>다음</span><strong>33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

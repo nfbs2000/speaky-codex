@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link active" href="ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제8부: Desktop SDK Runtime Evidence Harness</p>
+    <h1>30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: 사용자가 Chat에서 프롬프트를 실행하면 bridge server는 어떤 순서로 thread, timeline, raw archive, normalized evidence를 갱신하는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 <code>desktop/server/index.ts</code>의 turn 실행 경로를 코드 레벨로 따라갑니다.</p>
+<ul><li><code>handleCommand()</code>가 <code>chat.run</code>을 <code>runTurn()</code>으로 라우팅하는 방식을 본다.</li><li><code>createThreadController()</code>가 SDK thread와 UI snapshot을 동시에 만드는 구조를 이해한다.</li><li><code>runTurn()</code>이 raw SDK event와 normalized evidence event를 같은 run archive에 저장하는 방식을 확인한다.</li><li><code>applyEvent()</code>와 <code>applyItem()</code>이 stream event를 Chat UI timeline/runtime entry로 바꾸는 것을 본다.</li></ul>
+<h2 id="1단계-bridge-server는-websocket-command-router다">1단계: bridge server는 WebSocket command router다</h2>
+<p><code>desktop/server/index.ts</code>는 WebSocket connection을 받고, message를 <code>ClientCommand</code>로 파싱해 <code>handleCommand()</code>로 넘깁니다.</p>
+<pre class="code-block"><code class="language-ts">socket.on(&quot;message&quot;, async (payload) =&gt; {
+  const command = JSON.parse(payload.toString(&quot;utf8&quot;)) as ClientCommand;
+  await handleCommand(socket, command);
+});</code></pre>
+<p><code>chat.run</code>은 <code>runTurn(command)</code>로 갑니다.</p>
+<pre class="code-block"><code class="language-ts">case &quot;chat.run&quot;:
+  await runTurn(command);
+  return;</code></pre>
+<p>Evidence command도 같은 switch 안에 있습니다. 이 말은 Chat 실행과 Evidence 갱신이 같은 active project/session snapshot 위에서 움직인다는 뜻입니다.</p>
+<h2 id="2단계-thread-controller는-sdk-thread와-ui-snapshot의-쌍이다">2단계: thread controller는 SDK thread와 UI snapshot의 쌍이다</h2>
+<p>bridge server는 SDK <code>Thread</code>만 들고 있지 않습니다. UI를 위한 <code>ThreadSnapshot</code>도 같이 만듭니다.</p>
+<pre class="code-block"><code class="language-ts">type Controller = {
+  thread: Thread;
+  snapshot: ThreadSnapshot;
+  turnIndex: number;
+};</code></pre>
+<p><code>createThreadController()</code>는 <code>codex.startThread()</code>를 호출하고, launch config를 snapshot에 저장합니다.</p>
+<pre class="code-block"><code class="language-ts">const thread = codex.startThread({
+  workingDirectory: launchConfig.workingDirectory,
+  skipGitRepoCheck: true,
+  model: DEFAULT_MODEL ?? undefined,
+  sandboxMode: DEFAULT_SANDBOX_MODE,
+  approvalPolicy: DEFAULT_APPROVAL_POLICY,
+  modelReasoningEffort: DEFAULT_REASONING_EFFORT,
+});</code></pre>
+<p>이 launch config는 Runtime Evidence에서 configured evidence가 됩니다. 예를 들어 sandbox mode, approval policy, reasoning effort는 실제 tool call이 아니라 실행 조건입니다.</p>
+<h2 id="3단계-run-archive를-먼저-만든다">3단계: run archive를 먼저 만든다</h2>
+<p><code>runTurn()</code>은 SDK stream을 돌리기 전에 run archive를 만듭니다.</p>
+<pre class="code-block"><code class="language-ts">const runArchive = await createRunArchive({
+  rootDir: projectPath,
+  runId: makeRunId(controller.snapshot.threadId, controller.turnIndex + 1),
+  provider: &quot;codex&quot;,
+  threadId: controller.snapshot.threadId,
+});</code></pre>
+<p>그 다음 사용자의 prompt 실행 자체를 raw와 normalized 양쪽에 남깁니다.</p>
+<pre class="code-block"><code class="language-ts">await runArchive.appendRaw({
+  type: &quot;client.chat.run&quot;,
+  prompt: command.input,
+  workingDirectory: projectPath,
+  model: DEFAULT_MODEL,
+  approvalPolicy: DEFAULT_APPROVAL_POLICY,
+  sandboxMode: DEFAULT_SANDBOX_MODE,
+});
+runArchive.addNormalized(normalizeConfiguredPrompt(...));</code></pre>
+<p>여기서 prompt는 configured event입니다. 아직 tool call이나 최종 답변이 일어난 것이 아니기 때문입니다.</p>
+<h2 id="4단계-sdk-event-stream을-순회한다">4단계: SDK event stream을 순회한다</h2>
+<p>핵심 루프는 짧지만 중요합니다.</p>
+<pre class="code-block"><code class="language-ts">const { events } = await controller.thread.runStreamed(command.input);
+for await (const event of events) {
+  await runArchive.appendRaw(event);
+  applyEvent(controller, event);
+  const normalizedEvents = normalizeThreadEventForEvidence({ ...event });
+  runArchive.addNormalized(normalizedEvents);
+  broadcastSnapshot();
+}</code></pre>
+<p>이 루프에서 네 가지 일이 동시에 일어납니다.</p>
+<ol><li>raw SDK event를 JSONL archive에 append한다.</li><li>UI snapshot에 event를 반영한다.</li><li>evidence normalizer로 공통 event schema를 만든다.</li><li>snapshot을 모든 renderer client에게 broadcast한다.</li></ol>
+<p>그래서 화면의 live monitor와 디스크 artifact가 같은 source event stream에서 나옵니다.</p>
+<h2 id="5단계-applyevent-는-top-level-lifecycle을-처리한다">5단계: <code>applyEvent()</code>는 top-level lifecycle을 처리한다</h2>
+<p><code>thread.started</code>가 오면 local id를 실제 thread id로 교체합니다.</p>
+<pre class="code-block"><code class="language-ts">case &quot;thread.started&quot;:
+  if (controller.snapshot.threadId !== event.thread_id) {
+    renameController(controller.snapshot.threadId, event.thread_id);
+    controller.snapshot.threadId = event.thread_id;
+  }</code></pre>
+<p><code>turn.completed</code>가 오면 status를 idle로 바꾸고 usage를 저장합니다.</p>
+<pre class="code-block"><code class="language-ts">case &quot;turn.completed&quot;:
+  controller.snapshot.status = &quot;idle&quot;;
+  controller.snapshot.usage = normalizeUsage(event.usage);</code></pre>
+<p>이 usage는 나중에 header token count와 Runtime Evidence usage card의 근거가 됩니다.</p>
+<h2 id="6단계-applyitem-은-tool-file-command-assistant-message를-ui-event로-바꾼다">6단계: <code>applyItem()</code>은 tool, file, command, assistant message를 UI event로 바꾼다</h2>
+<p><code>item.completed</code>가 assistant message면 Chat message list에 assistant 답변을 추가합니다. command execution이면 runtime entry와 timeline event를 만듭니다. MCP tool call이면 <code>server.tool</code> 이름과 structured result/arguments preview를 남깁니다.</p>
+<p>중요한 점은 UI runtime entry가 평가의 전부가 아니라는 것입니다. UI는 preview를 보여 주고, 실제 평가 근거는 raw/normalized artifact의 <code>sourceEventIds</code>, <code>toolUseId</code>, <code>tool.result</code>, <code>result.completed</code> 연결입니다.</p>
+<h2 id="7단계-실패도-artifact로-남긴다">7단계: 실패도 artifact로 남긴다</h2>
+<p>stream 중 error가 나면 bridge server는 raw에 <code>{ type: &quot;error&quot;, message }</code>를 append하고, normalizer도 실패 evidence를 만듭니다. 그런 뒤 archive를 finalize합니다.</p>
+<p>이 때문에 실패 run도 Runtime Evidence history에서 볼 수 있어야 합니다. 성공한 답변만 남기면 prompt 교육에서 중요한 negative evidence를 잃습니다.</p>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td><code>chat.run</code>은 bridge server의 <code>runTurn()</code>으로 들어간다</td><td><code>desktop/server/index.ts</code></td><td><code>handleCommand()</code> switch에 <code>case &quot;chat.run&quot;: await runTurn(command)</code>가 있다</td></tr><tr><td>SDK thread와 UI snapshot은 controller 하나로 묶인다</td><td><code>desktop/server/index.ts</code></td><td><code>Controller</code> 타입이 <code>thread</code>, <code>snapshot</code>, <code>turnIndex</code>를 함께 가진다</td></tr><tr><td>thread 생성은 SDK <code>startThread()</code> 호출이다</td><td><code>desktop/server/index.ts</code></td><td><code>codex.startThread({ workingDirectory, sandboxMode, approvalPolicy, ... })</code>가 있다</td></tr><tr><td>raw event와 normalized event는 같은 stream loop에서 추가된다</td><td><code>desktop/server/index.ts</code></td><td><code>appendRaw(event)</code>, <code>normalizeThreadEventForEvidence(...)</code>, <code>addNormalized(...)</code>가 같은 <code>for await</code> 안에 있다</td></tr><tr><td>turn 완료 usage는 UI snapshot에 보존된다</td><td><code>desktop/server/index.ts</code></td><td><code>turn.completed</code> 처리에서 <code>snapshot.usage = normalizeUsage(event.usage)</code>를 수행한다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li><code>appendRaw(event)</code>가 <code>applyEvent()</code>보다 먼저 호출되는 이유는 무엇인가?</li><li>local thread id를 실제 <code>thread.started</code> id로 교체하지 않으면 어떤 문제가 생기는가?</li><li>실패 run도 archive를 finalize해야 하는 이유는 무엇인가?</li></ol>
+<p>다음 장에서는 이 run archive가 Runtime Evidence artifact history와 Book/Evidence UI에 어떻게 표시되는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 1개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>desktop/server/index.ts</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch29.html"><span>이전</span><strong>29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</strong></a><a class="nav-card" href="ch31.html"><span>다음</span><strong>31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>
