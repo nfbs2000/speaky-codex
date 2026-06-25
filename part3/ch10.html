@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link active" href="ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제3부: Memory for Long-Running Harness</p>
+    <h1>10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex는 왜 세션 전역 상태와 턴 지역 상태를 분리하며, 그 분리가 어떤 복잡성을 감당하게 해 주는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>에이전트 런타임은 상태가 빠르게 엉킵니다. 히스토리, rate limits, connector 선택, 이전 턴 설정처럼 오래 살아야 하는 정보와, 승인 대기, elicitation, pending input처럼 지금 턴에서만 유효한 정보가 뒤섞이면 곧 유지보수가 어려워집니다. Codex는 이 문제를 <code>SessionState</code>와 <code>TurnState</code>의 분리로 해결합니다.</p>
+<p>이 장은 그 분리가 단순 코드 취향이 아니라, resume/rollback/approval/dynamic tool 같은 기능을 지탱하는 구조적 결정임을 보여 줍니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">graph TD
+    S[&quot;SessionState&lt;br/&gt;장수명 상태&quot;] --&gt; T[&quot;ActiveTurn&quot;]
+    T --&gt; U[&quot;TurnState&lt;br/&gt;현재 턴의 왕복 상태&quot;]
+    T --&gt; V[&quot;running tasks&quot;]
+
+    S1[&quot;history / rate limits / previous turn settings&quot;] -.예시.-&gt; S
+    U1[&quot;approval pending / elicitation / mailbox phase&quot;] -.예시.-&gt; U</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a></td><td>세션 전역 상태 구조</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a></td><td>턴 지역 상태와 active turn 구조</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>세션 전역 상태는 히스토리, rate limits, 이전 턴 설정, prewarm, connector selection 등을 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a> -&gt; <code>SessionState</code> 필드 목록이 그 범위를 보여 준다</li><li>턴 상태는 승인 대기, user input, elicitation, dynamic tool, pending input 같은 현재 턴의 왕복을 저장한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a> -&gt; 여러 pending map과 phase 필드가 존재한다</li><li>Active turn은 여러 running task를 한 번에 가질 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a> -&gt; <code>ActiveTurn { tasks, turn_state }</code>와 <code>IndexMap</code> 기반 관리가 있다</li><li>mailbox delivery는 현재 턴과 다음 턴 사이를 잇는 별도 phase를 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a> -&gt; <code>MailboxDeliveryPhase</code>가 상태 전이를 설명한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a>의 <code>SessionState</code>는 세션 전역으로 오래 살아야 하는 값들을 담습니다.</p>
+<pre class="code-block"><code class="language-rust">/// Persistent, session-scoped state previously stored directly on `Session`.
+pub(crate) struct SessionState {
+    pub(crate) session_configuration: SessionConfiguration,
+    pub(crate) history: ContextManager,
+    pub(crate) latest_rate_limits: Option&lt;RateLimitSnapshot&gt;,
+    pub(crate) server_reasoning_included: bool,
+    pub(crate) dependency_env: HashMap&lt;String, String&gt;,
+    pub(crate) mcp_dependency_prompted: HashSet&lt;String&gt;,
+    /// Settings used by the latest regular user turn, used for turn-to-turn
+    /// model/realtime handling on subsequent regular turns (including full-context
+    /// reinjection after resume or `/compact`).
+    previous_turn_settings: Option&lt;PreviousTurnSettings&gt;,
+    /// Startup prewarmed session prepared during session initialization.
+    pub(crate) startup_prewarm: Option&lt;SessionStartupPrewarmHandle&gt;,
+    pub(crate) active_connector_selection: HashSet&lt;String&gt;,
+    pub(crate) pending_session_start_source: Option&lt;codex_hooks::SessionStartSource&gt;,
+    granted_permissions: Option&lt;PermissionProfile&gt;,
+    next_turn_is_first: bool,
+}</code></pre>
+<p>반대로 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a>의 <code>TurnState</code>는 현재 턴에서만 의미 있는 pending 왕복을 보관합니다.</p>
+<pre class="code-block"><code class="language-rust">/// Mutable state for a single turn.
+#[derive(Default)]
+pub(crate) struct TurnState {
+    pending_approvals: HashMap&lt;String, oneshot::Sender&lt;ReviewDecision&gt;&gt;,
+    pending_request_permissions: HashMap&lt;String, PendingRequestPermissions&gt;,
+    pending_user_input: HashMap&lt;String, oneshot::Sender&lt;RequestUserInputResponse&gt;&gt;,
+    pending_elicitations: HashMap&lt;(String, RequestId), oneshot::Sender&lt;ElicitationResponse&gt;&gt;,
+    pending_dynamic_tools: HashMap&lt;String, oneshot::Sender&lt;DynamicToolResponse&gt;&gt;,
+    pending_input: Vec&lt;ResponseInputItem&gt;,
+    mailbox_delivery_phase: MailboxDeliveryPhase,
+    granted_permissions: Option&lt;PermissionProfile&gt;,
+    pub(crate) tool_calls: u64,
+    pub(crate) has_memory_citation: bool,
+    pub(crate) token_usage_at_turn_start: TokenUsage,
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex는 &quot;대화 전체의 기억&quot;과 &quot;현재 왕복의 중간 상태&quot;를 의식적으로 분리합니다. 이 분리가 있기 때문에 턴이 중단되거나, 추가 입력이 끼어들거나, review/compact 같은 다른 태스크가 같은 세션 안에서 돌더라도 상태 책임이 비교적 명확하게 유지됩니다.</p>
+<h2 id="더-깊게-읽기-오래-사는-것과-잠깐-기다리는-것">더 깊게 읽기: 오래 사는 것과 잠깐 기다리는 것</h2>
+<p><code>SessionState</code>와 <code>TurnState</code>를 나란히 보면 분리 이유가 선명합니다. <code>SessionState</code>에는 session configuration, history, rate limits, dependency env, active connector selection, previous turn settings, startup prewarm처럼 여러 턴을 가로질러 유지돼야 하는 값이 있습니다. 반면 <code>TurnState</code>에는 approval 응답 channel, request permissions 응답 channel, user input 응답 channel, MCP elicitation 응답 channel, dynamic tool 응답 channel처럼 현재 턴에서 기다리는 one-shot 왕복이 모여 있습니다.</p>
+<p>즉 SessionState는 &quot;이 대화가 어떤 상태인가&quot;를 말하고, TurnState는 &quot;지금 이 턴이 무엇을 기다리는가&quot;를 말합니다.</p>
+<ul><li>history와 token/rate 상태는 session scope다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a> -&gt; <code>SessionState</code>가 <code>history</code>, <code>latest_rate_limits</code>, <code>previous_turn_settings</code>, <code>startup_prewarm</code>을 가진다</li><li>connector selection도 session scope다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a> -&gt; <code>merge_connector_selection</code>, <code>get_connector_selection</code>, <code>clear_connector_selection</code>이 session state에 있다</li><li>approval과 elicitation은 turn scope다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a> -&gt; <code>TurnState</code>가 <code>pending_approvals</code>, <code>pending_elicitations</code>, <code>pending_dynamic_tools</code>를 가진다</li><li>granted permissions는 session과 turn 양쪽에 존재할 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a>, <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a> -&gt; 각각 <code>record_granted_permissions(...)</code>가 있어 scope별 sticky permission을 표현한다</li></ul>
+<p>마지막 bullet이 특히 중요합니다. 같은 &quot;승인된 권한&quot;이라도 이번 턴에만 붙는 권한과 세션 전체에 남는 권한은 다르게 다뤄져야 합니다. Codex는 이 차이를 상태 구조에 반영합니다.</p>
+<h2 id="activeturn이-필요한-이유">ActiveTurn이 필요한 이유</h2>
+<p><code>ActiveTurn</code>은 단순히 현재 task 하나를 저장하는 wrapper가 아닙니다. <code>tasks: IndexMap&lt;String, RunningTask&gt;</code>와 <code>turn_state</code>를 함께 갖습니다. 지금 구현 주석은 세션에 한 번에 최대 하나의 running task가 있다는 방향을 말하지만, 구조 자체는 sub_id별 running task 관리와 공용 turn state를 함께 둡니다. 이 덕분에 abort, clear pending, task finished 같은 경로가 active turn 단위로 작동합니다.</p>
+<ul><li>running task는 sub_id로 관리된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs"><code>codex-rs/core/src/state/turn.rs</code></a> -&gt; <code>ActiveTurn.tasks</code>가 <code>IndexMap&lt;String, RunningTask&gt;</code>다</li><li>task가 모두 제거되면 active turn이 비워진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/mod.rs"><code>codex-rs/core/src/tasks/mod.rs</code></a> -&gt; <code>on_task_finished()</code>가 <code>remove_task(...)</code> 결과로 active turn을 <code>None</code>으로 만든다</li><li>abort는 task를 drain하고 pending을 정리한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/mod.rs"><code>codex-rs/core/src/tasks/mod.rs</code></a> -&gt; <code>abort_all_tasks()</code>가 <code>drain_tasks()</code> 후 <code>clear_pending()</code>을 호출한다</li></ul>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>자신의 에이전트 런타임도 <code>session scope</code>와 <code>turn scope</code>를 분리하는 편이 좋습니다. 특히 승인 대기나 도구 왕복처럼 비동기 삽입이 많은 시스템일수록, 장수명 상태와 단기 상태를 같은 구조체에 밀어 넣으면 곧 파편화됩니다.</p>
+<p>이제 상태의 큰 분리가 보였으니, 다음 장에서는 히스토리 관리자와 토큰 추정이 이 상태 위에서 어떻게 기억을 관리하는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core/src/state/session.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/state/session.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/state/turn.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/turn.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/state/turn.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/tasks/mod.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/mod.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tasks/mod.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="../part2/ch09.html"><span>이전</span><strong>9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</strong></a><a class="nav-card" href="ch11.html"><span>다음</span><strong>11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

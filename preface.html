@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>서문 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link active" href="preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">시작</p>
+    <h1>서문</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><p>이 책은 <code>openai/codex</code> 공개 저장소를 &quot;똑똑한 CLI&quot;가 아니라 <code>하니스 엔지니어링(harness engineering)</code> 사례로 읽기 위해 다시 쓴 한국어 해설서입니다. 여기서 런타임 구조는 목적이 아니라 수단입니다. 진짜로 보고 싶은 것은 Codex가 어떤 턴 루프를 코어로 삼고, 어떤 지침 층으로 모델을 조종하고, 어떤 상태와 예산으로 기억을 유지하며, 어떤 정책 경계 위에서 안전하게 서브에이전트로 분기하는지입니다.</p>
+<p>참조본 <code>book-ko</code>에서 가져온 것은 제목이 아니라 책을 조직하는 방식입니다. 각 장은 질문으로 열고, 구조도를 먼저 보여 주고, 실제 코드 anchor를 짚고, 관찰 가능한 런타임 증거를 붙인 뒤, 마지막에 <code>Builder Takeaway</code>로 닫힙니다. 이 리듬이 유지될 때만 독자는 기능 목록이 아니라 하나의 하니스를 머릿속에 세울 수 있습니다.</p>
+<h2 id="이-책의-약속">이 책의 약속</h2>
+<p>이 책은 다음 세 가지를 약속합니다.</p>
+<ol><li>Codex를 <code>CLI + 모델</code>이 아니라 <code>스레드/세션/턴/도구/정책/서브에이전트</code>로 조직된 하니스로 설명합니다.</li><li>가능한 한 공개 저장소의 실제 근거를 사용하고, 핵심 문장은 <code>Claim -&gt; file path -&gt; observable event/check</code> 형태로 고정합니다.</li><li>각 장 끝에서 &quot;이 구조를 내 하니스에 어떻게 옮길 것인가&quot;를 분명히 남깁니다.</li></ol>
+<p>즉 이 책은 반쯤은 해설서이고, 반쯤은 구축자용 하니스 패턴 카탈로그입니다.</p>
+<h2 id="이번-판에서-더-강화한-것">이번 판에서 더 강화한 것</h2>
+<p>이 판은 각 장을 요약 노트보다 한 단계 더 코드 독해에 가깝게 보강했습니다. 특히 <code>소스 발췌</code>, <code>더 깊게 읽기</code>, <code>직접 확인 체크포인트</code>, <code>Grounded Principle Notes</code> 같은 섹션은 독자가 책 안에서 먼저 실제 코드를 보고, 필요하면 저장소를 열어 더 확인할 수 있도록 구성했습니다.</p>
+<p>강화 방향은 세 가지입니다.</p>
+<ol><li>추상 설명 뒤에 바로 파일 경로와 관찰 지점을 붙입니다.</li><li>각 장에 실제 Rust 소스의 짧은 연속 발췌를 붙여, 파일을 바로 열 수 없는 독자도 핵심 구조를 눈으로 확인할 수 있게 합니다.</li><li>장별 기능을 &quot;왜 필요한가&quot;에서 끝내지 않고 &quot;어떤 타입/함수/이벤트가 그 책임을 소유하는가&quot;로 내립니다.</li><li>builder takeaway가 단순 조언이 되지 않도록, 앞선 코드 근거에서 어떤 설계 원칙이 나왔는지 다시 회수합니다.</li></ol>
+<p>예를 들어 &quot;도구 실행은 중앙 정책 계층을 거친다&quot;는 문장은 이제 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs"><code>codex-rs/core/src/tools/orchestrator.rs</code></a>에서 approval requirement 계산, sandbox selection, retry/escalation 분기가 실제 attempt보다 앞선다는 관찰과 함께 읽어야 합니다. &quot;skills는 지식층이다&quot;라는 문장도 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>core-skills/src/loader.rs</code></a>의 discovery/dedupe와 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>core-skills/src/injection.rs</code></a>의 mentioned-skill body injection을 같이 봐야 합니다.</p>
+<h2 id="누구를-위한-책인가">누구를 위한 책인가</h2>
+<h3 id="1-구조를-깊게-이해하고-싶은-독자">1. 구조를 깊게 이해하고 싶은 독자</h3>
+<p>Codex가 실제로 어떻게 굴러가는지 알고 싶지만, 저장소 전체를 직접 파고들 시간은 없는 독자입니다. 이 경우에는 장마다 제시되는 질문, 구조도, 코드 anchor만 따라가도 하니스의 전체 뼈대를 잡을 수 있게 했습니다.</p>
+<h3 id="2-에이전트-빌더">2. 에이전트 빌더</h3>
+<p>로컬 코딩 에이전트, 멀티에이전트 런타임, 승인 정책, 컨텍스트 주입, app-server 같은 구조를 자신의 제품에 옮기고 싶은 독자입니다. 이 경우 각 장의 <code>Builder Takeaway</code>, 특히 <code>8장</code>, <code>16장</code>, <code>18장</code>, <code>19장</code>을 집중해서 읽으면 됩니다.</p>
+<h2 id="읽기-전-준비">읽기 전 준비</h2>
+<p>필수 선수 지식은 많지 않습니다. 다만 아래 정도는 알고 있으면 읽기가 훨씬 편합니다.</p>
+<ul><li>Rust 모듈 구조와 비동기 코드에 대한 기초 감각</li><li>터미널 도구, 서브프로세스, 환경 변수, stdin/stdout</li><li>LLM API의 system/user/assistant 역할, tool call, streaming 개념</li></ul>
+<p>전문가일 필요는 없습니다. 파일 경로, 상태 기계, Mermaid 구조도를 읽을 수 있으면 충분합니다.</p>
+<h2 id="추천-독서-경로">추천 독서 경로</h2>
+<h3 id="경로-a-harness-builder">경로 A: Harness Builder</h3>
+<p>처음 읽는다면 아래 순서를 추천합니다.</p>
+<p><code>1장 -&gt; 3장 -&gt; 7장 -&gt; 8장 -&gt; 9장 -&gt; 13장 -&gt; 16장 -&gt; 18장 -&gt; 19장</code></p>
+<p>이 경로는 하니스의 코어, micro harness 제어층, 정책 경계, 서브에이전트, 표면 패키징의 순서로 mental model을 세웁니다.</p>
+<h3 id="경로-b-sub-agent-중심">경로 B: Sub-agent 중심</h3>
+<p>Codex가 어떻게 안전하게 일을 외주화하는지가 궁금하다면 아래 순서가 더 효율적입니다.</p>
+<p><code>3장 -&gt; 8장 -&gt; 13장 -&gt; 16장 -&gt; 17장 -&gt; 18장 -&gt; 19장</code></p>
+<p>이 경로는 턴 루프, 재사용 가능한 micro harness, 정책 경계, constrained sub-agent copy, 자원 관리, surface adapter를 빠르게 훑습니다.</p>
+<h3 id="경로-c-runtime-proof-중심">경로 C: Runtime Proof 중심</h3>
+<p><code>1장 -&gt; 2장 -&gt; 3장 -&gt; 10장 -&gt; 12장 -&gt; 16장 -&gt; 18장</code></p>
+<p>이 경로는 기능 설명보다 계약, 상태, 복구, delegation 경로를 실제 코드와 증거 중심으로 읽습니다.</p>
+<h2 id="이-책의-지식-지도">이 책의 지식 지도</h2>
+<div class="diagram"><pre class="mermaid">graph TD
+    P1[&quot;1부&lt;br/&gt;Harness Runtime Anatomy&quot;]
+    P2[&quot;2부&lt;br/&gt;Micro Harness Control Plane&quot;]
+    P3[&quot;3부&lt;br/&gt;Memory for Long-Running Harness&quot;]
+    P4[&quot;4부&lt;br/&gt;Policy Harness &amp; Extensibility&quot;]
+    P5[&quot;5부&lt;br/&gt;Subagents &amp; Surfaces&quot;]
+    P6[&quot;6부&lt;br/&gt;Harness Builder Lessons&quot;]
+
+    CH03((&quot;3장&lt;br/&gt;턴 루프&quot;))
+    CH08((&quot;8장&lt;br/&gt;Skills&quot;))
+    CH13((&quot;13장&lt;br/&gt;샌드박스/승인&quot;))
+    CH16((&quot;16장&lt;br/&gt;리뷰 서브에이전트&quot;))
+    CH18((&quot;18장&lt;br/&gt;표면 분리&quot;))
+    CH19((&quot;19장&lt;br/&gt;하니스 원칙&quot;))
+
+    P1 --&gt; P2
+    P2 --&gt; P3
+    P3 --&gt; P4
+    P4 --&gt; P5
+    P5 --&gt; P6
+
+    CH03 -.-&gt; P1
+    CH08 -.-&gt; P2
+    CH13 -.-&gt; P4
+    CH16 -.-&gt; P5
+    CH18 -.-&gt; P5
+    CH19 -.-&gt; P6
+
+    style CH03 fill:#f59e0b,stroke:#78350f,color:#111827
+    style CH08 fill:#60a5fa,stroke:#1e3a8a,color:#111827
+    style CH13 fill:#f87171,stroke:#7f1d1d,color:#111827
+    style CH16 fill:#c084fc,stroke:#581c87,color:#111827
+    style CH18 fill:#34d399,stroke:#065f46,color:#111827
+    style CH19 fill:#facc15,stroke:#713f12,color:#111827</pre></div>
+<p>이 지도에서 3장은 책의 닻(anchor)입니다. 하지만 책의 클라이맥스는 16장과 18장입니다. 앞선 장들이 왜 필요한지는 결국 &quot;무엇을 복제하고 무엇을 제한한 채 하니스를 분기할 수 있는가&quot;라는 질문으로 회수됩니다.</p>
+<h2 id="표기-규칙">표기 규칙</h2>
+<p>이 책은 아래 표기 규칙을 사용합니다.</p>
+<h3 id="파일-경로">파일 경로</h3>
+<ul><li>Rust 구현: <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/tree/main/codex-rs"><code>codex-rs/...</code></a></li><li>문서/설정: <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/tree/main/docs"><code>docs/...</code></a>, <code>book.toml</code>, <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/Cargo.toml"><code>Cargo.toml</code></a></li><li>부록에서 자주 참조하는 경로는 반복적으로 재등장합니다.</li></ul>
+<h3 id="근거-수준">근거 수준</h3>
+<div class="table-wrap"><table><thead><tr><th>Level</th><th>의미</th><th>예시</th></tr></thead><tbody><tr><td>Confirmed</td><td>코드나 설정으로 직접 확인</td><td>타입 정의, 함수 본문, 설정 파일</td></tr><tr><td>Observed</td><td>런타임/산출물로 관찰</td><td>이벤트 이름, CLI 출력, JSON schema</td></tr><tr><td>Inferred</td><td>앞선 근거를 바탕으로 한 해석</td><td>&quot;이 계층이 하니스 제어층 역할을 한다&quot; 같은 설명</td></tr></tbody></table></div>
+<p>핵심 주장은 가능하면 아래 형식을 따릅니다.</p>
+<ul><li><code>Claim -&gt; file path -&gt; observable event/check</code></li></ul>
+<p>예:</p>
+<ul><li>첫 세션 이벤트가 계약 역할을 한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/thread_manager.rs"><code>codex-rs/core/src/thread_manager.rs</code></a> -&gt; 첫 이벤트가 아니면 오류로 처리하는 검증 로직이 있다</li></ul>
+<p>이 형식은 문장 장식이 아니라 독서 규칙입니다. 독자가 직접 확인할 수 없는 주장은 이 책에서 핵심 결론이 되면 안 됩니다. 내부 구현의 의도를 해석할 수는 있지만, 그 해석은 먼저 타입, 함수, 이벤트, 문서 중 하나에 닿아 있어야 합니다.</p>
+<h2 id="실제-코드-읽기-루틴">실제 코드 읽기 루틴</h2>
+<p>각 장을 읽을 때는 다음 순서를 권합니다.</p>
+<ol><li>먼저 <code>System Map</code>으로 계층과 흐름을 잡습니다.</li><li><code>Code Anchor</code>의 파일을 열고 타입/함수 이름을 찾습니다.</li><li><code>Runtime Proof</code>의 <code>Claim -&gt; file path -&gt; observable event/check</code>를 하나씩 확인합니다.</li><li><code>더 깊게 읽기</code> 섹션에서 그 코드가 왜 설계상 중요한지 다시 해석합니다.</li><li>마지막으로 <code>Builder Takeaway</code>를 자신의 시스템에 옮길 때 어떤 전제 조건이 필요한지 적어 봅니다.</li></ol>
+<p>이 루틴을 따르면 책을 읽는 행위가 저장소를 검증하는 행위와 분리되지 않습니다.</p>
+<h2 id="시각-규칙">시각 규칙</h2>
+<p>이 책은 모든 장에서 동일한 시각 문법을 유지합니다.</p>
+<ol><li><code>이 장의 질문</code></li><li><code>System Map</code></li><li><code>Code Anchor</code></li><li><code>Runtime Proof</code></li><li><code>Builder Takeaway</code></li></ol>
+<p>또한 모든 장은 최소 하나의 Mermaid 다이어그램을 포함합니다. 여기서 다이어그램은 장식이 아니라 하니스의 층, 전환, 제약, parent-child 경계를 보여 주는 용도입니다.</p>
+<h2 id="이-책의-한계">이 책의 한계</h2>
+<ul><li>이 책은 공개 저장소 기준입니다. 서버 내부 정책, 비공개 운영 콘솔, 조직 내부 배포 로직까지 증명하지는 못합니다.</li><li>참조본처럼 30장 이상으로 늘리지 않고, 현재 19장 뼈대를 유지합니다. 대신 각 장의 약속과 회수 지점을 하니스 중심으로 다시 배치합니다.</li><li>일부 해석은 코드를 바탕으로 한 구조적 추론입니다. 그런 경우 <code>Inferred</code>로 분리합니다.</li></ul>
+<h2 id="마지막-안내">마지막 안내</h2>
+<p>이 책을 가장 잘 읽는 방법은 개별 기능을 외우는 것이 아닙니다. 대신 계속 같은 질문을 던지면 됩니다.</p>
+<ul><li>무엇이 하니스를 시작하는가</li><li>무엇이 모델 행동을 조종하는가</li><li>무엇이 기억과 비용을 관리하는가</li><li>무엇이 안전한 외주화를 허용하는가</li><li>무엇이 서브에이전트와 표면 분리를 성립시키는가</li></ul>
+<p>그 다섯 질문이 Codex 전체를 읽는 프레임이 됩니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/tree/main/codex-rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs">Edition</a></td></tr><tr><td><code>codex-rs/Cargo.toml</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/Cargo.toml">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/Cargo.toml">Edition</a></td></tr><tr><td><code>codex-rs/core-skills/src/injection.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core-skills/src/injection.rs">Edition</a></td></tr><tr><td><code>codex-rs/core-skills/src/loader.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core-skills/src/loader.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/thread_manager.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/thread_manager.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/thread_manager.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/tools/orchestrator.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/orchestrator.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tools/orchestrator.rs">Edition</a></td></tr><tr><td><code>docs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/tree/main/docs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d/docs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 1개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>book.toml</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><span class="nav-card disabled"><span>이전</span><strong>없음</strong></span><a class="nav-card" href="part1/ch01.html"><span>다음</span><strong>1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

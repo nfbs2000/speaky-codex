@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link active" href="ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제7부: Long-Running Goal Harness</p>
+    <h1>22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: TUI가 만든 goal 이벤트는 app-server에서 어떤 protocol method가 되고, 최종적으로 어떤 sqlite row로 저장되는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 <code>/goal</code>의 control plane을 읽습니다.</p>
+<ul><li>app-server protocol에서 <code>thread/goal/*</code> method를 찾는다.</li><li>request/response/notification payload를 이해한다.</li><li><code>thread_goals</code> 테이블이 왜 thread당 하나의 현재 goal만 허용하는지 확인한다.</li><li>app-server processor가 running thread와 persisted thread를 모두 처리하는 방식을 본다.</li></ul>
+<h2 id="1단계-v2-protocol-surface">1단계: v2 protocol surface</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a>는 app-server method vocabulary를 정의합니다. goal API는 모두 thread resource 아래에 있고 experimental marker가 붙어 있습니다.</p>
+<pre class="code-block"><code class="language-rust">#[experimental(&quot;thread/goal/set&quot;)]
+ThreadGoalSet =&gt; &quot;thread/goal/set&quot; {
+    params: v2::ThreadGoalSetParams,
+    serialization: thread_id(params.thread_id),
+    response: v2::ThreadGoalSetResponse,
+},
+#[experimental(&quot;thread/goal/get&quot;)]
+ThreadGoalGet =&gt; &quot;thread/goal/get&quot; {
+    params: v2::ThreadGoalGetParams,
+    serialization: thread_id(params.thread_id),
+    response: v2::ThreadGoalGetResponse,
+},
+#[experimental(&quot;thread/goal/clear&quot;)]
+ThreadGoalClear =&gt; &quot;thread/goal/clear&quot; {
+    params: v2::ThreadGoalClearParams,
+    serialization: thread_id(params.thread_id),
+    response: v2::ThreadGoalClearResponse,
+},</code></pre>
+<p>notification도 같은 파일에 있습니다.</p>
+<pre class="code-block"><code class="language-rust">#[experimental(&quot;thread/goal/updated&quot;)]
+ThreadGoalUpdated =&gt; &quot;thread/goal/updated&quot; (v2::ThreadGoalUpdatedNotification),
+#[experimental(&quot;thread/goal/cleared&quot;)]
+ThreadGoalCleared =&gt; &quot;thread/goal/cleared&quot; (v2::ThreadGoalClearedNotification),</code></pre>
+<h2 id="2단계-payload-shape">2단계: payload shape</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/v2/thread.rs"><code>codex-rs/app-server-protocol/src/protocol/v2/thread.rs</code></a>의 <code>ThreadGoalSetParams</code>는 세 가지 optional mutation을 받습니다.</p>
+<pre class="code-block"><code class="language-rust">pub struct ThreadGoalSetParams {
+    pub thread_id: String,
+    pub objective: Option&lt;String&gt;,
+    pub status: Option&lt;ThreadGoalStatus&gt;,
+    pub token_budget: Option&lt;Option&lt;i64&gt;&gt;,
+}</code></pre>
+<p><code>token_budget</code>이 <code>Option&lt;Option&lt;i64&gt;&gt;</code>인 이유는 &quot;필드를 보내지 않음&quot;과 &quot;budget을 null로 설정&quot;을 구분하기 위해서입니다. response는 단순합니다.</p>
+<pre class="code-block"><code class="language-rust">pub struct ThreadGoalSetResponse {
+    pub goal: ThreadGoal,
+}
+
+pub struct ThreadGoalGetResponse {
+    pub goal: Option&lt;ThreadGoal&gt;,
+}
+
+pub struct ThreadGoalClearResponse {
+    pub cleared: bool,
+}</code></pre>
+<p><code>ThreadGoal</code>은 app-server boundary에서 camelCase로 나갑니다. 중요한 필드는 objective, status, tokenBudget, tokensUsed, timeUsedSeconds입니다.</p>
+<h2 id="3단계-sqlite-schema">3단계: sqlite schema</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/migrations/0029_thread_goals.sql"><code>codex-rs/state/migrations/0029_thread_goals.sql</code></a>은 <code>/goal</code>의 persistent shape를 한눈에 보여 줍니다.</p>
+<pre class="code-block"><code class="language-sql">CREATE TABLE thread_goals (
+    thread_id TEXT PRIMARY KEY NOT NULL REFERENCES threads(id) ON DELETE CASCADE,
+    goal_id TEXT NOT NULL,
+    objective TEXT NOT NULL,
+    status TEXT NOT NULL CHECK(status IN (&#x27;active&#x27;, &#x27;paused&#x27;, &#x27;budget_limited&#x27;, &#x27;complete&#x27;)),
+    token_budget INTEGER,
+    tokens_used INTEGER NOT NULL DEFAULT 0,
+    time_used_seconds INTEGER NOT NULL DEFAULT 0,
+    created_at_ms INTEGER NOT NULL,
+    updated_at_ms INTEGER NOT NULL
+);</code></pre>
+<p><code>thread_id</code>가 primary key입니다. 즉 한 thread에는 &quot;현재 goal&quot;이 하나만 있습니다. goal history를 여러 row로 쌓는 설계가 아닙니다. 대신 <code>goal_id</code>가 별도로 있어 같은 thread에서 goal이 교체되었는지 구분합니다.</p>
+<h2 id="4단계-state-runtime-쿼리">4단계: state runtime 쿼리</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/src/runtime/goals.rs"><code>codex-rs/state/src/runtime/goals.rs</code></a>는 네 종류의 mutation을 제공합니다.</p>
+<div class="table-wrap"><table><thead><tr><th>함수</th><th>의미</th></tr></thead><tbody><tr><td><code>get_thread_goal</code></td><td>thread의 현재 goal 읽기</td></tr><tr><td><code>replace_thread_goal</code></td><td>새 objective로 현재 goal 교체, usage reset</td></tr><tr><td><code>update_thread_goal</code></td><td>status 또는 token budget 변경</td></tr><tr><td><code>delete_thread_goal</code></td><td>goal 삭제</td></tr><tr><td><code>account_thread_goal_usage</code></td><td>time/token delta 누적, budget 도달 시 status 변경</td></tr></tbody></table></div>
+<p><code>replace_thread_goal</code>은 <code>ON CONFLICT(thread_id) DO UPDATE</code>를 사용합니다. 이것이 &quot;thread당 하나의 현재 goal&quot;이라는 schema 설계와 맞물립니다. 새 objective가 들어오면 <code>goal_id</code>, objective, status, budget, usage counter가 모두 교체됩니다.</p>
+<p><code>update_thread_goal</code>과 <code>account_thread_goal_usage</code>에는 <code>expected_goal_id</code>가 들어갑니다. runtime이 어떤 goal에 대해 회계 중이었는데 사용자가 goal을 교체했다면, 이전 goal 기준 token/time delta가 새 goal에 섞이면 안 됩니다. <code>goal_id</code> filter는 이 문제를 막는 concurrency guard입니다.</p>
+<h2 id="5단계-app-server-processor">5단계: app-server processor</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/src/request_processors/thread_goal_processor.rs"><code>codex-rs/app-server/src/request_processors/thread_goal_processor.rs</code></a>는 protocol request를 state db mutation으로 바꿉니다. <code>thread_goal_set_inner</code>의 흐름은 다음과 같습니다.</p>
+<ol><li><code>Feature::Goals</code> 확인</li><li><code>thread_id</code> parse</li><li>materialized thread인지 확인하고 state db 확보</li><li>running thread가 있으면 rollout path 확인, 없으면 thread id로 rollout path 탐색</li><li><code>reconcile_rollout</code>으로 state db thread metadata를 맞춤</li><li>objective와 budget 검증</li><li>running thread가 있으면 external mutation 전 accounting 수행</li><li>objective가 있으면 replace 또는 same-goal update</li><li>objective가 없으면 existing goal status/budget update</li><li>response 전송</li><li>ordered <code>ThreadGoalUpdated</code> notification 전송</li><li>running core session에 external goal runtime effect 적용</li></ol>
+<p>이 processor가 중요한 이유는 app-server가 단순 CRUD 계층이 아니라는 점입니다. 이미 실행 중인 core session이 있으면, persisted state 변경과 runtime accounting/scheduling 상태를 함께 맞춥니다.</p>
+<h2 id="상태-전이-표">상태 전이 표</h2>
+<div class="table-wrap"><table><thead><tr><th>요청</th><th>state db 동작</th><th>runtime effect</th></tr></thead><tbody><tr><td><code>set(objective, Active)</code></td><td><code>replace_thread_goal</code> 또는 same objective update</td><td>active accounting mark, maybe continue</td></tr><tr><td><code>set(None, Paused)</code></td><td><code>update_thread_goal</code></td><td>active accounting clear</td></tr><tr><td><code>set(None, Active)</code></td><td><code>update_thread_goal</code></td><td>active accounting mark, maybe continue</td></tr><tr><td><code>clear</code></td><td><code>delete_thread_goal</code></td><td>stopped runtime state clear</td></tr></tbody></table></div>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>goal API는 thread resource 아래에 있다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a></td><td><code>thread/goal/set</code>, <code>thread/goal/get</code>, <code>thread/goal/clear</code> method가 있다</td></tr><tr><td>goal update는 response와 notification을 모두 가진다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/v2/thread.rs"><code>codex-rs/app-server-protocol/src/protocol/v2/thread.rs</code></a>, <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/src/request_processors/thread_goal_processor.rs"><code>codex-rs/app-server/src/request_processors/thread_goal_processor.rs</code></a></td><td><code>ThreadGoalSetResponse</code>와 <code>ThreadGoalUpdatedNotification</code>을 모두 보낸다</td></tr><tr><td>thread당 현재 goal은 하나다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/migrations/0029_thread_goals.sql"><code>codex-rs/state/migrations/0029_thread_goals.sql</code></a></td><td><code>thread_id TEXT PRIMARY KEY</code>다</td></tr><tr><td>goal replacement는 usage를 reset한다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/src/runtime/goals.rs"><code>codex-rs/state/src/runtime/goals.rs</code></a></td><td><code>replace_thread_goal</code>의 <code>ON CONFLICT</code> update가 <code>tokens_used = 0</code>, <code>time_used_seconds = 0</code>을 설정한다</td></tr><tr><td>app-server는 persisted thread metadata를 reconcile한다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/src/request_processors/thread_goal_processor.rs"><code>codex-rs/app-server/src/request_processors/thread_goal_processor.rs</code></a></td><td>set/clear 전에 <code>reconcile_rollout</code>을 호출한다</td></tr><tr><td>running thread 변경은 core runtime에도 반영된다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/src/request_processors/thread_goal_processor.rs"><code>codex-rs/app-server/src/request_processors/thread_goal_processor.rs</code></a></td><td><code>apply_external_goal_set</code> 또는 <code>apply_external_goal_clear</code>를 호출한다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li><code>thread_id</code>가 primary key인 설계는 어떤 복잡도를 줄이는가?</li><li><code>goal_id</code>가 없다면 어떤 race가 생길 수 있는가?</li><li>app-server가 state db만 바꾸고 running core session을 건드리지 않으면 어떤 UI/runtime 불일치가 생기는가?</li></ol>
+<p>다음 장에서는 core runtime이 이 persisted goal을 어떻게 token/time accounting과 자동 continuation으로 바꾸는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server-protocol/src/protocol/common.rs">Edition</a></td></tr><tr><td><code>codex-rs/app-server-protocol/src/protocol/v2/thread.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/v2/thread.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server-protocol/src/protocol/v2/thread.rs">Edition</a></td></tr><tr><td><code>codex-rs/app-server/src/request_processors/thread_goal_processor.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/src/request_processors/thread_goal_processor.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server/src/request_processors/thread_goal_processor.rs">Edition</a></td></tr><tr><td><code>codex-rs/state/migrations/0029_thread_goals.sql</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/migrations/0029_thread_goals.sql">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/state/migrations/0029_thread_goals.sql">Edition</a></td></tr><tr><td><code>codex-rs/state/src/runtime/goals.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/src/runtime/goals.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/state/src/runtime/goals.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch21.html"><span>이전</span><strong>21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</strong></a><a class="nav-card" href="ch23.html"><span>다음</span><strong>23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

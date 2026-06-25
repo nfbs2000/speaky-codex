@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link active" href="ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제7부: Long-Running Goal Harness</p>
+    <h1>24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: active goal을 계속 수행하는 모델에게 Codex는 어떤 goal 도구를 주고, 어떤 상태 변경은 의도적으로 막는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 model-visible surface를 읽습니다.</p>
+<ul><li><code>get_goal</code>, <code>create_goal</code>, <code>update_goal</code> 세 도구의 역할을 구분한다.</li><li>모델이 goal을 임의로 pause/resume/budget-limit하지 못하게 막는 이유를 이해한다.</li><li>completion accounting이 왜 <code>update_goal(status=complete)</code> 직전에 일어나는지 확인한다.</li><li>budget limit steering과 completion report의 차이를 본다.</li></ul>
+<h2 id="1단계-goal-tool-spec">1단계: goal tool spec</h2>
+<p><code>codex-rs/core/src/tools/handlers/goal_spec.rs</code>는 세 도구를 정의합니다.</p>
+<div class="table-wrap"><table><thead><tr><th>도구</th><th>설명</th></tr></thead><tbody><tr><td><code>get_goal</code></td><td>현재 goal, status, budget, token/time usage, remaining token budget 조회</td></tr><tr><td><code>create_goal</code></td><td>명시적으로 요청된 경우에만 새 active goal 생성</td></tr><tr><td><code>update_goal</code></td><td>기존 goal을 complete로 표시</td></tr></tbody></table></div>
+<p>중요한 문장은 <code>create_goal</code> 설명에 있습니다.</p>
+<pre class="code-block"><code class="language-rust">&quot;Create a goal only when explicitly requested by the user or system/developer instructions; do not infer goals from ordinary tasks.&quot;</code></pre>
+<p>모델은 일반 작업을 보고 &quot;이건 goal로 만들자&quot;고 추론하면 안 됩니다. goal 생성은 사용자나 상위 instruction이 명시적으로 요청한 경우에만 허용됩니다.</p>
+<h2 id="2단계-update_goal은-complete만-허용한다">2단계: update_goal은 complete만 허용한다</h2>
+<p><code>update_goal</code> schema는 status enum을 하나만 노출합니다.</p>
+<pre class="code-block"><code class="language-rust">JsonSchema::string_enum(
+    vec![json!(&quot;complete&quot;)],
+    Some(&quot;Required. Set to complete only when the objective is achieved and no required work remains.&quot;.to_string()),
+)</code></pre>
+<p>handler도 같은 제한을 다시 확인합니다.</p>
+<pre class="code-block"><code class="language-rust">if args.status != ThreadGoalStatus::Complete {
+    return Err(FunctionCallError::RespondToModel(
+        &quot;update_goal can only mark the existing goal complete; pause, resume, and budget-limited status changes are controlled by the user or system&quot;
+            .to_string(),
+    ));
+}</code></pre>
+<p>이중 guard가 중요합니다. schema는 모델이 보는 도구 표면을 제한하고, handler는 실제 실행 시 다시 방어합니다.</p>
+<h2 id="3단계-create_goal은-기존-goal이-있으면-실패한다">3단계: create_goal은 기존 goal이 있으면 실패한다</h2>
+<p><code>create_goal.rs</code>는 <code>session.create_thread_goal</code>을 호출합니다. 이미 goal이 있으면 모델에게 명확한 오류를 돌려줍니다.</p>
+<pre class="code-block"><code class="language-rust">&quot;cannot create a new goal because this thread already has a goal; use update_goal only when the existing goal is complete&quot;</code></pre>
+<p>즉 모델은 기존 goal을 임의로 교체하지 못합니다. 교체는 사용자 표면의 <code>/goal &lt;objective&gt;</code>와 확인 UI가 담당합니다. 모델 도구는 &quot;새 goal 생성&quot;과 &quot;완료 표시&quot; 사이에 좁은 통로만 제공합니다.</p>
+<h2 id="4단계-완료-직전-회계">4단계: 완료 직전 회계</h2>
+<p><code>update_goal.rs</code>는 complete 상태를 저장하기 전에 <code>GoalRuntimeEvent::ToolCompletedGoal</code>을 적용합니다.</p>
+<pre class="code-block"><code class="language-rust">session
+    .goal_runtime_apply(GoalRuntimeEvent::ToolCompletedGoal {
+        turn_context: turn.as_ref(),
+    })
+    .await?;</code></pre>
+<p>그 다음 <code>set_thread_goal(status=Complete)</code>를 호출합니다. 이 순서가 없으면 목표를 완료한 바로 그 턴의 token/time 사용량이 final usage에 빠질 수 있습니다. 특히 budgeted goal에서는 완료 보고에 token 사용량이 포함되므로, 완료 직전 accounting은 사용자에게 보이는 숫자의 정확성에 직접 연결됩니다.</p>
+<h2 id="5단계-도구-response-shape">5단계: 도구 response shape</h2>
+<p><code>goal.rs</code>의 <code>GoalToolResponse</code>는 세 필드를 갖습니다.</p>
+<pre class="code-block"><code class="language-rust">struct GoalToolResponse {
+    goal: Option&lt;ThreadGoal&gt;,
+    remaining_tokens: Option&lt;i64&gt;,
+    completion_budget_report: Option&lt;String&gt;,
+}</code></pre>
+<p><code>completion_budget_report</code>는 complete 상태일 때만 포함됩니다. 예를 들어 budgeted goal을 완료하면 &quot;tokens used: X of Y&quot;와 time used를 사용자에게 보고하라는 메시지가 tool result에 들어갑니다. 이것은 runtime이 모델에게 &quot;완료 후 사용자에게 알려야 할 숫자&quot;를 structured output으로 돌려주는 방식입니다.</p>
+<h2 id="6단계-budget-limit은-complete가-아니다">6단계: budget limit은 complete가 아니다</h2>
+<p>budget limit은 모델 도구가 아니라 system/runtime이 제어합니다. state runtime의 <code>account_thread_goal_usage</code>는 token budget을 넘으면 status를 <code>budget_limited</code>로 바꿉니다. 그 뒤 core는 budget limit steering developer message를 주입할 수 있습니다.</p>
+<p><code>core/templates/goals/budget_limit.md</code>의 핵심 지시는 다음과 같습니다.</p>
+<pre class="code-block"><code class="language-markdown">The system has marked the goal as budget_limited, so do not start new substantive work for this goal. Wrap up this turn soon: summarize useful progress, identify remaining work or blockers, and leave the user with a clear next step.</code></pre>
+<p>그리고 바로 이어서 &quot;실제로 complete가 아니면 update_goal을 호출하지 말라&quot;고 합니다. budget exhaustion은 작업 완료가 아니라 중단 조건입니다.</p>
+<h2 id="7단계-tool-exposure-자체도-feature-gated">7단계: tool exposure 자체도 feature-gated</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/spec_plan_tests.rs"><code>codex-rs/core/src/tools/spec_plan_tests.rs</code></a>는 feature가 꺼져 있을 때 goal tools가 없고, <code>Feature::Goals</code>를 켜면 <code>get_goal</code>, <code>create_goal</code>, <code>update_goal</code>이 노출되는지 검사합니다.</p>
+<pre class="code-block"><code class="language-rust">assert_lacks_tool_name(&amp;tools, &quot;get_goal&quot;);
+assert_lacks_tool_name(&amp;tools, &quot;create_goal&quot;);
+assert_lacks_tool_name(&amp;tools, &quot;update_goal&quot;);
+
+features.enable(Feature::Goals);
+assert_contains_tool_names(&amp;tools, &amp;[&quot;get_goal&quot;, &quot;create_goal&quot;, &quot;update_goal&quot;]);</code></pre>
+<p>이 테스트는 model-visible surface가 runtime feature flag와 같은 게이트를 공유한다는 근거입니다.</p>
+<h2 id="안전성-패턴">안전성 패턴</h2>
+<div class="table-wrap"><table><thead><tr><th>위험</th><th>방어</th></tr></thead><tbody><tr><td>모델이 일반 task를 goal로 승격</td><td><code>create_goal</code> 설명에서 명시 요청 없이는 금지</td></tr><tr><td>모델이 goal을 임의 교체</td><td><code>create_goal</code>은 기존 goal이 있으면 실패</td></tr><tr><td>모델이 pause/resume/budget_limit 조작</td><td><code>update_goal</code> enum과 handler가 <code>complete</code>만 허용</td></tr><tr><td>budget 도달을 완료로 오인</td><td>budget limit template이 complete와 구분</td></tr><tr><td>final usage 누락</td><td><code>ToolCompletedGoal</code> accounting 후 complete 저장</td></tr><tr><td>feature off 상태에서 도구 노출</td><td>spec plan에서 feature flag 검사</td></tr></tbody></table></div>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>모델 도구는 세 개다</td><td><code>codex-rs/core/src/tools/handlers/goal_spec.rs</code></td><td><code>GET_GOAL_TOOL_NAME</code>, <code>CREATE_GOAL_TOOL_NAME</code>, <code>UPDATE_GOAL_TOOL_NAME</code>가 있다</td></tr><tr><td>모델은 ordinary task에서 goal을 추론하면 안 된다</td><td><code>codex-rs/core/src/tools/handlers/goal_spec.rs</code></td><td><code>create_goal</code> description에 명시 요청 조건이 있다</td></tr><tr><td><code>update_goal</code>은 complete만 허용한다</td><td><code>codex-rs/core/src/tools/handlers/goal_spec.rs</code>, <code>codex-rs/core/src/tools/handlers/goal/update_goal.rs</code></td><td>enum이 <code>&quot;complete&quot;</code> 하나이고 handler가 다른 status를 거부한다</td></tr><tr><td>완료 전 final usage accounting이 실행된다</td><td><code>codex-rs/core/src/tools/handlers/goal/update_goal.rs</code></td><td><code>set_thread_goal(Complete)</code> 전에 <code>ToolCompletedGoal</code> 이벤트를 적용한다</td></tr><tr><td>budget limit은 system/runtime 상태다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/src/runtime/goals.rs"><code>codex-rs/state/src/runtime/goals.rs</code></a>, <code>codex-rs/core/templates/goals/budget_limit.md</code></td><td>usage accounting이 <code>budget_limited</code>를 설정하고 template은 새 작업 중단을 지시한다</td></tr><tr><td>goal tools는 feature-gated다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/spec_plan_tests.rs"><code>codex-rs/core/src/tools/spec_plan_tests.rs</code></a></td><td>feature off/on 양쪽에서 tool presence를 assert한다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li>왜 pause/resume은 모델 도구가 아니라 사용자/API 제어로 남겨 두는가?</li><li><code>create_goal</code>이 기존 goal을 덮어쓰게 만들면 어떤 문제가 생기는가?</li><li>budget limit과 complete를 분리하지 않으면 사용자에게 어떤 잘못된 신호가 갈 수 있는가?</li></ol>
+<p>다음 장에서는 지금까지 본 설계를 내 하니스에 옮길 때의 구현 순서로 정리합니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core/src/tools/spec_plan_tests.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/spec_plan_tests.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tools/spec_plan_tests.rs">Edition</a></td></tr><tr><td><code>codex-rs/state/src/runtime/goals.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/state/src/runtime/goals.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/state/src/runtime/goals.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 7개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>codex-rs/core/src/tools/handlers/goal/update_goal.rs</code></li><li><code>codex-rs/core/src/tools/handlers/goal_spec.rs</code></li><li><code>codex-rs/core/templates/goals/budget_limit.md</code></li><li><code>core/templates/goals/budget_limit.md</code></li><li><code>create_goal.rs</code></li><li><code>goal.rs</code></li><li><code>update_goal.rs</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch23.html"><span>이전</span><strong>23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</strong></a><a class="nav-card" href="ch25.html"><span>다음</span><strong>25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

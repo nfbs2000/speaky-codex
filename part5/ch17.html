@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 별도 서브시스템인가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link active" href="ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제5부: Subagents &amp; Surfaces</p>
+    <h1>17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 별도 서브시스템인가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex는 왜 모델 목록을 정적 상수로 두지 않고, 인증 상태와 refresh strategy를 가진 별도 모델 관리 서브시스템으로 다루는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>모델 선택은 단순 드롭다운 문제가 아닙니다. 어떤 인증 모드인지, 캐시가 있는지, 원격 새로고침이 허용되는지, 커스텀 카탈로그를 강제했는지에 따라 가능한 모델 목록 자체가 달라집니다. Codex는 이 복잡성을 <code>ModelsManager</code>로 격리합니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;bundled catalog&quot;] --&gt; M[&quot;ModelsManager&quot;]
+    B[&quot;remote /models&quot;] --&gt; M
+    C[&quot;cache + etag&quot;] --&gt; M
+    D[&quot;auth mode / refresh strategy&quot;] --&gt; M
+    M --&gt; E[&quot;available models&quot;]</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a></td><td>카탈로그, cache, remote refresh, provider 관리의 중심</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>models manager는 remote models, etag, cache manager, provider를 함께 관리한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>ModelsManager</code> struct가 관련 필드를 가진다</li><li>custom model catalog가 주어지면 원격 refresh를 하지 않는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>CatalogMode::Custom</code>일 때 새로고침이 조기 반환된다</li><li>refresh strategy는 offline, online-if-uncached, online 세 가지다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>refresh_available_models()</code> 분기가 전략별 동작을 나눈다</li><li>인증 모드가 맞지 않으면 네트워크 fetch를 건너뛰고 cache만 본다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; auth mode 검사 후 fetch 여부를 결정한다</li><li>원격 fetch 성공 시 etag와 cache를 함께 갱신한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; remote 결과 적용 후 cache persist 경로가 이어진다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a>는 refresh 전략을 enum으로 분리합니다.</p>
+<pre class="code-block"><code class="language-rust">/// Strategy for refreshing available models.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum RefreshStrategy {
+    /// Always fetch from the network, ignoring cache.
+    Online,
+    /// Only use cached data, never fetch from the network.
+    Offline,
+    /// Use cache if available and fresh, otherwise fetch from the network.
+    OnlineIfUncached,
+}</code></pre>
+<p>manager 자체는 remote catalog, catalog mode, cache manager, provider를 함께 소유합니다.</p>
+<pre class="code-block"><code class="language-rust">/// Coordinates remote model discovery plus cached metadata on disk.
+#[derive(Debug)]
+pub struct ModelsManager {
+    remote_models: RwLock&lt;Vec&lt;ModelInfo&gt;&gt;,
+    catalog_mode: CatalogMode,
+    collaboration_modes_config: CollaborationModesConfig,
+    etag: RwLock&lt;Option&lt;String&gt;&gt;,
+    cache_manager: ModelsCacheManager,
+    provider: SharedModelProvider,
+}</code></pre>
+<p>모델 목록 호출은 refresh 후 active catalog snapshot을 picker용 preset으로 바꿉니다.</p>
+<pre class="code-block"><code class="language-rust">pub async fn list_models(&amp;self, refresh_strategy: RefreshStrategy) -&gt; Vec&lt;ModelPreset&gt; {
+    if let Err(err) = self.refresh_available_models(refresh_strategy).await {
+        error!(&quot;failed to refresh available models: {err}&quot;);
+    }
+    let remote_models = self.get_remote_models().await;
+    self.build_available_models(remote_models)
+}</code></pre>
+<p>picker용 preset은 인증 모드에 따라 필터링됩니다.</p>
+<pre class="code-block"><code class="language-rust">fn build_available_models(&amp;self, mut remote_models: Vec&lt;ModelInfo&gt;) -&gt; Vec&lt;ModelPreset&gt; {
+    remote_models.sort_by(|a, b| a.priority.cmp(&amp;b.priority));
+
+    let mut presets: Vec&lt;ModelPreset&gt; = remote_models.into_iter().map(Into::into).collect();
+    let auth_mode = self
+        .provider
+        .auth_manager()
+        .and_then(|auth_manager| auth_manager.auth_mode());
+    let chatgpt_mode = matches!(auth_mode, Some(AuthMode::Chatgpt));
+    presets = ModelPreset::filter_by_auth(presets, chatgpt_mode);
+
+    ModelPreset::mark_default_by_picker_visibility(&amp;mut presets);
+
+    presets
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex가 모델 관리를 별도 서브시스템으로 둔 이유는 &quot;선택 가능한 모델&quot;이 런타임 환경에 따라 달라지기 때문입니다. 모델은 프롬프트 한 줄로 끝나는 것이 아니라, 인증, 캐시, 갱신 정책, 원격 공급원과 얽힌 운영 대상입니다.</p>
+<h2 id="더-깊게-읽기-모델-목록은-환경-의존-값이다">더 깊게 읽기: 모델 목록은 환경 의존 값이다</h2>
+<p><code>ModelsManager</code>는 remote model list만 들고 있지 않습니다. catalog mode, collaboration mode config, etag, disk cache manager, provider를 함께 가집니다. 즉 모델 목록은 compile-time constant가 아니라 &quot;현재 인증 상태와 캐시 상태, provider 설정으로 계산한 결과&quot;입니다.</p>
+<ul><li>manager는 catalog, etag, cache, provider를 함께 소유한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>ModelsManager</code> 필드가 <code>remote_models</code>, <code>catalog_mode</code>, <code>etag</code>, <code>cache_manager</code>, <code>provider</code>를 가진다</li><li>custom catalog는 authoritative하다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>CatalogMode::Custom</code>이면 <code>refresh_available_models(...)</code>가 즉시 반환한다</li><li>default catalog는 bundled models에서 시작한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>new_with_provider(...)</code>가 custom catalog가 없으면 <code>load_remote_models_from_file()</code>을 사용한다</li><li>model list는 refresh strategy에 따라 달라진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>RefreshStrategy::{Online, Offline, OnlineIfUncached}</code>가 각각 fetch/cache 정책을 설명한다</li></ul>
+<p>여기서 &quot;모델을 고른다&quot;는 말은 단순히 문자열 하나를 선택한다는 뜻이 아닙니다. 먼저 가능한 model preset 집합을 만들고, 그중 default 또는 사용자 지정 모델을 고르는 것입니다.</p>
+<h2 id="auth와-cache를-같이-읽기">auth와 cache를 같이 읽기</h2>
+<p>refresh 경로에서 인증은 핵심 게이트입니다. auth mode가 ChatGPT가 아니고 provider가 command auth를 갖지 않으면, online fetch 대신 cache만 시도하고 종료합니다. <code>OnlineIfUncached</code>에서는 cache를 먼저 보고, 없을 때만 원격 <code>/models</code>를 fetch합니다. fetch 성공 시에는 remote models를 적용하고 etag와 cache를 갱신합니다.</p>
+<ul><li>인증 조건이 맞지 않으면 네트워크 fetch를 피한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>auth_mode != Some(AuthMode::Chatgpt)</code>와 <code>!has_command_auth()</code> 분기에서 cache만 시도한다</li><li>offline strategy는 cache만 읽는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>RefreshStrategy::Offline</code> 분기가 <code>try_load_cache()</code>만 호출한다</li><li>online-if-uncached는 cache hit이면 fetch하지 않는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>try_load_cache()</code> 성공 시 바로 반환한다</li><li>fetch 성공 시 etag와 disk cache를 갱신한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs"><code>codex-rs/models-manager/src/manager.rs</code></a> -&gt; <code>fetch_and_update_models()</code>가 <code>etag</code>를 쓰고 <code>persist_cache(...)</code>를 호출한다</li></ul>
+<p>이 설계는 모델 목록을 사용자 경험의 편의 기능이 아니라 운영 자원으로 취급합니다. 특히 sub-agent에서는 <code>spawn_internal()</code>이 refresh strategy를 <code>Offline</code>으로 바꾸기 때문에, child harness가 불필요한 모델 카탈로그 refresh를 일으키지 않습니다.</p>
+<ul><li>sub-agent는 offline refresh strategy를 사용한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>SessionSource::SubAgent(_)</code>이면 <code>RefreshStrategy::Offline</code>을 선택한다</li></ul>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>모델 목록을 하드코딩해 두는 단계는 오래가지 못합니다. 인증 모드, 원격 공급원, 캐시 무효화, 사용자 override가 들어오는 순간 곧 별도 카탈로그 관리 계층이 필요해집니다. Codex는 그 미래 문제를 일찍 분리해 둔 사례입니다.</p>
+<p>이제 어떤 모델을 쓸 수 있는지 관리하는 계층을 봤으니, 다음 장에서는 같은 코어가 app-server, TUI, CLI라는 서로 다른 표면으로 어떻게 드러나는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core/src/session/mod.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/mod.rs">Edition</a></td></tr><tr><td><code>codex-rs/models-manager/src/manager.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/models-manager/src/manager.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/models-manager/src/manager.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch16.html"><span>이전</span><strong>16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</strong></a><a class="nav-card" href="ch18.html"><span>다음</span><strong>18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>9장: 초기 컨텍스트 — 모델은 무엇을 먼저 보게 되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link active" href="ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제2부: Control Plane as Micro Harness</p>
+    <h1>9장: 초기 컨텍스트 — 모델은 무엇을 먼저 보게 되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex는 세션 시작 시 어떤 developer/user section을 어떤 순서와 예산으로 조립해 모델에게 보여 주는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>많은 에이전트 구현은 거대한 system prompt 문자열 하나만 보고 설명을 끝냅니다. 하지만 실제 제품 런타임에서는 personality, collaboration mode, realtime update, apps, skills, plugins, 사용자 지침 같은 조각이 동적으로 바뀝니다. Codex는 이 조각들을 section 단위로 조립하며, 예산을 넘기면 일부를 잘라내고 경고를 남깁니다.</p>
+<p>즉 이 장은 &quot;프롬프트를 어떻게 쓰는가&quot;가 아니라 &quot;모델이 처음 보게 되는 세계를 어떻게 구성하는가&quot;를 다룹니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;session config&quot;] --&gt; B[&quot;developer sections&quot;]
+    C[&quot;AGENTS.md / user instructions&quot;] --&gt; D[&quot;user fragment&quot;]
+    E[&quot;skills/apps/plugins/personality&quot;] --&gt; B
+    B --&gt; F[&quot;budget check / trim&quot;]
+    D --&gt; G[&quot;initial model-visible context&quot;]
+    F --&gt; G</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a></td><td>초기 developer sections 조립과 trim warning</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a></td><td>이전 턴 설정과 세션 전역 설정 보관</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>초기 developer sections에는 collaboration mode, realtime update, personality, apps, skills, plugins가 단계적으로 추가된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; 관련 섹션 push 경로가 연속적으로 존재한다</li><li>skills 목록이 예산을 넘기면 warning을 내고 일부만 모델에 노출한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; trimmed warning message와 emit 경로가 있다</li><li>session state는 이전 regular turn 설정을 따로 보관해 후속 턴 재주입에 쓴다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs"><code>codex-rs/core/src/state/session.rs</code></a> -&gt; <code>previous_turn_settings</code> 필드와 접근자가 존재한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a>의 <code>build_initial_context</code>는 문자열 하나를 만드는 대신 developer/user 섹션 배열을 따로 조립합니다.</p>
+<pre class="code-block"><code class="language-rust">pub(crate) async fn build_initial_context(
+    &amp;self,
+    turn_context: &amp;TurnContext,
+) -&gt; Vec&lt;ResponseItem&gt; {
+    let mut developer_sections = Vec::&lt;String&gt;::with_capacity(8);
+    let mut contextual_user_sections = Vec::&lt;String&gt;::with_capacity(2);
+    let shell = self.user_shell();</code></pre>
+<p>권한 안내, collaboration mode, apps, skills, plugins는 순서대로 developer section에 추가됩니다.</p>
+<pre class="code-block"><code class="language-rust">if turn_context.config.include_permissions_instructions {
+    developer_sections.push(
+        PermissionsInstructions::from_policy(
+            turn_context.sandbox_policy.get(),
+            turn_context.approval_policy.value(),
+            turn_context.config.approvals_reviewer,
+            self.services.exec_policy.current().as_ref(),
+            &amp;turn_context.cwd,
+            turn_context
+                .features
+                .enabled(Feature::ExecPermissionApprovals),
+            turn_context
+                .features
+                .enabled(Feature::RequestPermissionsTool),
+        )
+        .render(),
+    );
+}</code></pre>
+<p>AGENTS.md와 환경 정보는 contextual user section으로 들어갑니다.</p>
+<pre class="code-block"><code class="language-rust">if let Some(user_instructions) = turn_context.user_instructions.as_deref() {
+    contextual_user_sections.push(
+        UserInstructions {
+            text: user_instructions.to_string(),
+            directory: turn_context.cwd.to_string_lossy().into_owned(),
+        }
+        .render(),
+    );
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex의 초기 컨텍스트는 &quot;문자열 하나&quot;가 아니라 조립식 보드입니다. 이 조립식 구조는 두 가지 장점을 만듭니다.</p>
+<ol><li>어떤 섹션이 행동을 바꿨는지 추적하기 쉬워집니다.</li><li>예산 초과 시 어느 부분을 잘랐는지 설명하고 경고할 수 있습니다.</li></ol>
+<p>이것이 바로 Codex가 제어 평면을 운영 가능한 상태로 만드는 방식입니다.</p>
+<h2 id="더-깊게-읽기-초기-컨텍스트는-섹션-배열로-만들어진다">더 깊게 읽기: 초기 컨텍스트는 섹션 배열로 만들어진다</h2>
+<p><code>build_initial_context()</code>는 거대한 문자열을 바로 만들지 않습니다. 먼저 <code>developer_sections</code>와 <code>contextual_user_sections</code>라는 두 배열을 만듭니다. developer 쪽에는 permissions, developer instructions, memory, collaboration mode, realtime update, personality, apps, skills, plugins, commit attribution 같은 조각이 차례로 들어갑니다. user 쪽에는 AGENTS.md 지침과 environment context가 들어갑니다.</p>
+<p>이 구조가 중요한 이유는 각 섹션의 출처와 lifecycle이 다르기 때문입니다. permissions는 현재 sandbox/approval policy에 의존하고, apps는 MCP connection manager에서 접근 가능한 connector를 읽고, skills는 <code>TurnSkillsContext</code>의 outcome과 budget에 의존합니다. 같은 &quot;초기 프롬프트&quot;라도 출처별로 계산 시점과 실패 방식이 다릅니다.</p>
+<ul><li>초기 컨텍스트는 developer/user section 배열에서 출발한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>build_initial_context()</code>가 <code>developer_sections</code>, <code>contextual_user_sections</code>를 만든다</li><li>permissions section은 현재 policy에서 렌더링된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>PermissionsInstructions::from_policy(...)</code>가 sandbox, approval, approvals reviewer, exec policy를 받는다</li><li>apps section은 MCP manager에서 connector 상태를 읽는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>list_accessible_and_enabled_connectors_from_manager(...)</code> 결과로 <code>AppsInstructions</code>를 만든다</li><li>user instructions는 contextual user fragment로 따로 들어간다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>UserInstructions { text, directory }.render()</code> 결과가 user section에 추가된다</li><li>최종 item은 update builder를 거쳐 만들어진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>build_developer_update_item(...)</code>, <code>build_contextual_user_message(...)</code>가 section 배열을 <code>ResponseItem</code>으로 바꾼다</li></ul>
+<p>이 방식은 &quot;초기 컨텍스트&quot;를 한 번 만든 뒤 잊는 것이 아니라, 후속 턴에서 이전 context item과 비교해 diff 또는 reinjection을 만들 수 있는 기반이 됩니다.</p>
+<h2 id="section-순서가-주는-의미">section 순서가 주는 의미</h2>
+<p>섹션 순서는 단순 정렬이 아닙니다. permissions는 모델에게 현재 실행 경계를 먼저 알려야 하므로 앞쪽에 있고, collaboration/personality/apps/skills/plugins는 모델 행동과 가용 도구를 설명합니다. AGENTS.md는 user fragment로 분리되어 &quot;프로젝트/사용자 지침&quot;의 성격을 유지합니다.</p>
+<p>이 구분이 없으면 나중에 &quot;왜 모델이 이 지침을 봤는가&quot;를 설명하기 어렵습니다. Codex는 section 기반 조립으로 이 설명 가능성을 남깁니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>자신의 시스템에서도 system prompt를 하나의 거대한 상수로 두기보다, 출처별 section으로 나눠 두는 편이 좋습니다. 그래야 기능을 추가해도 전체 프롬프트를 다시 쓰지 않고, 어느 section이 행동을 바꿨는지 설명 가능성을 유지할 수 있습니다.</p>
+<p>이제 제어 평면이 보였으니, 다음 장부터는 이 평면이 어떤 상태와 메모리 구조 위에서 움직이는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core/src/session/mod.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/mod.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/state/session.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/state/session.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/state/session.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch08.html"><span>이전</span><strong>8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</strong></a><a class="nav-card" href="../part3/ch10.html"><span>다음</span><strong>10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

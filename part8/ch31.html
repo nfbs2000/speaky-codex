@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link active" href="ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제8부: Desktop SDK Runtime Evidence Harness</p>
+    <h1>31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: 한 번의 Chat 실행으로 생성된 SDK event는 어떤 파일로 저장되고, Desktop UI에서는 어떤 Evidence surface로 보이는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 run archive와 Evidence UI를 연결합니다.</p>
+<ul><li>SQLite <code>raw_events</code>가 current session의 canonical runtime store가 되는 이유를 본다.</li><li>raw archive, normalized events, OTel trace, run summary가 DB에서 어떻게 export되는지 이해한다.</li><li><code>BookVisualizationPage</code>의 현재 역할을 &quot;Book Reader surface&quot;와 &quot;Runtime Evidence surface&quot;로 분리해 읽는다.</li><li>Trajectory, Prompt Score, Prompt Coach가 자동 실행이 아니라 명시 command로 생성되는 이유를 확인한다.</li></ul>
+<h2 id="1단계-run-directory는-observability-data-다">1단계: run directory는 <code>observability/data/&lt;run-id&gt;</code>다</h2>
+<p><code>desktop/server/evidence/run-archive.ts</code>는 run root를 이렇게 정합니다.</p>
+<pre class="code-block"><code class="language-ts">function runRoot(rootDir: string) {
+  return path.join(rootDir, &quot;observability&quot;, &quot;data&quot;);
+}</code></pre>
+<p><code>createRunArchive()</code>는 run마다 다음 파일을 준비합니다.</p>
+<pre class="code-block"><code class="language-ts">const rawJsonlPath = path.join(runDir, &quot;raw-sdk-events.jsonl&quot;);
+const normalizedPath = path.join(runDir, &quot;normalized-events.json&quot;);
+const otelPath = path.join(runDir, &quot;otel-trace.json&quot;);
+const projectionDir = path.join(runDir, &quot;projection&quot;);</code></pre>
+<p>이 경로가 중요한 이유는 UI와 Claude 평가 prompt가 &quot;어떤 파일을 직접 읽을 것인지&quot; 명확히 알 수 있기 때문입니다.</p>
+<h2 id="2단계-sqlite-raw_events가-원천-저장소다">2단계: SQLite raw_events가 원천 저장소다</h2>
+<p>Chat 실행 중 SDK event가 들어오면 <code>desktop/server/index.ts</code>는 먼저 SQLite에 raw event를 저장합니다.</p>
+<pre class="code-block"><code class="language-text">desktop/server/index.ts
+  -&gt; persistRuntimeRawEvent()
+  -&gt; RuntimeEventStore.persistRawEvent()
+  -&gt; observability/data/codex-runtime.db
+  -&gt; raw_events(session_id, event_type, payload, ts)</code></pre>
+<p>이 DB가 current session의 canonical runtime event store입니다. <code>raw-sdk-events.jsonl</code>은 원천이 아니라 export artifact입니다.</p>
+<h2 id="3단계-raw-archive는-sanitize-후-append-export된다">3단계: raw archive는 sanitize 후 append/export된다</h2>
+<p><code>appendRaw()</code>와 SQLite store는 원 event를 그대로 쓰기 전에 같은 sanitize 규칙을 통과시킵니다.</p>
+<pre class="code-block"><code class="language-ts">appendRaw: async (value) =&gt; {
+  await appendFile(rawJsonlPath, `${JSON.stringify(sanitizeRawArchiveValue(value))}\n`, &quot;utf8&quot;);
+}</code></pre>
+<p>secret, token, private path, 과도한 private text를 그대로 남기지 않기 위한 방어선입니다. Runtime Evidence는 &quot;증거&quot;를 남기지만, 증거 수집이 private data dump가 되면 안 됩니다.</p>
+<h2 id="4단계-finalize에서는-normalized가-먼저-생성된다">4단계: finalize에서는 normalized가 먼저 생성된다</h2>
+<p><code>finalize()</code>는 메모리에 모은 normalized events를 <code>normalized-events.json</code>으로 씁니다. 이 시점에는 <code>otel-trace.json</code>을 자동 생성하지 않습니다.</p>
+<pre class="code-block"><code class="language-ts">const inputDocument: ProjectionInput = {
+  runId,
+  provider: input.provider ?? &quot;codex&quot;,
+  events,
+};
+await writeJson(normalizedPath, inputDocument);</code></pre>
+<p>그 뒤 <code>run-summary.json</code>을 씁니다. 이 summary에는 raw/normalized/OTel 존재 여부, trajectory/prompt score/prompt coach 생성 여부, Opik parity 결과, Course Evidence summary 같은 UI용 metadata가 붙습니다. Chat run 직후에는 raw와 normalized는 ready이고, OTel은 missing일 수 있습니다.</p>
+<h2 id="5단계-evidence-refresh는-db에서-raw-normalized-otel을-재export한다">5단계: Evidence refresh는 DB에서 raw/normalized/OTel을 재export한다</h2>
+<p><code>desktop/server/index.ts</code>의 <code>handleEvidenceRefresh()</code>는 selected run의 <code>runId</code>를 SQLite <code>raw_events.session_id</code>로 먼저 조회합니다.</p>
+<pre class="code-block"><code class="language-ts">const dbExport = runtimeEventStore
+  ? await exportRunArtifactsFromRawEvents({
+      rootDir: projectPath,
+      runId: run.runId,
+      eventStore: runtimeEventStore,
+      provider: &quot;codex&quot;,
+    })
+  : null;
+latestProjectionRun = dbExport ?? await refreshOtelTrace(projectPath, run.runId) ?? run;</code></pre>
+<p>이 단계는 Chat 실행과 분리되어 있습니다. Chat만 실행해도 SQLite raw_events와 raw/normalized export는 남지만, OTel trace는 사용자가 명시적으로 갱신할 때 생성됩니다. DB 이벤트가 있으면 <code>artifactSource=db_raw_events</code>가 summary에 기록되고, 과거 run처럼 DB 이벤트가 없을 때만 기존 normalized artifact fallback을 사용합니다.</p>
+<h2 id="6단계-세션-히스토리는-fingerprint로-관리한다">6단계: 세션 히스토리는 fingerprint로 관리한다</h2>
+<p><code>run-summary.json</code>은 export history를 관리하기 위해 source metadata를 보존합니다.</p>
+<pre class="code-block"><code class="language-text">artifactSource: db_raw_events
+sourceAvailability.dbRawEventCount
+sourceAvailability.dbRawMaxEventId
+currentFingerprint
+exportedFingerprint
+exportStatus
+dirty</code></pre>
+<p>새 raw event가 SQLite에 더 쌓이면 count/max id가 달라집니다. 이 값이 OTel artifact가 현재 DB 상태와 같은지 판단하는 기준입니다.</p>
+<h2 id="7단계-trajectory도-명시-버튼으로-생성한다">7단계: Trajectory도 명시 버튼으로 생성한다</h2>
+<p><code>handleTrajectoryGenerate()</code>는 selected run의 projection input을 읽고 <code>trajectory-evaluation.json</code>을 씁니다.</p>
+<pre class="code-block"><code class="language-ts">const input = await readProjectionInput(projectPath, runId);
+const trajectory = buildTrajectoryEvaluation(input);
+await writeProjectionArtifact(projectPath, runId, &quot;trajectory-evaluation.json&quot;, trajectory);</code></pre>
+<p>Trajectory의 <code>judge.status</code>는 처음에 <code>not_run</code>이어야 합니다. 실제 점수는 Claude judge, Opik, human judge가 나중에 명시적으로 확정합니다.</p>
+<h2 id="8단계-ui는-book과-evidence를-분리한다">8단계: UI는 Book과 Evidence를 분리한다</h2>
+<p>현재 Desktop UI에서 상단 메뉴의 <code>Book</code>은 reader surface를 열고, <code>Evidence</code>는 runtime evidence surface를 엽니다.</p>
+<div class="table-wrap"><table><thead><tr><th>surface</th><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><code>book-reader</code></td><td><code>desktop/src/components/v2/ViewRouter.tsx</code>, <code>BookVisualizationPage</code></td><td>책 장과 Try Chat 진입점</td></tr><tr><td><code>runtime-evidence</code></td><td><code>desktop/src/components/v2/ViewRouter.tsx</code>, <code>BookVisualizationPage</code></td><td>selected run의 artifact coverage, OTel, trajectory, Course Evidence</td></tr><tr><td>aux host</td><td><code>desktop/src/components/v2/AuxSurfaceHost.tsx</code></td><td>Chat companion drawer/canvas로 Book/Evidence를 붙인다</td></tr><tr><td>chat menu</td><td><code>desktop/src/components/v2/pages/TerminalPage.tsx</code></td><td>Swarm/Team/History 옆에서 Book/Evidence 진입</td></tr></tbody></table></div>
+<p>파일 이름은 아직 <code>BookVisualizationPage.tsx</code>지만, UX 책임은 &quot;책 시각화&quot;가 아니라 Book Reader와 Runtime Evidence surface로 분리되어 있습니다.</p>
+<h2 id="9단계-evidence-surface가-보여-주는-것">9단계: Evidence surface가 보여 주는 것</h2>
+<p>Evidence surface는 selected run에 대해 다음을 보여 줍니다.</p>
+<ul><li>event count</li><li>artifact source</li><li>SQLite raw event count</li><li>raw archive 존재 여부</li><li>normalized events 존재 여부</li><li>OTel trace 존재 여부</li><li>trajectory 생성 여부</li><li>prompt score 저장 여부</li><li>SDK pipeline monitor</li><li>evidence chain</li><li>Course Evidence review</li><li>Trajectory artifact review</li></ul>
+<p>이 화면의 핵심은 &quot;프롬프트 키워드가 아니라 artifact 경로와 source event id로 말한다&quot;는 점입니다.</p>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>run artifact는 <code>observability/data/&lt;run-id&gt;</code> 아래에 저장된다</td><td><code>desktop/server/evidence/run-archive.ts</code></td><td><code>runRoot(rootDir)</code>와 <code>rawJsonlPath</code>, <code>normalizedPath</code>, <code>otelPath</code>가 있다</td></tr><tr><td>raw_events는 SQLite에 저장된다</td><td><code>desktop/server/evidence/runtime-event-store.ts</code>, <code>desktop/server/index.ts</code></td><td><code>RuntimeEventStore.persistRawEvent()</code>가 <code>raw_events</code>에 append한다</td></tr><tr><td>raw archive는 sanitize 후 JSONL append/export된다</td><td><code>desktop/server/evidence/raw-sanitize.ts</code>, <code>desktop/server/evidence/run-archive.ts</code></td><td><code>sanitizeRawArchiveValue()</code> 후 raw JSONL과 DB payload에 기록한다</td></tr><tr><td>OTel trace는 명시 refresh에서 DB raw_events로 생성된다</td><td><code>desktop/server/index.ts</code>, <code>desktop/server/evidence/run-archive.ts</code>, <code>desktop/server/evidence/otel-trace.ts</code></td><td><code>exportRunArtifactsFromRawEvents()</code>가 SQLite rows를 normalized event로 바꾸고 <code>buildOtelTrace(inputDocument)</code>를 호출한다</td></tr><tr><td>Evidence refresh는 명시 command다</td><td><code>desktop/server/index.ts</code>, <code>desktop/src/store/useCodexStore.ts</code></td><td><code>evidence.refresh</code> command와 <code>handleEvidenceRefresh()</code>가 있다</td></tr><tr><td>Book/Evidence는 Chat companion surface다</td><td><code>desktop/src/components/v2/pages/TerminalPage.tsx</code>, <code>desktop/src/components/v2/AuxSurfaceHost.tsx</code></td><td>Chat action row에 <code>책</code>, <code>증거</code> 버튼과 aux view metadata가 있다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li>SQLite <code>raw_events</code>와 JSONL export artifact를 분리한 이유는 무엇인가?</li><li>Chat 실행과 Evidence refresh를 분리한 이유는 무엇인가?</li><li><code>normalized-events.json</code>이 Claude 평가와 Opik payload의 공통 입력이 되는 이유는 무엇인가?</li><li>파일 이름이 <code>BookVisualizationPage.tsx</code>여도 UX 책임을 문서에서 정확히 분리해야 하는 이유는 무엇인가?</li></ol>
+<p>다음 Part에서는 Course Evidence가 Rust core decision point에서 어떻게 시작되어 OTel과 Desktop Evidence UI까지 올라오는지 자세히 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 16개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>BookVisualizationPage.tsx</code></li><li><code>desktop/server/evidence/otel-trace.ts</code></li><li><code>desktop/server/evidence/raw-sanitize.ts</code></li><li><code>desktop/server/evidence/run-archive.ts</code></li><li><code>desktop/server/evidence/runtime-event-store.ts</code></li><li><code>desktop/server/index.ts</code></li><li><code>desktop/src/components/v2/AuxSurfaceHost.tsx</code></li><li><code>desktop/src/components/v2/ViewRouter.tsx</code></li><li><code>desktop/src/components/v2/pages/TerminalPage.tsx</code></li><li><code>desktop/src/store/useCodexStore.ts</code></li><li><code>normalized-events.json</code></li><li><code>observability/data/&lt;run-id&gt;</code></li><li><code>otel-trace.json</code></li><li><code>raw-sdk-events.jsonl</code></li><li><code>run-summary.json</code></li><li><code>trajectory-evaluation.json</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch30.html"><span>이전</span><strong>30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</strong></a><a class="nav-card" href="../part9/ch32.html"><span>다음</span><strong>32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

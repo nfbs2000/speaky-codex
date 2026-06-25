@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link active" href="ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제3부: Memory for Long-Running Harness</p>
+    <h1>12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex는 대화가 길어질 때 히스토리를 어떻게 요약하고, 어떤 방식으로 되돌리고, 다시 주입하는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>긴 대화를 다루는 시스템에서 compaction과 rollback은 부가 기능이 아닙니다. 이것은 &quot;대화의 연속성&quot;을 유지하기 위한 복구 문법입니다. Codex는 compaction을 별도 task로 취급하고, rollback과 fork도 단순 복사가 아니라 어떤 시점까지 히스토리를 재구성할지 명시적으로 모델링합니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;긴 히스토리&quot;] --&gt; B[&quot;compact task&quot;]
+    B --&gt; C[&quot;summary 생성&quot;]
+    C --&gt; D[&quot;history 재구성&quot;]
+    D --&gt; E[&quot;후속 turn에 재주입&quot;]
+
+    A --&gt; F[&quot;rollback / fork request&quot;]
+    F --&gt; G[&quot;snapshot 선택&quot;]
+    G --&gt; D</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a></td><td>compaction task와 요약 prompt</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/thread_manager.rs"><code>codex-rs/core/src/thread_manager.rs</code></a></td><td>fork snapshot과 rollback 관련 경계</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a></td><td>compact/rollback이 외부 API에서 어떻게 노출되는지 설명</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>compaction은 별도 task이며 summary prefix와 요약 prompt를 사용한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>SUMMARIZATION_PROMPT</code>, <code>SUMMARY_PREFIX</code>, <code>run_compact_task(...)</code>가 존재한다</li><li>manual/pre-turn compaction과 mid-turn compaction은 initial context 주입 방식이 다르다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>InitialContextInjection::{DoNotInject, BeforeLastUserMessage}</code>가 차이를 명시한다</li><li>compaction 중 context window 초과가 나면 오래된 항목부터 제거하며 재시도한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>ContextWindowExceeded</code> 분기에서 <code>remove_first_item()</code>을 호출한다</li><li>fork는 단순 복사가 아니라 truncate-before-user-message와 interrupted snapshot 두 모드를 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/thread_manager.rs"><code>codex-rs/core/src/thread_manager.rs</code></a> -&gt; <code>ForkSnapshot</code> enum이 두 방식을 정의한다</li><li>외부 API에서도 compact와 rollback은 thread-level 연산으로 노출된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; <code>thread/compact/start</code>, <code>thread/rollback</code> API가 존재한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a>는 manual/pre-turn compaction과 mid-turn compaction의 initial context 주입 차이를 enum으로 표현합니다.</p>
+<pre class="code-block"><code class="language-rust">/// Controls whether compaction replacement history must include initial context.
+///
+/// Pre-turn/manual compaction variants use `DoNotInject`: they replace history with a summary and
+/// clear `reference_context_item`, so the next regular turn will fully reinject initial context
+/// after compaction.
+///
+/// Mid-turn compaction must use `BeforeLastUserMessage` because the model is trained to see the
+/// compaction summary as the last item in history after mid-turn compaction; we therefore inject
+/// initial context into the replacement history just above the last real user message.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub(crate) enum InitialContextInjection {
+    BeforeLastUserMessage,
+    DoNotInject,
+}</code></pre>
+<p>compaction 결과는 새 history를 만들고 세션 history를 교체합니다.</p>
+<pre class="code-block"><code class="language-rust">let mut new_history = build_compacted_history(Vec::new(), &amp;user_messages, &amp;summary_text);
+
+if matches!(
+    initial_context_injection,
+    InitialContextInjection::BeforeLastUserMessage
+) {
+    let initial_context = sess.build_initial_context(turn_context.as_ref()).await;
+    new_history =
+        insert_initial_context_before_last_real_user_or_summary(new_history, initial_context);
+}
+let ghost_snapshots: Vec&lt;ResponseItem&gt; = history_items
+    .iter()
+    .filter(|item| matches!(item, ResponseItem::GhostSnapshot { .. }))
+    .cloned()
+    .collect();
+new_history.extend(ghost_snapshots);
+let reference_context_item = match initial_context_injection {
+    InitialContextInjection::DoNotInject =&gt; None,
+    InitialContextInjection::BeforeLastUserMessage =&gt; Some(turn_context.to_turn_context_item()),
+};
+let compacted_item = CompactedItem {
+    message: summary_text.clone(),
+    replacement_history: Some(new_history.clone()),
+};
+sess.replace_compacted_history(new_history, reference_context_item, compacted_item)
+    .await;</code></pre>
+<p>최종 교체는 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a>에서 history와 rollout persistence를 같이 갱신합니다.</p>
+<pre class="code-block"><code class="language-rust">pub(crate) async fn replace_compacted_history(
+    &amp;self,
+    items: Vec&lt;ResponseItem&gt;,
+    reference_context_item: Option&lt;TurnContextItem&gt;,
+    compacted_item: CompactedItem,
+) {
+    self.replace_history(items, reference_context_item.clone())
+        .await;
+
+    self.persist_rollout_items(&amp;[RolloutItem::Compacted(compacted_item)])
+        .await;
+    if let Some(turn_context_item) = reference_context_item {
+        self.persist_rollout_items(&amp;[RolloutItem::TurnContext(turn_context_item)])
+            .await;
+    }
+    self.services.model_client.advance_window_generation();
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex는 긴 대화를 &quot;잘라 버리는&quot; 대신 &quot;재구성하는&quot; 쪽에 가깝습니다. 요약은 다음 턴이 이해할 수 있는 새로운 입력이 되고, rollback/fork는 어떤 스냅샷을 기준으로 다시 출발할지 고르는 행위가 됩니다.</p>
+<h2 id="더-깊게-읽기-compaction은-새-history를-만든다">더 깊게 읽기: compaction은 새 history를 만든다</h2>
+<p><code>run_compact_task_inner_impl()</code>을 따라가면 compaction이 단순히 &quot;요약 텍스트 하나 생성&quot;이 아님을 알 수 있습니다. 먼저 현재 history를 clone하고, 사용자가 요청한 compact prompt를 history에 기록합니다. 그 history를 prompt용 입력으로 변환해 모델에 보내고, context window 초과가 나면 가장 오래된 항목부터 제거하며 재시도합니다. 성공하면 마지막 assistant message를 summary suffix로 삼아 <code>SUMMARY_PREFIX</code>와 결합하고, user messages와 summary로 replacement history를 새로 만듭니다.</p>
+<ul><li>compaction도 turn item lifecycle을 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>ContextCompactionItem::new()</code>를 started/completed로 emit한다</li><li>compaction prompt는 history에 기록된 뒤 모델 입력이 된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>initial_input_for_turn</code>을 <code>history.record_items(...)</code>로 넣는다</li><li>context window 초과 시 오래된 history item을 제거하고 재시도한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>ContextWindowExceeded</code> 분기에서 <code>history.remove_first_item()</code>을 호출한다</li><li>summary는 prefix와 마지막 assistant message를 결합해 만든다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>format!(&quot;{SUMMARY_PREFIX}\n{summary_suffix}&quot;)</code>가 replacement summary가 된다</li><li>replacement history는 session state에 들어간다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs"><code>codex-rs/core/src/compact.rs</code></a> -&gt; <code>replace_compacted_history(new_history, reference_context_item, compacted_item)</code>을 호출한다</li></ul>
+<p>이 흐름 때문에 compaction 결과는 &quot;별도 노트&quot;가 아니라 이후 모델 요청의 history 자체를 바꾸는 구조적 이벤트입니다.</p>
+<h2 id="rollback과-fork를-같이-보는-이유">rollback과 fork를 같이 보는 이유</h2>
+<p>rollback도 같은 문제를 다룹니다. &quot;어디까지 기억할 것인가&quot;입니다. <code>ContextManager::drop_last_n_user_turns()</code>는 마지막 N개의 instruction turn을 자르되, 첫 user message 이전 항목은 보존할 수 있게 설계되어 있습니다. <code>ForkSnapshot</code>은 committed prefix를 자르는 모드와, 현재 mid-turn snapshot을 interrupt marker와 함께 가져가는 모드를 나눕니다.</p>
+<ul><li>rollback은 user turn boundary 기준으로 history를 자른다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context_manager/history.rs"><code>codex-rs/core/src/context_manager/history.rs</code></a> -&gt; <code>drop_last_n_user_turns()</code>가 user message positions를 기준으로 cut index를 계산한다</li><li>fork snapshot은 두 가지 semantics를 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/thread_manager.rs"><code>codex-rs/core/src/thread_manager.rs</code></a> -&gt; <code>ForkSnapshot::TruncateBeforeNthUserMessage</code>와 <code>ForkSnapshot::Interrupted</code>가 별도 variant다</li><li>interrupt marker는 실제 interrupt와 fork snapshot이 공유한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/mod.rs"><code>codex-rs/core/src/tasks/mod.rs</code></a> -&gt; <code>interrupted_turn_history_marker()</code>가 공용 model-visible marker를 만든다</li></ul>
+<p>따라서 compaction, rollback, fork는 서로 다른 기능이지만 같은 질문에 답합니다. &quot;후속 턴이 어떤 history에서 다시 시작해야 하는가?&quot;</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>compaction을 단순 summarize 기능으로 구현하면 곧 실패합니다. 중요한 것은 summary 텍스트보다 &quot;어느 지점까지 잘랐는가&quot;, &quot;무엇을 다시 주입했는가&quot;, &quot;후속 턴이 어떤 문맥에서 재시작하는가&quot;입니다. Codex는 이 세 질문을 별도 타입과 task 경계로 모델링합니다.</p>
+<p>이제 기억과 복구 문법을 봤으니, 다음 장부터는 이 시스템이 어떤 보호 계층과 확장 경계 위에 서는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/app-server/README.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server/README.md">Edition</a></td></tr><tr><td><code>codex-rs/core/src/compact.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/compact.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/compact.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/context_manager/history.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context_manager/history.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/context_manager/history.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/session/mod.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/mod.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/tasks/mod.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tasks/mod.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tasks/mod.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/thread_manager.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/thread_manager.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/thread_manager.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch11.html"><span>이전</span><strong>11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</strong></a><a class="nav-card" href="../part4/ch13.html"><span>다음</span><strong>13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

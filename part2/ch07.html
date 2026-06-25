@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link active" href="ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제2부: Control Plane as Micro Harness</p>
+    <h1>7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex는 파일 시스템에 흩어진 AGENTS.md 계열 지침을 어떤 우선순위와 포맷으로 모델에게 주입하는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>에이전트 시스템에서 사용자 지침은 &quot;옵션 몇 개&quot;가 아니라 모델 행동을 바꾸는 제어 평면입니다. Codex가 흥미로운 이유는 AGENTS.md를 그냥 읽어서 붙이지 않는다는 점입니다. 프로젝트 루트 탐색, override 우선순위, byte budget, config 기반 사용자 지침 결합, model-visible 포맷팅까지 모두 별도 파이프라인으로 다룹니다.</p>
+<p>즉 이 장은 파일 읽기 기능이 아니라, &quot;사용자 명령이 어디서 우선권을 얻는가&quot;를 해부하는 장입니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;프로젝트 루트 탐색&quot;] --&gt; B[&quot;AGENTS.md / AGENTS.override.md 선택&quot;]
+    B --&gt; C[&quot;내용 읽기 + budget 적용&quot;]
+    C --&gt; D[&quot;config 기반 user instructions 결합&quot;]
+    D --&gt; E[&quot;contextual user fragment 생성&quot;]
+    E --&gt; F[&quot;모델 가시 컨텍스트로 주입&quot;]</pre></div>
+<p>이 구조에서 핵심은 <code>탐색</code>, <code>우선순위</code>, <code>표현</code>이 한 함수에 뭉쳐 있지 않다는 점입니다.</p>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a></td><td>파일 탐색, override 우선순위, 결합 로직</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context/user_instructions.rs"><code>codex-rs/core/src/context/user_instructions.rs</code></a></td><td>모델이 실제로 보게 되는 포맷 생성</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>AGENTS.md 탐색은 프로젝트 루트에서 현재 디렉터리까지 내려오며 루트를 넘지 않는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a> -&gt; 모듈 주석과 <code>agents_md_paths()</code>가 탐색 규칙을 구현한다</li><li><code>AGENTS.override.md</code>가 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/AGENTS.md"><code>AGENTS.md</code></a>보다 우선된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a> -&gt; <code>LOCAL_AGENTS_MD_FILENAME</code>를 우선 후보로 둔다</li><li>AGENTS 내용은 config의 사용자 지침과 결합될 수 있다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a> -&gt; <code>user_instructions_with_fs()</code>가 separator를 넣어 합친다</li><li>모델에 보이는 형식은 contextual user fragment다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context/user_instructions.rs"><code>codex-rs/core/src/context/user_instructions.rs</code></a> -&gt; <code># AGENTS.md instructions for ...</code> 마커와 body formatter가 존재한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a>는 파일 상단 주석에서 탐색 규칙을 직접 설명합니다.</p>
+<pre class="code-block"><code class="language-rust">//! Project-level documentation is primarily stored in files named `AGENTS.md`.
+//! Additional fallback filenames can be configured via `project_doc_fallback_filenames`.
+//! We include the concatenation of all files found along the path from the
+//! project root to the current working directory as follows:
+//!
+//! 1.  Determine the project root by walking upwards from the current working
+//!     directory until a configured `project_root_markers` entry is found.
+//!     When `project_root_markers` is unset, the default marker list is used
+//!     (`.git`). If no marker is found, only the current working directory is
+//!     considered. An empty marker list disables parent traversal.
+//! 2.  Collect every `AGENTS.md` found from the project root down to the
+//!     current working directory (inclusive) and concatenate their contents in
+//!     that order.
+//! 3.  We do **not** walk past the project root.</code></pre>
+<p>후보 파일 우선순위도 같은 파일에서 확인할 수 있습니다.</p>
+<pre class="code-block"><code class="language-rust">fn candidate_filenames(&amp;self) -&gt; Vec&lt;&amp;str&gt; {
+    let mut names: Vec&lt;&amp;str&gt; =
+        Vec::with_capacity(2 + self.config.project_doc_fallback_filenames.len());
+    names.push(LOCAL_AGENTS_MD_FILENAME);
+    names.push(DEFAULT_AGENTS_MD_FILENAME);
+    for candidate in &amp;self.config.project_doc_fallback_filenames {
+        let candidate = candidate.as_str();
+        if candidate.is_empty() {
+            continue;
+        }
+        if !names.contains(&amp;candidate) {
+            names.push(candidate);
+        }
+    }
+    names
+}</code></pre>
+<p>모델에 보이는 최종 포맷은 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context/user_instructions.rs"><code>codex-rs/core/src/context/user_instructions.rs</code></a>에서 contextual user fragment로 만들어집니다.</p>
+<pre class="code-block"><code class="language-rust">impl ContextualUserFragment for UserInstructions {
+    const ROLE: &amp;&#x27;static str = &quot;user&quot;;
+    const START_MARKER: &amp;&#x27;static str = &quot;# AGENTS.md instructions for &quot;;
+    const END_MARKER: &amp;&#x27;static str = &quot;&lt;/INSTRUCTIONS&gt;&quot;;
+
+    fn body(&amp;self) -&gt; String {
+        format!(&quot;{}\n\n&lt;INSTRUCTIONS&gt;\n{}\n&quot;, self.directory, self.text)
+    }
+}</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex는 AGENTS.md를 &quot;파일&quot;이 아니라 &quot;우선순위를 가진 지침 계층&quot;으로 취급합니다. 이 계층화 덕분에 로컬 override, 루트 지침, config 기반 지침을 한데 넣어도 행동의 우선순위를 비교적 예측 가능하게 유지할 수 있습니다.</p>
+<h2 id="더-깊게-읽기-발견-예산-표현을-나눠-본다">더 깊게 읽기: 발견, 예산, 표현을 나눠 본다</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>agents_md.rs</code></a>의 주석은 이 장의 가장 좋은 출발점입니다. Codex는 현재 디렉터리에서 위로 올라가 project root marker를 찾고, 그 root부터 현재 cwd까지 내려오며 AGENTS.md를 수집합니다. 이때 project root를 넘지 않는다는 규칙이 명시돼 있습니다. 이 규칙은 &quot;상위 홈 디렉터리에 우연히 있는 파일이 프로젝트 지침으로 들어오는&quot; 문제를 막습니다.</p>
+<p>파일 우선순위도 별도입니다. global instruction load에서는 <code>AGENTS.override.md</code>를 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/AGENTS.md"><code>AGENTS.md</code></a>보다 먼저 봅니다. 프로젝트 문서는 <code>project_doc_max_bytes</code> 예산 안에서 읽고, 남은 예산을 넘는 파일은 truncate합니다. 마지막으로 config의 user instructions와 AGENTS.md 문서를 separator로 합치고, model-visible user fragment는 <code>UserInstructions</code>가 렌더링합니다.</p>
+<ul><li>탐색은 root부터 cwd까지 내려오는 계층이다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a> -&gt; 모듈 주석과 <code>agents_md_paths()</code>가 root marker와 search dir 순서를 설명한다</li><li>budget 0이면 프로젝트 문서를 아예 넣지 않는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a> -&gt; <code>read_agents_md()</code>와 <code>agents_md_paths()</code>가 <code>project_doc_max_bytes == 0</code>에서 조기 반환한다</li><li>config instruction과 project doc은 separator로 합쳐진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs"><code>codex-rs/core/src/agents_md.rs</code></a> -&gt; <code>AGENTS_MD_SEPARATOR</code>와 <code>user_instructions_with_fs()</code>가 결합 순서를 보여 준다</li><li>모델에 보이는 user fragment는 고정 marker를 가진다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context/user_instructions.rs"><code>codex-rs/core/src/context/user_instructions.rs</code></a> -&gt; <code>START_MARKER</code>가 <code># AGENTS.md instructions for </code>로 정의된다</li></ul>
+<p>이렇게 보면 AGENTS.md는 단순 파일 include가 아니라 &quot;발견 규칙, 우선순위, 예산, 렌더링 marker&quot;를 모두 가진 지침 pipeline입니다.</p>
+<h2 id="설계상-중요한-경계">설계상 중요한 경계</h2>
+<p>AGENTS.md의 내용은 강력하지만 무한하지 않습니다. Codex는 예산을 둬서 너무 큰 프로젝트 문서가 전체 초기 컨텍스트를 잠식하지 못하게 하고, 프로젝트 root 밖으로 탐색하지 않아서 지침의 적용 범위를 제한합니다. 이 두 경계가 없다면 AGENTS.md는 유용한 제어 평면이 아니라 예측하기 어려운 전역 side effect가 됩니다.</p>
+<p>자신의 시스템에서도 &quot;지침 파일을 읽는다&quot;에서 멈추면 부족합니다. 반드시 어느 디렉터리까지 읽는지, 어떤 파일이 override인지, 얼마나 읽는지, 모델에게 어떤 marker로 보여 주는지를 같이 설계해야 합니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>지침 주입을 설계할 때 파일 발견과 모델 노출 포맷을 분리해 두는 편이 좋습니다. 그래야 나중에 override 파일, 관리자 지침, 사용자별 설정을 추가해도 시스템이 무너지지 않습니다.</p>
+<p>이제 사용자 지침 계층이 보였으니, 다음 장에서는 Codex가 <code>skills</code>를 어떻게 런타임 지식층으로 로드하고 주입하는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>AGENTS.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/AGENTS.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/AGENTS.md">Edition</a></td></tr><tr><td><code>codex-rs/core/src/agents_md.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/agents_md.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/agents_md.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/context/user_instructions.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/context/user_instructions.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/context/user_instructions.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 1개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>AGENTS.override.md</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="../part1/ch06.html"><span>이전</span><strong>6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</strong></a><a class="nav-card" href="ch08.html"><span>다음</span><strong>8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link active" href="ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제1부: Harness Runtime Anatomy</p>
+    <h1>4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: 모델이 보는 도구 목록은 어떻게 구성되며, 호출은 왜 별도의 라우팅 계층을 거쳐야 하는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>도구가 많은 에이전트일수록 &quot;도구를 많이 붙이는 것&quot;과 &quot;모델이 보게 되는 도구 표면을 설계하는 것&quot;은 전혀 다른 문제입니다. Codex는 이 둘을 명확히 분리합니다. 로컬 도구, MCP 도구, discoverable tools, dynamic tools는 런타임 출처가 다르지만, 모델에게는 하나의 도구 표면으로 보이게 해야 합니다. 반대로 모델이 호출을 내렸을 때는 다시 적절한 실행 경로로 되돌려 보내야 합니다.</p>
+<p>이 문제를 해결하는 것이 <code>ToolRouter</code>입니다. 이 라우터가 없으면 모델이 본 스키마와 실제 실행기 사이의 간격을 관리할 수 없습니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">graph TD
+    A[&quot;Local tools&quot;] --&gt; R[&quot;ToolRouter&quot;]
+    B[&quot;MCP tools&quot;] --&gt; R
+    C[&quot;Discoverable tools&quot;] --&gt; R
+    D[&quot;Dynamic tools&quot;] --&gt; R
+
+    R --&gt; E[&quot;model_visible_specs&quot;]
+    R --&gt; F[&quot;runtime specs&quot;]
+
+    E --&gt; M[&quot;Model&quot;]
+    M --&gt; C1[&quot;function/local shell/custom call&quot;]
+    C1 --&gt; R
+    R --&gt; X[&quot;actual execution path&quot;]</pre></div>
+<p>이 그림에서 중요한 점은 <code>specs</code>와 <code>model_visible_specs</code>가 따로 있다는 것입니다. Codex는 &quot;보이는 표면&quot;과 &quot;실제 실행 경로&quot;를 같은 자료구조로 다루지 않습니다.</p>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a></td><td>여러 출처의 도구를 model-visible 표면과 runtime path로 연결</td></tr><tr><td><code>codex-rs/core/src/tools/spec.rs</code></td><td>도구 스펙과 호출 파라미터를 정규화하는 기반 타입</td></tr></tbody></table></div>
+<p>이 장의 핵심은 도구 종류 자체보다, 그 다양한 종류를 같은 표면으로 보이게 만드는 어댑터 계층입니다.</p>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>도구 목록은 로컬/MCP/discoverable/dynamic 입력을 합쳐 구성된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>ToolRouterParams</code>가 서로 다른 도구 출처를 함께 받는다</li><li>model-visible 도구 목록은 runtime registry와 분리된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>specs</code>와 <code>model_visible_specs</code>를 따로 보관한다</li><li>함수 호출은 MCP, 일반 function, local shell, custom, tool search 등으로 다시 분기된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>build_tool_call()</code>이 응답 아이템별 payload를 정규화한다</li><li>local shell call도 별도 예외가 아니라 표준 tool payload로 재정규화된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>LocalShellAction::Exec</code>를 shell params로 감싼다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a>의 <code>ToolRouter</code>는 실행용 spec과 모델 가시 spec을 별도로 보관합니다.</p>
+<pre class="code-block"><code class="language-rust">pub struct ToolRouter {
+    registry: ToolRegistry,
+    specs: Vec&lt;ConfiguredToolSpec&gt;,
+    model_visible_specs: Vec&lt;ToolSpec&gt;,
+    parallel_mcp_server_names: HashSet&lt;String&gt;,
+}</code></pre>
+<p>같은 파일의 생성 경로는 config와 MCP, discoverable, dynamic tools를 합쳐 registry를 만들고, 별도의 <code>model_visible_specs</code>를 계산합니다.</p>
+<pre class="code-block"><code class="language-rust">let builder = build_specs_with_discoverable_tools(
+    config,
+    mcp_tools,
+    deferred_mcp_tools,
+    unavailable_called_tools,
+    discoverable_tools,
+    dynamic_tools,
+);
+let (specs, registry) = builder.build();
+let model_visible_specs = if config.code_mode_only_enabled {
+    specs
+        .iter()
+        .filter_map(|configured_tool| {
+            if !codex_code_mode::is_code_mode_nested_tool(configured_tool.name()) {
+                Some(configured_tool.spec.clone())
+            } else {
+                None
+            }
+        })
+        .collect()
+} else {
+    specs
+        .iter()
+        .map(|configured_tool| configured_tool.spec.clone())
+        .collect()
+};</code></pre>
+<h2 id="왜-라우터가-필요한가">왜 라우터가 필요한가</h2>
+<p>Codex의 도구 라우팅이 중요한 이유는 두 가지입니다.</p>
+<ol><li><strong>모델에게는 단순한 표면을 보인다</strong></li></ol>
+<p>모델은 출처별 구현 차이를 몰라도 된다.</p>
+<ol><li><strong>런타임은 출처별 차이를 유지한다</strong></li></ol>
+<p>실제 실행기, 권한 계산, 프로토콜, 네임스페이스는 각기 다를 수 있다.</p>
+<p>즉 라우터는 모델을 단순화하고 런타임은 복잡성을 유지하는 계층입니다.</p>
+<h2 id="더-깊게-읽기-보이는-스펙과-실행-스펙을-분리한다">더 깊게 읽기: 보이는 스펙과 실행 스펙을 분리한다</h2>
+<p><code>ToolRouter</code>에서 가장 먼저 봐야 할 필드는 <code>specs</code>와 <code>model_visible_specs</code>입니다. 둘 다 도구 목록처럼 보이지만 역할이 다릅니다. <code>specs</code>는 런타임이 dispatch와 lookup에 쓰는 설정된 도구 목록이고, <code>model_visible_specs</code>는 모델에 실제로 보여 줄 도구 목록입니다. code mode only 같은 설정에서는 nested tool을 모델 가시 목록에서 숨기지만, 런타임 registry는 별도로 유지됩니다.</p>
+<p>호출을 받는 쪽도 같은 원칙을 따릅니다. 모델 응답의 <code>ResponseItem</code>은 그대로 실행되지 않고 <code>ToolCall</code>로 재정규화됩니다. MCP tool이면 server와 raw tool name을 payload에 담고, 일반 function이면 function payload로 남기고, local shell call이면 <code>ShellToolCallParams</code>로 감쌉니다.</p>
+<ul><li>model-visible surface는 runtime registry와 별도다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>ToolRouter { registry, specs, model_visible_specs, ... }</code>가 분리돼 있다</li><li>code mode only에서는 일부 nested tool을 모델 표면에서 숨긴다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>code_mode_only_enabled</code> 분기에서 <code>is_code_mode_nested_tool</code>을 필터링한다</li><li>MCP 호출은 canonical tool name으로 재작성된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>resolve_mcp_tool_info(...)</code> 성공 시 <code>ToolPayload::Mcp { server, tool, raw_arguments }</code>를 만든다</li><li>local shell은 특별 케이스로 실행되지 않고 표준 payload가 된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs"><code>codex-rs/core/src/tools/router.rs</code></a> -&gt; <code>LocalShellAction::Exec</code>가 <code>ShellToolCallParams</code>로 변환된다</li></ul>
+<p>이 분리 덕분에 &quot;모델에게 보여 주는 단순성&quot;과 &quot;실제 실행 경로의 정확성&quot;을 동시에 유지할 수 있습니다. 모델은 도구 이름과 스키마만 보면 되지만, 런타임은 namespace, MCP server, custom call, shell permission 같은 정보를 잃지 않습니다.</p>
+<h2 id="라우터를-읽는-순서">라우터를 읽는 순서</h2>
+<p>도구 라우팅을 처음 볼 때는 등록 파일부터 파고들기보다 아래 흐름을 권합니다.</p>
+<ol><li><code>ToolRouterParams</code>에서 도구 출처가 무엇인지 확인한다.</li><li><code>from_config()</code>에서 <code>specs</code>와 <code>model_visible_specs</code>가 어떻게 달라지는지 본다.</li><li><code>build_tool_call()</code>에서 <code>ResponseItem</code>이 어떤 payload로 바뀌는지 따라간다.</li><li><code>dispatch_tool_call_with_code_mode_result()</code>가 registry로 넘기는 마지막 지점을 확인한다.</li></ol>
+<p>이 순서대로 보면 MCP, dynamic tools, tool search가 제각각 추가된 예외가 아니라 같은 라우팅 계층에 들어온 출처로 보입니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>도구 수가 늘어날수록 &quot;등록&quot;보다 &quot;노출&quot;과 &quot;역정규화&quot;가 더 중요해집니다. 자신의 에이전트에서도 <code>모델이 보는 스키마</code>와 <code>실제 실행기 레지스트리</code>를 분리해 두면, MCP나 앱 연결 같은 새 출처를 추가해도 코어 호출 경로를 덜 흔들 수 있습니다.</p>
+<p>이제 모델의 손이 어떻게 조직되는지 봤으니, 다음 장에서는 그 손이 실제로 움직일 때 승인, 샌드박스, 병렬성이 어디서 계산되는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core/src/tools/router.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/tools/router.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/tools/router.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 1개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>codex-rs/core/src/tools/spec.rs</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch03.html"><span>이전</span><strong>3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</strong></a><a class="nav-card" href="ch05.html"><span>다음</span><strong>5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

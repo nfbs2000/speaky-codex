@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link active" href="ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제9부: Course Evidence Implementation</p>
+    <h1>33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Rust core가 교육용 내부 증거를 남길 때 어떤 typed event shape를 사용하고, OTel log/trace에는 어떤 attribute로 나가는가?</p></blockquote>
+<h2 id="학습-목표">학습 목표</h2>
+<p>이 장에서는 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/tree/main/codex-rs/otel"><code>codex-rs/otel</code></a>에 추가된 Course Evidence 계약을 읽습니다.</p>
+<ul><li><code>CourseEvidenceLevel</code> enum이 evidence level을 어떻게 제한하는지 확인한다.</li><li><code>CourseEvidenceEvent</code> struct의 필수 필드를 이해한다.</li><li><code>SessionTelemetry::course_evidence()</code>가 log와 trace event를 동시에 남기는 방식을 본다.</li><li>attributes JSON을 별도 payload로 둔 이유를 이해한다.</li></ul>
+<h2 id="1단계-evidence-level-enum">1단계: evidence level enum</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a>에는 Course Evidence 전용 level enum이 있습니다.</p>
+<pre class="code-block"><code class="language-rust">pub enum CourseEvidenceLevel {
+    Configured,
+    Observed,
+    Inferred,
+}</code></pre>
+<p><code>as_str()</code>는 wire value를 안정적으로 만듭니다.</p>
+<pre class="code-block"><code class="language-rust">Self::Configured =&gt; &quot;configured&quot;,
+Self::Observed =&gt; &quot;observed&quot;,
+Self::Inferred =&gt; &quot;inferred&quot;,</code></pre>
+<p>이 enum은 임의 문자열을 막습니다. core insertion point가 event를 만들 때 evidence level을 세 가지 중 하나로 선택해야 하므로, UI와 normalizer가 안정적으로 분류할 수 있습니다.</p>
+<h2 id="2단계-event-struct는-강좌와-코드-위치를-같이-요구한다">2단계: event struct는 강좌와 코드 위치를 같이 요구한다</h2>
+<p><code>CourseEvidenceEvent</code>의 필드는 다음과 같습니다.</p>
+<pre class="code-block"><code class="language-rust">pub struct CourseEvidenceEvent&lt;&#x27;a&gt; {
+    pub chapter: &amp;&#x27;a str,
+    pub concept: &amp;&#x27;a str,
+    pub evidence_level: CourseEvidenceLevel,
+    pub source_file: &amp;&#x27;a str,
+    pub source_function: &amp;&#x27;a str,
+    pub decision: &amp;&#x27;a str,
+    pub reason: Option&lt;&amp;&#x27;a str&gt;,
+    pub attributes: JsonValue,
+}</code></pre>
+<p>여기서 <code>chapter</code>와 <code>concept</code>는 책과 연결되고, <code>source_file</code>과 <code>source_function</code>은 코드 근거와 연결됩니다. <code>decision</code>은 사람이 읽는 branch label이고, <code>attributes</code>는 실제 관측값입니다.</p>
+<p>좋은 event는 이런 모양입니다.</p>
+<pre class="code-block"><code class="language-rust">session_telemetry.course_evidence(CourseEvidenceEvent {
+    chapter: &quot;part2.ch09&quot;,
+    concept: &quot;skill_metadata_budget&quot;,
+    evidence_level: CourseEvidenceLevel::Observed,
+    source_file: &quot;codex-rs/core/src/session/mod.rs&quot;,
+    source_function: &quot;Session::build_initial_context&quot;,
+    decision: &quot;render_available_skills_with_budget&quot;,
+    reason: Some(&quot;available skills were rendered within the thread metadata budget&quot;),
+    attributes: serde_json::json!({
+        &quot;budgetKind&quot;: &quot;tokens&quot;,
+        &quot;budgetLimit&quot;: 2000,
+        &quot;totalSkills&quot;: 30,
+        &quot;includedSkills&quot;: 18,
+        &quot;omittedSkills&quot;: 12
+    }),
+});</code></pre>
+<h2 id="3단계-sessiontelemetry-course_evidence">3단계: <code>SessionTelemetry::course_evidence()</code></h2>
+<p>emitter는 <code>log_and_trace_event!</code> macro를 사용합니다.</p>
+<pre class="code-block"><code class="language-rust">pub fn course_evidence(&amp;self, event: CourseEvidenceEvent&lt;&#x27;_&gt;) {
+    log_and_trace_event!(
+        self,
+        common: {
+            event.name = &quot;codex.course_evidence&quot;,
+            course.chapter = %event.chapter,
+            course.concept = %event.concept,
+            evidence.level = %event.evidence_level.as_str(),
+            source.file = %event.source_file,
+            source.function = %event.source_function,
+            decision = %event.decision,
+            reason = event.reason,
+        },
+        log: {
+            attributes_json = %event.attributes,
+        },
+        trace: {
+            attributes_json = %event.attributes,
+        },
+    );
+}</code></pre>
+<p>공통 attribute는 log와 trace 양쪽에 들어갑니다. <code>attributes_json</code>도 log와 trace 양쪽에 들어갑니다. 따라서 OTel collector가 log만 보든 trace만 보든 Course Evidence event를 잃지 않습니다.</p>
+<h2 id="4단계-왜-attributes를-json-string으로-두는가">4단계: 왜 attributes를 JSON string으로 두는가</h2>
+<p>Course Evidence의 scalar metadata는 concept마다 다릅니다.</p>
+<ul><li>skill budget: <code>totalSkills</code>, <code>includedSkills</code>, <code>omittedSkills</code></li><li>compaction selection: <code>maxTokens</code>, <code>selectedUserMessageCount</code>, <code>remainingTokens</code></li><li>replacement history: <code>replacementHistoryItemCount</code>, <code>referenceContextItemPersisted</code></li></ul>
+<p>모든 field를 top-level OTel attribute로 고정하면 schema가 빨리 커집니다. 그래서 공통 index field는 top-level에 두고, concept-specific 값은 <code>attributes_json</code>에 담습니다.</p>
+<p>이 구조의 장점:</p>
+<ul><li>검색/필터: <code>course.concept</code>, <code>evidence.level</code>, <code>source.file</code>, <code>decision</code></li><li>세부 분석: <code>attributes_json</code> parse</li><li>낮은 cardinality: top-level key 폭발 방지</li></ul>
+<h2 id="5단계-public-export">5단계: public export</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/lib.rs"><code>codex-rs/otel/src/lib.rs</code></a>는 Course Evidence type을 public으로 re-export합니다.</p>
+<pre class="code-block"><code class="language-rust">pub use crate::events::session_telemetry::CourseEvidenceEvent;
+pub use crate::events::session_telemetry::CourseEvidenceLevel;</code></pre>
+<p>core crate는 이 re-export를 통해 <code>codex_otel::CourseEvidenceEvent</code>와 <code>codex_otel::CourseEvidenceLevel</code>을 import합니다. 임의 <code>tracing::event!</code>를 쓰지 않고 typed emitter를 쓰는 이유는 Course Evidence 계약을 안정적으로 유지하기 위해서입니다.</p>
+<h2 id="claim---file-path---observable-event-check">Claim -&gt; file path -&gt; observable event/check</h2>
+<div class="table-wrap"><table><thead><tr><th>Claim</th><th>file path</th><th>observable event/check</th></tr></thead><tbody><tr><td>evidence level은 세 값으로 제한된다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a></td><td><code>CourseEvidenceLevel::{Configured, Observed, Inferred}</code>가 있다</td></tr><tr><td>event는 chapter/concept/source/decision을 필수로 받는다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a></td><td><code>CourseEvidenceEvent</code> struct fields가 있다</td></tr><tr><td>event name은 <code>codex.course_evidence</code>다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a></td><td><code>event.name = &quot;codex.course_evidence&quot;</code>가 있다</td></tr><tr><td>log와 trace 모두에 attributes_json이 들어간다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs"><code>codex-rs/otel/src/events/session_telemetry.rs</code></a></td><td><code>log</code>와 <code>trace</code> block에 <code>attributes_json = %event.attributes</code>가 있다</td></tr><tr><td>core는 typed public API를 쓴다</td><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/lib.rs"><code>codex-rs/otel/src/lib.rs</code></a></td><td><code>CourseEvidenceEvent</code>, <code>CourseEvidenceLevel</code> re-export가 있다</td></tr></tbody></table></div>
+<h2 id="강좌-체크포인트">강좌 체크포인트</h2>
+<ol><li>concept-specific 값을 모두 top-level OTel attribute로 만들면 어떤 문제가 생기는가?</li><li><code>source_file</code>과 <code>source_function</code>을 event에 강제하는 이유는 무엇인가?</li><li><code>Observed</code>와 <code>Inferred</code>를 enum으로 나누면 UI 판단에서 어떤 실수를 줄일 수 있는가?</li></ol>
+<p>다음 장에서는 이 typed event가 실제 core decision point 어디에 삽입되어 있는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/otel</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/tree/main/codex-rs/otel">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/otel">Edition</a></td></tr><tr><td><code>codex-rs/otel/src/events/session_telemetry.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/events/session_telemetry.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/otel/src/events/session_telemetry.rs">Edition</a></td></tr><tr><td><code>codex-rs/otel/src/lib.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/otel/src/lib.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/otel/src/lib.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch32.html"><span>이전</span><strong>32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</strong></a><a class="nav-card" href="ch34.html"><span>다음</span><strong>34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

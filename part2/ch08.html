@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>8장: Skills — 런타임 지식층은 어떻게 주입되는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="../part1/ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="../part1/ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="../part1/ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="../part1/ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="../part1/ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link" href="../part1/ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link active" href="ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제2부: Control Plane as Micro Harness</p>
+    <h1>8장: Skills — 런타임 지식층은 어떻게 주입되는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex의 skills 시스템은 파일 나열이 아니라 어떤 로딩·선택·주입 파이프라인으로 작동하는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>skills는 흔히 &quot;프롬프트 조각 모음&quot; 정도로 오해되지만, Codex에서는 scope 우선순위, 파일 시스템 탐색, 명시적 언급 추출, 예산 제한, session 시작 시 개발자 섹션 렌더링까지 포함하는 독립된 지식 주입 계층입니다. 즉 이 장은 메모장 기능이 아니라 &quot;런타임이 지식을 어떤 방식으로 모델에 보이게 하는가&quot;를 설명합니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">flowchart TD
+    A[&quot;repo/user/system/admin roots&quot;] --&gt; B[&quot;skill roots 계산&quot;]
+    B --&gt; C[&quot;path 기준 dedupe&quot;]
+    C --&gt; D[&quot;명시적 mention 추출&quot;]
+    D --&gt; E[&quot;선택된 SKILL.md 읽기&quot;]
+    E --&gt; F[&quot;session developer section에 렌더링&quot;]</pre></div>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a></td><td>scope, root, dedupe 로직</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>codex-rs/core-skills/src/injection.rs</code></a></td><td>언급된 skill만 실제 injection item으로 변환</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a></td><td>세션 시작 시 skill 목록과 경고를 모델 가시 섹션으로 렌더링</td></tr></tbody></table></div>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>skill loader는 repo/user/system/admin scope를 고려해 여러 root를 합친다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a> -&gt; <code>SkillRoot</code>, <code>skill_roots(...)</code>, <code>scope_rank(...)</code>가 존재한다</li><li>스캔 결과는 path 기준으로 dedupe된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a> -&gt; <code>seen.insert(skill.path_to_skills_md.clone())</code>로 중복을 제거한다</li><li>명시적으로 언급된 skill만 본문까지 읽어 실제 injection item이 된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>codex-rs/core-skills/src/injection.rs</code></a> -&gt; <code>build_skill_injections()</code>가 <code>mentioned_skills</code>만 읽는다</li><li>세션 시작 시 implicit invocation 가능한 skill 목록은 예산 안에서 developer section으로 렌더링된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>build_available_skills(...)</code>와 trim warning 경로가 존재한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a>의 root 단위 loader는 skill을 읽은 뒤 path 기준으로 중복을 제거하고 scope/name/path 순서로 정렬합니다.</p>
+<pre class="code-block"><code class="language-rust">pub async fn load_skills_from_roots&lt;I&gt;(roots: I) -&gt; SkillLoadOutcome
+where
+    I: IntoIterator&lt;Item = SkillRoot&gt;,
+{
+    let mut outcome = SkillLoadOutcome::default();
+    let mut file_systems_by_skill_path: HashMap&lt;AbsolutePathBuf, Arc&lt;dyn ExecutorFileSystem&gt;&gt; =
+        HashMap::new();
+    for root in roots {
+        let fs = root.file_system;
+        let skills_before_root = outcome.skills.len();
+        discover_skills_under_root(fs.as_ref(), &amp;root.path, root.scope, &amp;mut outcome).await;
+        for skill in &amp;outcome.skills[skills_before_root..] {
+            file_systems_by_skill_path
+                .entry(skill.path_to_skills_md.clone())
+                .or_insert_with(|| Arc::clone(&amp;fs));
+        }
+    }
+
+    let mut seen: HashSet&lt;AbsolutePathBuf&gt; = HashSet::new();
+    outcome
+        .skills
+        .retain(|skill| seen.insert(skill.path_to_skills_md.clone()));</code></pre>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>codex-rs/core-skills/src/injection.rs</code></a>는 명시적으로 선택된 skill만 본문 파일을 읽어 injection item으로 만듭니다.</p>
+<pre class="code-block"><code class="language-rust">for skill in mentioned_skills {
+    let fs = loaded_skills
+        .and_then(|outcome| outcome.file_system_for_skill(skill))
+        .unwrap_or_else(|| Arc::clone(&amp;LOCAL_FS));
+    match fs
+        .read_file_text(&amp;skill.path_to_skills_md, /*sandbox*/ None)
+        .await
+    {
+        Ok(contents) =&gt; {
+            emit_skill_injected_metric(otel, skill, &quot;ok&quot;);
+            invocations.push(SkillInvocation {
+                skill_name: skill.name.clone(),
+                skill_scope: skill.scope,
+                skill_path: skill.path_to_skills_md.to_path_buf(),
+                invocation_type: InvocationType::Explicit,
+            });
+            result.items.push(SkillInjection {
+                name: skill.name.clone(),
+                path: skill.path_to_skills_md.to_string_lossy().into_owned(),
+                contents,
+            });
+        }</code></pre>
+<h2 id="해석">해석</h2>
+<p>Codex는 모든 skill 파일을 무차별적으로 넣지 않습니다. 먼저 &quot;어떤 skill이 존재하는가&quot;를 만들고, 그 다음 &quot;어떤 skill이 언급되었는가&quot;를 보고, 마지막에 &quot;무엇을 모델에게 보여 줄 것인가&quot;를 결정합니다. 이 세 단계가 분리되어 있기 때문에 규모가 커져도 지식 주입이 덜 혼란스러워집니다.</p>
+<h2 id="더-깊게-읽기-skill은-두-번-선택된다">더 깊게 읽기: skill은 두 번 선택된다</h2>
+<p>skills 시스템은 한 번의 선택으로 끝나지 않습니다. 첫 번째 선택은 discovery입니다. <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>loader.rs</code></a>는 repo, user, system, admin scope의 root를 모으고, root path를 dedupe한 뒤, 발견된 skill을 scope rank와 이름, path 기준으로 정렬합니다. 이 단계의 결과는 &quot;사용 가능한 skill 목록&quot;입니다.</p>
+<p>두 번째 선택은 invocation입니다. <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>injection.rs</code></a>는 structured <code>UserInput::Skill</code>과 텍스트 <code>$skill-name</code> mention을 따로 보고, disabled path와 중복 path를 제외합니다. 그리고 실제 <code>SKILL.md</code> 본문은 명시적으로 mention된 skill에 대해서만 읽습니다. 즉 available list가 모델에게 &quot;어떤 skill이 있는지&quot;를 알려 줄 수는 있지만, 모든 skill body가 항상 prompt에 들어가는 것은 아닙니다.</p>
+<ul><li>skill root는 scope별로 모인다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a> -&gt; <code>SkillRoot</code>, <code>skill_roots_with_home_dir(...)</code>, <code>repo_agents_skill_roots(...)</code>가 root 계산을 담당한다</li><li>scope rank는 repo를 가장 높은 우선순위로 둔다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a> -&gt; <code>scope_rank()</code>가 Repo, User, System, Admin 순서를 반환한다</li><li>discovery 결과는 path 기준으로 dedupe된다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs"><code>codex-rs/core-skills/src/loader.rs</code></a> -&gt; <code>seen.insert(skill.path_to_skills_md.clone())</code>로 중복 skill을 제거한다</li><li>본문 injection은 mention된 skill만 대상으로 한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>codex-rs/core-skills/src/injection.rs</code></a> -&gt; <code>build_skill_injections()</code>가 <code>mentioned_skills</code>를 순회하며 파일을 읽는다</li><li>mention parser는 structured input과 text input을 모두 본다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs"><code>codex-rs/core-skills/src/injection.rs</code></a> -&gt; <code>collect_explicit_skill_mentions()</code>가 <code>UserInput::Skill</code>과 <code>$...</code> text mention을 따로 처리한다</li></ul>
+<p>이 두 단계 분리 덕분에 Codex는 &quot;skill catalog&quot;와 &quot;skill invocation&quot;을 서로 다른 예산과 타이밍으로 다룰 수 있습니다.</p>
+<h2 id="budget-관점에서-보는-skills">budget 관점에서 보는 skills</h2>
+<p>세션 시작 시 implicit invocation 가능한 skill 목록은 <code>build_initial_context()</code>에서 developer section으로 렌더링됩니다. 그런데 이 목록도 무제한이 아닙니다. <code>default_skill_metadata_budget(...)</code>을 적용하고, trim이 발생하면 warning 이벤트를 보냅니다. 이것은 skills가 강력한 지식층이지만 컨텍스트 예산을 공유하는 자원이라는 뜻입니다.</p>
+<ul><li>available skills는 초기 developer section에 들어간다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>build_initial_context()</code>가 <code>AvailableSkillsInstructions</code>를 push한다</li><li>예산 초과는 조용히 묻히지 않는다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs"><code>codex-rs/core/src/session/mod.rs</code></a> -&gt; <code>emit_warning</code>이면 <code>THREAD_START_SKILLS_TRIMMED_WARNING_MESSAGE</code>를 warning event로 보낸다</li></ul>
+<p>이 지점에서 skills는 &quot;편한 프롬프트 조각&quot;이 아니라 런타임이 관리해야 하는 지식 자원으로 바뀝니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>지식층을 설계할 때는 <code>발견(discovery)</code>과 <code>주입(injection)</code>을 분리해야 합니다. 모든 지식을 항상 모델에게 던지기보다, 먼저 목록을 만들고, 언급이나 규칙으로 좁히고, 마지막에 budget 안에서 렌더링하는 구조가 훨씬 강합니다.</p>
+<p>이제 skills가 보였으니, 다음 장에서는 AGENTS.md와 skills, apps, plugins, personality 같은 요소들이 실제 초기 컨텍스트로 어떻게 조립되는지 봅니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>codex-rs/core-skills/src/injection.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/injection.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core-skills/src/injection.rs">Edition</a></td></tr><tr><td><code>codex-rs/core-skills/src/loader.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core-skills/src/loader.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core-skills/src/loader.rs">Edition</a></td></tr><tr><td><code>codex-rs/core/src/session/mod.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/mod.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/mod.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 1개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>SKILL.md</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch07.html"><span>이전</span><strong>7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</strong></a><a class="nav-card" href="ch09.html"><span>다음</span><strong>9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>

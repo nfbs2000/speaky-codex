@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>6장: 이벤트 스트리밍과 app-server — 런타임 계약은 어떤 이벤트로 드러나는가 | Codex 오픈소스 해부</title>
+    <meta name="description" content="Codex 오픈소스 저장소를 실제 fork 소스와 함께 읽는 한국어 온라인 책" />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+
+<aside class="sidebar" aria-label="책 목차">
+  <div class="brand">
+    <p class="eyebrow">Codex Source Book</p>
+    <a class="brand-title" href="../index.html">Codex 오픈소스 해부</a>
+    <p class="brand-subtitle">공개 Rust 구현으로 읽는 로컬 코딩 에이전트. 온라인판은 실제 fork 소스 참조를 함께 제공합니다.</p>
+  </div>
+  <nav class="toc-nav">
+    <a class="toc-link" href="../index.html">목차</a>
+    <section class="toc-section"><h2>시작</h2><div class="toc-links"><a class="toc-link" href="../preface.html">서문</a></div></section><section class="toc-section"><h2>제1부: Harness Runtime Anatomy</h2><div class="toc-links"><a class="toc-link" href="ch01.html">1장: 저장소 지형도 — Codex를 어떤 층으로 읽어야 하는가</a><a class="toc-link" href="ch02.html">2장: 스레드와 세션 — 런타임은 어디서 시작되는가</a><a class="toc-link" href="ch03.html">3장: 턴 루프 — Codex 하니스는 어떻게 한 턴을 계속 이어 가는가</a><a class="toc-link" href="ch04.html">4장: 도구 표면과 라우팅 — 모델의 손은 어떻게 조직되는가</a><a class="toc-link" href="ch05.html">5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</a><a class="toc-link active" href="ch06.html">6장: 이벤트 스트리밍과 app-server — 하니스 계약은 어떤 이벤트로 드러나는가</a></div></section><section class="toc-section"><h2>제2부: Control Plane as Micro Harness</h2><div class="toc-links"><a class="toc-link" href="../part2/ch07.html">7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</a><a class="toc-link" href="../part2/ch08.html">8장: Skills — 재사용 가능한 micro harness는 어떻게 주입되는가</a><a class="toc-link" href="../part2/ch09.html">9장: 초기 컨텍스트 — 하니스 입력층은 어떻게 조립되는가</a></div></section><section class="toc-section"><h2>제3부: Memory for Long-Running Harness</h2><div class="toc-links"><a class="toc-link" href="../part3/ch10.html">10장: SessionState와 TurnState — 상태는 왜 둘로 나뉘는가</a><a class="toc-link" href="../part3/ch11.html">11장: 히스토리 관리자와 토큰 추정 — 기억은 어떻게 계산되는가</a><a class="toc-link" href="../part3/ch12.html">12장: Compaction과 Rollback — 긴 대화는 어떻게 접고 되돌리는가</a></div></section><section class="toc-section"><h2>제4부: Policy Harness &amp; Extensibility</h2><div class="toc-links"><a class="toc-link" href="../part4/ch13.html">13장: 샌드박스와 승인 정책 — 안전성은 어떤 계층으로 서는가</a><a class="toc-link" href="../part4/ch14.html">14장: Hooks 시스템 — 사용자는 어디서 런타임에 개입할 수 있는가</a><a class="toc-link" href="../part4/ch15.html">15장: MCP 연결 관리자 — 외부 앱과 도구는 어떻게 붙는가</a></div></section><section class="toc-section"><h2>제5부: Subagents &amp; Surfaces</h2><div class="toc-links"><a class="toc-link" href="../part5/ch16.html">16장: 리뷰 서브에이전트 — Codex는 어떻게 축소된 하니스 복제본을 만들어 검토를 외주화하는가</a><a class="toc-link" href="../part5/ch17.html">17장: 모델 카탈로그와 새로고침 — 모델 선택은 왜 하니스 자원 관리인가</a><a class="toc-link" href="../part5/ch18.html">18장: app-server, TUI, CLI — 같은 하니스가 어떻게 다른 표면으로 드러나는가</a></div></section><section class="toc-section"><h2>제6부: Harness Builder Lessons</h2><div class="toc-links"><a class="toc-link" href="../part6/ch19.html">19장: Codex가 보여 주는 하니스 엔지니어링 원칙 — 무엇을 가져가고 무엇을 버릴까</a></div></section><section class="toc-section"><h2>제7부: Long-Running Goal Harness</h2><div class="toc-links"><a class="toc-link" href="../part7/ch20.html">20장: /goal 강좌 로드맵 — 장시간 목표 루프를 어떻게 읽을 것인가</a><a class="toc-link" href="../part7/ch21.html">21장: TUI 표면 — /goal 입력은 어떻게 앱 이벤트가 되는가</a><a class="toc-link" href="../part7/ch22.html">22장: app-server와 저장 모델 — goal은 어떤 API와 row로 고정되는가</a><a class="toc-link" href="../part7/ch23.html">23장: core goal runtime — active goal은 어떻게 다음 턴의 원인이 되는가</a><a class="toc-link" href="../part7/ch24.html">24장: 모델 도구와 안전장치 — 모델은 goal을 어디까지 조작할 수 있는가</a><a class="toc-link" href="../part7/ch25.html">25장: 내 하니스에 옮기기 — 장시간 목표 루프 구현 순서</a></div></section><section class="toc-section"><h2>제8부: Desktop SDK Runtime Evidence Harness</h2><div class="toc-links"><a class="toc-link" href="../part8/ch26.html">26장: Desktop Runtime Evidence 하니스 — Electron 앱은 실제 Codex를 어디서 실행하는가</a><a class="toc-link" href="../part8/ch27.html">27장: 개발 실행 체인 — bridge, Vite, Electron은 어떤 순서로 뜨는가</a><a class="toc-link" href="../part8/ch28.html">28장: TypeScript SDK 실행 어댑터 — runStreamed()는 어떻게 실제 Codex CLI가 되는가</a><a class="toc-link" href="../part8/ch29.html">29장: Renderer와 bridge protocol — React UI는 SDK를 직접 부르지 않는다</a><a class="toc-link" href="../part8/ch30.html">30장: chat.run에서 runStreamed()까지 — bridge server의 한 턴 실행 루프</a><a class="toc-link" href="../part8/ch31.html">31장: Runtime Evidence artifact — raw, normalized, OTel, Trajectory는 어떻게 화면이 되는가</a></div></section><section class="toc-section"><h2>제9부: Course Evidence Implementation</h2><div class="toc-links"><a class="toc-link" href="../part9/ch32.html">32장: Course Evidence 로드맵 — 강좌 개념은 어떻게 실제 런타임 증거가 되는가</a><a class="toc-link" href="../part9/ch33.html">33장: Rust OTel 타입 — CourseEvidenceEvent는 어떤 계약인가</a><a class="toc-link" href="../part9/ch34.html">34장: core decision point 계측 — Course Evidence는 어디에 꽂혀 있는가</a><a class="toc-link" href="../part9/ch35.html">35장: OTel export 검증 — codex.course_evidence는 log와 trace에 실제로 남는가</a><a class="toc-link" href="../part9/ch36.html">36장: Desktop normalizer — codex.course_evidence는 어떻게 course.evidence가 되는가</a><a class="toc-link" href="../part9/ch37.html">37장: Course Evidence UI와 다음 확장 — Runtime Evidence에서 무엇을 보고 무엇을 더 붙일 것인가</a></div></section><section class="toc-section"><h2>부록</h2><div class="toc-links"><a class="toc-link" href="../appendix/a-file-index.html">부록 A: 주요 파일 인덱스 — 무엇을 어디서 찾을 것인가</a><a class="toc-link" href="../appendix/b-evidence-rules.html">부록 B: 근거 사용 규칙 — 무엇을 확인이라 부르고 무엇을 추론이라 부를 것인가</a></div></section>
+  </nav>
+  <div class="meta-panel">
+    <p>Fork: <a href="https://github.com/nfbs2000/speaky-codex">nfbs2000/speaky-codex</a></p>
+    <p>Latest source: <a href="https://github.com/nfbs2000/speaky-codex/tree/main">main</a></p>
+    <p>Edition snapshot: <a href="https://github.com/nfbs2000/speaky-codex/tree/e7a032af1e031fd65cd7e18836710581259b8c8d">e7a032af1e</a></p>
+  </div>
+</aside>
+
+      <main class="content">
+<article class="book-page">
+  <header class="chapter-header">
+    <p class="eyebrow">제1부: Harness Runtime Anatomy</p>
+    <h1>6장: 이벤트 스트리밍과 app-server — 런타임 계약은 어떤 이벤트로 드러나는가</h1>
+    <p class="chapter-meta">온라인판은 원고 본문을 유지하면서 현재 fork의 실제 소스 링크를 함께 제공합니다.</p>
+  </header>
+  <div class="markdown-body"><blockquote><p><strong>이 장의 질문</strong>: Codex 내부의 이벤트 기반 런타임은 외부 클라이언트에게 어떤 프로토콜 계약으로 노출되는가?</p></blockquote>
+<h2 id="왜-중요한가">왜 중요한가</h2>
+<p>Codex를 단지 로컬 CLI로 보면 내부 이벤트 설계가 과하게 느껴질 수 있습니다. 하지만 이 저장소는 처음부터 TUI, CLI, app-server, 그리고 그 위에 올라갈 외부 클라이언트를 모두 염두에 둔 구조입니다. 이때 중요한 것은 &quot;코어가 어떤 사건을 알고 있는가&quot;와 &quot;외부 표면이 어떤 프리미티브를 이해하는가&quot;를 맞추는 일입니다.</p>
+<p>Codex는 내부적으로 이벤트 기반 런타임이고, app-server는 그 사건들을 thread/turn/item 중심의 외부 계약으로 번역하는 계층입니다. 이 번역이 안정적이어야 VS Code 같은 rich interface도 코어와 같은 의미론을 공유할 수 있습니다.</p>
+<h2 id="system-map">System Map</h2>
+<div class="diagram"><pre class="mermaid">sequenceDiagram
+    participant Core as core session
+    participant Events as internal events
+    participant Server as app-server
+    participant Client as external client
+
+    Core-&gt;&gt;Events: SessionConfigured
+    Core-&gt;&gt;Events: TurnStarted / item delta / completed
+    Events-&gt;&gt;Server: protocol event translation
+    Server-&gt;&gt;Client: thread/start response
+    Server-&gt;&gt;Client: turn/start stream
+    Server-&gt;&gt;Client: item delta / turn completed</pre></div>
+<p>이 구조 덕분에 외부 클라이언트는 코어의 세부 구현을 몰라도 <code>thread</code>, <code>turn</code>, <code>item</code>이라는 안정된 단위로 Codex를 제어할 수 있습니다.</p>
+<h2 id="code-anchor">Code Anchor</h2>
+<div class="table-wrap"><table><thead><tr><th>파일</th><th>역할</th></tr></thead><tbody><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs"><code>codex-rs/core/src/session/session.rs</code></a></td><td>내부 이벤트가 처음 방출되는 지점</td></tr><tr><td><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a></td><td>외부 프로토콜의 개념과 lifecycle 설명</td></tr></tbody></table></div>
+<p>특히 <code>app-server</code> 문서는 구현 파일이 아니라도 중요합니다. 왜냐하면 외부 계약이 어떤 vocabulary를 기준으로 설계되었는지를 가장 명시적으로 설명하기 때문입니다.</p>
+<h2 id="runtime-proof">Runtime Proof</h2>
+<ul><li>세션 시작 시 <code>SessionConfigured</code>가 먼저 나간다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs"><code>codex-rs/core/src/session/session.rs</code></a> -&gt; watcher와 MCP 초기화보다 먼저 이벤트를 송신한다</li><li>app-server는 JSON-RPC 스타일의 양방향 프로토콜을 사용한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; stdio/websocket transport와 initialization 규칙을 설명한다</li><li>외부 API의 핵심 개념은 thread, turn, item이다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; Core Primitives 섹션이 세 단위를 정의한다</li><li><code>turn/start</code> 이후에는 item delta와 turn completion 스트림을 읽어야 한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; lifecycle overview가 그 흐름을 서술한다</li></ul>
+<h2 id="소스-발췌">소스 발췌</h2>
+<p><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a>의 request macro 사용부는 wire method 이름을 Rust variant에 직접 붙입니다.</p>
+<pre class="code-block"><code class="language-rust">client_request_definitions! {
+    Initialize {
+        params: v1::InitializeParams,
+        response: v1::InitializeResponse,
+    },
+
+    /// NEW APIs
+    // Thread lifecycle
+    // Uses `inspect_params` because only some fields are experimental.
+    ThreadStart =&gt; &quot;thread/start&quot; {
+        params: v2::ThreadStartParams,
+        inspect_params: true,
+        response: v2::ThreadStartResponse,
+    },</code></pre>
+<p>turn lifecycle도 같은 파일에서 별도 request와 notification 이름으로 드러납니다.</p>
+<pre class="code-block"><code class="language-rust">TurnStart =&gt; &quot;turn/start&quot; {
+    params: v2::TurnStartParams,
+    inspect_params: true,
+    response: v2::TurnStartResponse,
+},</code></pre>
+<pre class="code-block"><code class="language-rust">ThreadStarted =&gt; &quot;thread/started&quot; (v2::ThreadStartedNotification),
+ThreadStatusChanged =&gt; &quot;thread/status/changed&quot; (v2::ThreadStatusChangedNotification),
+ThreadArchived =&gt; &quot;thread/archived&quot; (v2::ThreadArchivedNotification),
+ThreadUnarchived =&gt; &quot;thread/unarchived&quot; (v2::ThreadUnarchivedNotification),
+ThreadClosed =&gt; &quot;thread/closed&quot; (v2::ThreadClosedNotification),
+SkillsChanged =&gt; &quot;skills/changed&quot; (v2::SkillsChangedNotification),
+ThreadNameUpdated =&gt; &quot;thread/name/updated&quot; (v2::ThreadNameUpdatedNotification),
+ThreadTokenUsageUpdated =&gt; &quot;thread/tokenUsage/updated&quot; (v2::ThreadTokenUsageUpdatedNotification),
+TurnStarted =&gt; &quot;turn/started&quot; (v2::TurnStartedNotification),
+HookStarted =&gt; &quot;hook/started&quot; (v2::HookStartedNotification),
+TurnCompleted =&gt; &quot;turn/completed&quot; (v2::TurnCompletedNotification),</code></pre>
+<h2 id="내부-사건과-외부-계약의-대응">내부 사건과 외부 계약의 대응</h2>
+<p>이 장에서 중요한 해석은 하나입니다. Codex는 내부 이벤트를 그대로 바깥에 쏟아내지 않고, 외부가 이해하기 쉬운 단위로 재구성합니다.</p>
+<ul><li>내부는 세션/태스크/이벤트 중심</li><li>외부는 thread/turn/item 중심</li></ul>
+<p>이 분리는 아주 중요합니다. 코어 구현이 바뀌어도 외부 계약을 덜 흔들 수 있기 때문입니다.</p>
+<h2 id="더-깊게-읽기-이벤트는-내부-로그가-아니라-외부-상태-기계다">더 깊게 읽기: 이벤트는 내부 로그가 아니라 외부 상태 기계다</h2>
+<p>app-server 문서가 긴 이유는 단순 API 목록이 많아서가 아닙니다. 외부 클라이언트가 Codex를 안정적으로 붙잡으려면 &quot;언제 thread가 시작됐는가&quot;, &quot;turn이 실제로 running이 됐는가&quot;, &quot;item이 시작/완료됐는가&quot;, &quot;approval request에 어떻게 응답해야 하는가&quot;를 알아야 합니다. 그래서 app-server는 내부 이벤트를 그대로 내보내는 대신 JSON-RPC method와 notification vocabulary로 다시 정리합니다.</p>
+<p>예를 들어 내부 regular turn은 <code>TurnStartedEvent</code>를 보내고 task 완료 시 <code>TurnComplete</code>로 닫힙니다. app-server 문서에서는 이것이 <code>turn/start</code> 응답, <code>turn/started</code>, <code>item/*</code>, <code>turn/completed</code> notification 흐름으로 설명됩니다. 같은 사건을 내부 구현자는 <code>EventMsg</code>로, 외부 클라이언트는 JSON-RPC notification으로 이해하는 셈입니다.</p>
+<ul><li>외부 thread lifecycle은 method와 notification이 쌍을 이룬다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; <code>thread/start</code>가 thread object를 반환하고 <code>thread/started</code>를 emit한다고 설명한다</li><li>turn lifecycle은 start response와 stream notification으로 나뉜다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a> -&gt; <code>turn/start</code> 뒤 <code>turn/started</code>, <code>item/*</code>, <code>turn/completed</code>를 읽으라고 설명한다</li><li>protocol crate도 같은 method vocabulary를 타입으로 고정한다 -&gt; <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a> -&gt; <code>ThreadStart</code>, <code>TurnStart</code>, <code>ReviewStart</code>, <code>ThreadRollback</code>, <code>ThreadCompactStart</code> method 매핑이 있다</li><li>v2 타입은 camelCase wire format과 TypeScript export를 함께 갖는다 -&gt; <code>codex-rs/app-server-protocol/src/protocol/v2.rs</code> -&gt; 다수 payload가 <code>#[serde(rename_all = &quot;camelCase&quot;)]</code>, <code>#[ts(export_to = &quot;v2/&quot;)]</code>를 사용한다</li></ul>
+<p>이 구조는 외부 클라이언트가 Rust 내부 모듈명을 몰라도 되게 합니다. 클라이언트는 thread/turn/item이라는 안정된 단위를 보고, core는 task/session/event라는 내부 구조를 유지합니다.</p>
+<h2 id="프로토콜을-읽는-법">프로토콜을 읽는 법</h2>
+<p>이 장을 코드와 함께 읽으려면 README만 보지 말고 세 층을 같이 봐야 합니다.</p>
+<ol><li><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs"><code>codex-rs/core/src/session/session.rs</code></a>에서 어떤 <code>EventMsg</code>가 core에서 만들어지는지 확인한다.</li><li><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md"><code>codex-rs/app-server/README.md</code></a>에서 그 사건이 어떤 user-facing lifecycle로 설명되는지 본다.</li><li><a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs"><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></a>와 <code>v2.rs</code>에서 method 이름과 payload 타입이 어떻게 고정되는지 확인한다.</li></ol>
+<p>이 세 층이 맞아야 &quot;문서상 API&quot;와 &quot;실제 런타임 사건&quot;이 어긋나지 않습니다.</p>
+<h2 id="builder-takeaway">Builder Takeaway</h2>
+<p>코어 런타임을 외부 표면에 그대로 노출하지 말고, 외부가 오래 붙잡을 수 있는 프로토콜 단위를 다시 정의해야 합니다. Codex에서는 그 단위가 <code>thread</code>, <code>turn</code>, <code>item</code>입니다. 자신의 시스템도 같은 식으로 &quot;내부 사건 vocabulary&quot;와 &quot;외부 계약 vocabulary&quot;를 분리해 두는 편이 좋습니다.</p>
+<p>이제 실행 표면과 이벤트 계약이 보였으니, 다음 장부터는 이 런타임을 실제로 제어하는 <a class="source-code" href="https://github.com/nfbs2000/speaky-codex/blob/main/AGENTS.md"><code>AGENTS.md</code></a>, <code>skills</code>, 초기 컨텍스트 조립 계층으로 들어갑니다.</p></div>
+  
+<section class="source-references" id="source-references">
+  <h2>이 장의 실제 소스 참조</h2>
+  <p>본문의 코드 경로 중 현재 fork에 존재하는 항목만 실제 GitHub 소스로 연결했습니다. <code>Latest</code>는 <code>main</code>, <code>Edition</code>은 이 온라인판 생성 시점의 snapshot입니다.</p>
+  
+<div class="table-wrap source-table">
+  <table>
+    <thead><tr><th>경로</th><th>Latest</th><th>Edition</th></tr></thead>
+    <tbody><tr><td><code>AGENTS.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/AGENTS.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/AGENTS.md">Edition</a></td></tr><tr><td><code>codex-rs/app-server-protocol/src/protocol/common.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server-protocol/src/protocol/common.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server-protocol/src/protocol/common.rs">Edition</a></td></tr><tr><td><code>codex-rs/app-server/README.md</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/app-server/README.md">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/app-server/README.md">Edition</a></td></tr><tr><td><code>codex-rs/core/src/session/session.rs</code></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/main/codex-rs/core/src/session/session.rs">Latest</a></td><td><a href="https://github.com/nfbs2000/speaky-codex/blob/e7a032af1e031fd65cd7e18836710581259b8c8d/codex-rs/core/src/session/session.rs">Edition</a></td></tr></tbody>
+  </table>
+</div>
+
+  
+<details class="unresolved-refs">
+  <summary>현재 fork에서 찾지 못한 참조 2개</summary>
+  <p>이 경로들은 원고에 있지만 현재 <code>nfbs2000/speaky-codex</code> snapshot에는 없어서 404 링크를 만들지 않았습니다.</p>
+  <ul><li><code>codex-rs/app-server-protocol/src/protocol/v2.rs</code></li><li><code>v2.rs</code></li></ul>
+</details>
+
+</section>
+
+  <nav class="chapter-nav" aria-label="장 이동"><a class="nav-card" href="ch05.html"><span>이전</span><strong>5장: 승인·샌드박스·병렬 실행 — 정책 하니스는 어디서 성립되는가</strong></a><a class="nav-card" href="../part2/ch07.html"><span>다음</span><strong>7장: AGENTS.md — 사용자 지침은 어떻게 우선권을 얻는가</strong></a></nav>
+</article>
+</main>
+    </div>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "base",
+        themeVariables: {
+          background: "#fffdf8",
+          primaryColor: "#f1eee6",
+          primaryTextColor: "#191817",
+          primaryBorderColor: "#d9d1c3",
+          lineColor: "#1f6f8b",
+          secondaryColor: "#e8f0ec",
+          tertiaryColor: "#fff6ed",
+          fontFamily: "Inter, system-ui, sans-serif"
+        }
+      });
+    </script>
+  </body>
+</html>
